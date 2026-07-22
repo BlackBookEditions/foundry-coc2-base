@@ -69,8 +69,8 @@
         "desavantage": "Désavantage"
       },
       "points": "Coût en points",
-      "traitPoints": "Traits",
-      "traitPointsTooltip": "Points d'avantages / désavantages (5 maximum à la création)"
+      "traitBalance": "Traits distinctifs : {av}/{max} avantages − {dav}/{max} désavantages",
+      "traitError": " — déséquilibre : les avantages doivent égaler les désavantages (5 max)"
     },
     "age": {
       "label": "Tranche d'âge",

@@ -96,14 +96,49 @@ export default class COC2CharacterSheet extends COCharacterSheet {
     context.initFormula = `10 + ${shortAbility("int")} + ${shortAbility("per")}`
     context.defFormula = `10 + ${shortAbility("agi")} + ${shortAbility("per")}`
 
-    // Traits distinctifs : compteur informatif des points d'avantages et de désavantages
+    // Traits distinctifs : compteur des points d'avantages et de désavantages, injecté dans l'onglet Biographie par _onRender
     const traitPoints = (subtype) =>
       features.filter((f) => f.system.subtype === subtype).reduce((acc, f) => acc + (f.getFlag("coc2-base", "points") ?? 1), 0)
     context.avantagePoints = traitPoints(FEATURE_SUBTYPES_COC2.avantage.id)
     context.desavantagePoints = traitPoints(FEATURE_SUBTYPES_COC2.desavantage.id)
     context.traitPointsMax = TRAIT_POINTS_MAX
+    // Le message ne s'affiche que si le personnage possède au moins un trait distinctif
+    context.hasTraits = features.some((f) => [FEATURE_SUBTYPES_COC2.avantage.id, FEATURE_SUBTYPES_COC2.desavantage.id].includes(f.system.subtype))
+    // Règle : équilibre avantages = désavantages, et plafond de 5 points de chaque côté
+    context.traitBalanced = context.avantagePoints === context.desavantagePoints
+    context.traitWithinCap = context.avantagePoints <= TRAIT_POINTS_MAX && context.desavantagePoints <= TRAIT_POINTS_MAX
+    context.traitValid = context.traitBalanced && context.traitWithinCap
 
     return context
+  }
+
+  /** @inheritDoc */
+  async _onRender(context, options) {
+    await super._onRender(context, options)
+
+    // Compteur des traits distinctifs : injecté en tête de l'onglet Biographie, avant le bloc « Profils & Traits ».
+    // Injection DOM plutôt qu'un override du template biographie (propriété du système co2) afin de ne pas le dupliquer.
+    const biographyPart = this.element?.querySelector('[data-application-part="biography"]')
+    if (!biographyPart) return
+
+    // Idempotence : on retire toute injection précédente (re-render partiel de l'onglet)
+    biographyPart.querySelector(".coc2-trait-balance")?.remove()
+
+    // Aucun trait avantage/désavantage : pas de message
+    if (!context.hasTraits) return
+
+    const target = biographyPart.querySelector(".features.section-container")
+    if (!target) return
+
+    const message = game.i18n.format("COC2BASE.feature.traitBalance", {
+      av: context.avantagePoints,
+      dav: context.desavantagePoints,
+      max: context.traitPointsMax,
+    })
+    const suffix = context.traitValid ? "" : game.i18n.localize("COC2BASE.feature.traitError")
+    const status = context.traitValid ? "info" : "error"
+    const html = `<div class="notification ${status} permanent coc2-trait-balance">${message}${suffix}</div>`
+    target.insertAdjacentHTML("beforebegin", html)
   }
 
   /**

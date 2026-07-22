@@ -824,6 +824,7 @@
   /* Rangée supplémentaire pleine largeur dans le header, sous les caractéristiques */
   /* Ruban de l'échelle de santé : libellé, bloc coeur, 20 échelons, état atteint */
   /* Ruban de la seconde échelle : même structure que .health-bar, couleur et emplacement propres */
+  /* Compteur des traits distinctifs, injecté en tête de l'onglet Biographie (réutilise le style .notification du système) */
   /* Formule figée d'Initiative et de Défense, à la place du select de caractéristique de COF2 */
   /* Nom de l'état atteint, affiché sous le bloc coeur. La couleur de l'état est portée par le jalon
      correspondant dans le ruban ; le libellé suit le texte du header, posé sur --co-sheet-accent. */
@@ -1033,10 +1034,8 @@
   align-items: center;
   gap: 8px;
 }
-.co.actor.coc2 .age-bracket .trait-points {
-  font-size: 0.85em;
-  opacity: 0.85;
-  white-space: nowrap;
+.co.actor.coc2 .coc2-trait-balance {
+  margin-bottom: 8px;
 }
 .co.actor.coc2 .combat-formula {
   flex: 1;
