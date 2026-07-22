@@ -1,0 +1,822 @@
+@font-face {
+  font-family: "Alana";
+  src: url("./fonts/alana.ttf");
+}
+@font-face {
+  font-family: "Hypatia";
+  src: url("./fonts/hypatia_sans_pro.otf");
+}
+@font-face {
+  font-family: "Calibri";
+  src: url("./fonts/calibri.ttf");
+}
+@font-face {
+  font-family: "Matrix";
+  src: url("./fonts/matrix_iiot.ttf");
+}
+@font-face {
+  font-family: "Mendel";
+  src: url("./fonts/mendl_serif_dusk.ttf");
+}
+@font-face {
+  font-family: "Mendl Serif Dusk Medium";
+  src: url("./fonts/mendl_serif_dusk_med.ttf");
+}
+@font-face {
+  font-family: "Mendl Serif Dusk Semibold";
+  src: url("./fonts/mendl_serif_dusk_semb.ttf");
+}
+@font-face {
+  font-family: "Mendel Bold";
+  src: url("./fonts/mendl_serif_dusk_bold.ttf");
+}
+@font-face {
+  font-family: "Wingdings";
+  src: url("./fonts/wingdings.ttf") format('truetype');
+}
+@font-face {
+  font-family: "Wingdings2";
+  src: url("./fonts/wingdings2.ttf") format('truetype');
+}
+@font-face {
+  font-family: "Wingdings3";
+  src: url("./fonts/wingdings3.ttf") format('truetype');
+}
+@font-face {
+  font-family: "D6Black";
+  src: url("./fonts/d6_black.otf");
+}
+@font-face {
+  font-family: "BBECOF2ICons";
+  src: url("./fonts/bbe_cof2_icons_v1c.otf");
+}
+@font-face {
+  font-family: "MinionPro";
+  src: url("./fonts/minion-pro-regular.otf");
+}
+:root {
+  --font-size-standard: 16px;
+  --font-normal-style: normal;
+  --font-normal-variant: normal;
+  --font-normal-weight: normal;
+  --line-height-standard: 1.2;
+  --margin-standard: 0;
+  --padding-standard: 10px;
+  --orphans-standard: 1;
+  --page-break-standard: auto;
+  --text-align-standard: justify;
+  --text-align-last-standard: left;
+  --text-decoration-standard: none;
+  --text-indent-standard: 10px;
+  --widows-standard: 1;
+  /* Surcharge des variables du système ou de Foudry */
+  --font-primary: "Hypatia", serif;
+  --font-secondary: "Mendel", sans-serif;
+  --background-standard: no-repeat url("/modules/coc2-base/assets/artwork/background.webp");
+  --background-image-standard: url("/modules/coc2-base/assets/artwork/background.webp");
+  --background-chat-image: url("/modules/coc2-base/assets/artwork/background.webp");
+}
+.scenes-sidebar .scene,
+.compendium-sidebar .compendium {
+  max-height: 48px;
+}
+.journal-coc-base {
+  --color-text-light-highlight: #f0f0e0;
+  --color-text-light-heading: #c9c7b8;
+  --color-text-light-primary: #b5b3a4;
+  --color-text-dark-primary: #191813;
+  --color-text-dark-secondary: #4b4a44;
+  --color-text-dark-header: #23221d;
+  --color-text-dark-inactive: #7a7971;
+  --color-text-selection: #f7f3e8;
+  --color-text-selection-bg: #666;
+  --color-text-selection-bg: var(--color-cool-3);
+  --color-text-primary: var(--color-dark-2);
+  --color-text-emphatic: var(--color-dark-1);
+  --color-text-light-0: #fff;
+  --color-text-light-1: #eee;
+  --color-text-light-2: #ddd;
+  --color-text-light-3: #ccc;
+  --color-text-light-4: #bbb;
+  --color-text-light-5: #aaa;
+  --color-text-light-6: #999;
+  --color-text-light-7: #888;
+  --color-text-dark-1: #111;
+  --color-text-dark-2: #222;
+  --color-text-dark-3: #444;
+  --color-text-dark-4: #555;
+  --color-text-dark-5: #666;
+  --color-text-dark-6: #777;
+  --color-border-light-1: #ddd;
+  --color-border-light-2: #999;
+  --color-border-dark-1: #111;
+  --color-border-dark-2: #222;
+  --color-border-dark-3: #333;
+  --color-border-dark-4: #444;
+  --color-border-dark-5: #666;
+  --color-shadow-primary: var(--color-warm-2);
+  --color-shadow-highlight: var(--color-warm-1);
+  --color-shadow-dark: var(--color-dark-1);
+  --color-underline-inactive: #7a7971;
+  --color-underline-active: #44191a;
+  --color-underline-header: #782e22;
+  --color-border-light-highlight: #f0f0e0;
+  --color-border-light-primary: #b5b3a4;
+  --color-border-light-secondary: #c9c7b8;
+  --color-border-light-tertiary: #7a7971;
+  --color-border-dark: #000;
+  --table-row-color-even: #0000001a;
+  --table-row-color-odd: transparent;
+  --table-background-color: none;
+}
+.journal-coc-base .journal-entry-content {
+  background: url("/modules/coc2-base/assets/artwork/background.webp");
+  background-color: #f6eeea;
+}
+.journal-coc-base .journal-entry-content .journal-header {
+  font-family: "Matrix", sans-serif;
+}
+.journal-coc-base .journal-entry-content .journal-header input {
+  border: none;
+  background: url("/modules/coc2-base/assets/artwork/background.webp");
+  color: #222;
+}
+.journal-coc-base .journal-entry-content .journal-entry-pages .journal-entry-page .journal-page-header h1 {
+  color: #ba9442;
+  font-family: "Mendl Serif Dusk", serif;
+  font-size: calc(var(--font-size-standard) * 2);
+  font-style: normal;
+  font-variant: normal;
+  font-weight: bold;
+  text-align: center;
+  text-transform: uppercase;
+  border: none;
+  padding-bottom: 20px;
+  margin-top: 10px;
+}
+.journal-coc-base .journal-entry-content .journal-entry-pages .journal-entry-page .journal-page-content .journal-page-coc-base body,
+.journal-coc-base .journal-entry-content .journal-entry-pages .journal-entry-page .journal-page-content .journal-page-coc-base div,
+.journal-coc-base .journal-entry-content .journal-entry-pages .journal-entry-page .journal-page-content .journal-page-coc-base dl,
+.journal-coc-base .journal-entry-content .journal-entry-pages .journal-entry-page .journal-page-content .journal-page-coc-base dt,
+.journal-coc-base .journal-entry-content .journal-entry-pages .journal-entry-page .journal-page-content .journal-page-coc-base dd,
+.journal-coc-base .journal-entry-content .journal-entry-pages .journal-entry-page .journal-page-content .journal-page-coc-base h1,
+.journal-coc-base .journal-entry-content .journal-entry-pages .journal-entry-page .journal-page-content .journal-page-coc-base h2,
+.journal-coc-base .journal-entry-content .journal-entry-pages .journal-entry-page .journal-page-content .journal-page-coc-base h3,
+.journal-coc-base .journal-entry-content .journal-entry-pages .journal-entry-page .journal-page-content .journal-page-coc-base h4,
+.journal-coc-base .journal-entry-content .journal-entry-pages .journal-entry-page .journal-page-content .journal-page-coc-base p,
+.journal-coc-base .journal-entry-content .journal-entry-pages .journal-entry-page .journal-page-content .journal-page-coc-base pre,
+.journal-coc-base .journal-entry-content .journal-entry-pages .journal-entry-page .journal-page-content .journal-page-coc-base code {
+  margin: 0;
+  padding: 0;
+  border-width: 0;
+}
+.journal-coc-base .journal-entry-content .journal-entry-pages .journal-entry-page .journal-page-content .journal-page-coc-base i.fa-solid,
+.journal-coc-base .journal-entry-content .journal-entry-pages .journal-entry-page .journal-page-content .journal-page-coc-base i.fa-regular {
+  color: var(--color-text-primary);
+}
+.journal-coc-base .journal-entry-content .journal-entry-pages .journal-entry-page .journal-page-content .journal-page-coc-base i.fa-regular {
+  font-weight: normal;
+}
+.journal-coc-base .journal-entry-content .journal-entry-pages .journal-entry-page .journal-page-content .journal-page-coc-base a i.fa-solid {
+  color: #a88452;
+}
+.journal-coc-base .journal-entry-content .journal-entry-pages .journal-entry-page .journal-page-content .journal-page-coc-base h2 {
+  font-size: calc(var(--font-size-standard) * 1.6);
+  font-family: "Mendel Semibold", sans-serif;
+  text-align: left;
+  text-transform: uppercase;
+  font-weight: bold;
+  color: #555756;
+  margin: 0 0 10px 10px;
+  padding-top: 25px;
+  /* 1) Définir une bordure solide, mais uniquement sur le bas */
+  border-style: solid;
+  border-width: 0 0 4px 0;
+  /* top right bottom left */
+  /* 2) Indiquer le dégradé à utiliser comme source */
+  border-image-source: linear-gradient(to right, /* sens du dégradé */ #b99442, /* couleur de départ */ transparent /* couleur d’arrivée */);
+  /* 3) Découper le “9-patch” du gradient : 
+        top 0, right 0, bottom 100%, left 0 */
+  border-image-slice: 0 0 100% 0;
+  /* 4) Appliquer la largeur de bordure (en bas) à partir de la tranche */
+  border-image-width: 0 0 4px 0;
+  /* 5) Empêcher tout décalage ou répétition */
+  border-image-outset: 0;
+  border-image-repeat: stretch;
+}
+.journal-coc-base .journal-entry-content .journal-entry-pages .journal-entry-page .journal-page-content .journal-page-coc-base h3 {
+  font-size: calc(var(--font-size-standard) * 1.6);
+  font-family: "Matrix", sans-serif;
+  text-align: left;
+  font-weight: bold;
+  color: #b99442;
+  margin: 0 0 10px 10px;
+  padding-top: 20px;
+}
+.journal-coc-base .journal-entry-content .journal-entry-pages .journal-entry-page .journal-page-content .journal-page-coc-base h4 {
+  font-size: calc(var(--font-size-standard) * 1.4);
+  font-family: "Mendel Semibold", sans-serif;
+  text-align: left;
+  font-weight: bold;
+  color: #474846;
+  margin: 0 0 10px 20px;
+  padding-top: 15px;
+}
+.journal-coc-base .journal-entry-content .journal-entry-pages .journal-entry-page .journal-page-content .journal-page-coc-base h5 {
+  font-size: calc(var(--font-size-standard) * 1.1);
+  font-family: "Mendel Semibold", sans-serif;
+  text-align: left;
+  font-weight: bold;
+  color: #474846;
+  margin: 10px 0 10px 20px;
+  font-style: italic;
+}
+.journal-coc-base .journal-entry-content .journal-entry-pages .journal-entry-page .journal-page-content .journal-page-coc-base .image-centre {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.journal-coc-base .journal-entry-content .journal-entry-pages .journal-entry-page .journal-page-content .journal-page-coc-base .image-large {
+  border: none;
+  padding: 20px;
+}
+.journal-coc-base .journal-entry-content .journal-entry-pages .journal-entry-page .journal-page-content .journal-page-coc-base .image-moyenne {
+  border: none;
+  padding: 20px;
+  width: 60%;
+}
+.journal-coc-base .journal-entry-content .journal-entry-pages .journal-entry-page .journal-page-content .journal-page-coc-base .image-petite {
+  border: none;
+  padding: 20px;
+  width: 20%;
+}
+.journal-coc-base .journal-entry-content .journal-entry-pages .journal-entry-page .journal-page-content .journal-page-coc-base .image-guide {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  float: right;
+  margin: 15px 0 0 10px;
+}
+.journal-coc-base .journal-entry-content .journal-entry-pages .journal-entry-page .journal-page-content .journal-page-coc-base .image-guide img {
+  width: 250px;
+}
+.journal-coc-base .journal-entry-content .journal-entry-pages .journal-entry-page .journal-page-content .journal-page-coc-base p {
+  font-size: 1rem;
+  font-family: "Hypatia";
+  text-indent: 1em;
+  text-align: justify;
+  margin-left: 8px;
+}
+.journal-coc-base .journal-entry-content .journal-entry-pages .journal-entry-page .journal-page-content .journal-page-coc-base p.dialogues {
+  color: #a88452;
+  font-family: "Hypatia Sans Pro", sans-serif;
+  font-style: italic;
+  font-variant: normal;
+  font-weight: normal;
+  line-height: 1.1;
+  margin: 10px 20px 10px 20px;
+}
+.journal-coc-base .journal-entry-content .journal-entry-pages .journal-entry-page .journal-page-content .journal-page-coc-base ul {
+  list-style: none;
+  padding-left: 2rem;
+}
+.journal-coc-base .journal-entry-content .journal-entry-pages .journal-entry-page .journal-page-content .journal-page-coc-base ul li {
+  font-size: 1rem;
+  font-family: "Hypatia";
+  text-align: justify;
+  padding-left: 10px;
+}
+.journal-coc-base .journal-entry-content .journal-entry-pages .journal-entry-page .journal-page-content .journal-page-coc-base ul li p {
+  text-indent: 0;
+}
+.journal-coc-base .journal-entry-content .journal-entry-pages .journal-entry-page .journal-page-content .journal-page-coc-base ul li::marker {
+  content: "\00AF";
+  /* U+00AF → octet 0xAF dans Wingdings 2 → rhombopen */
+  font-family: "Wingdings 2";
+  font-size: 1rem;
+  color: #ba9442;
+  font-weight: bold;
+}
+.journal-coc-base .journal-entry-content .journal-entry-pages .journal-entry-page .journal-page-content .journal-page-coc-base ul li.puce-noire::marker {
+  content: "\0075";
+  font-family: "Wingdings";
+  font-size: 0.8rem;
+  color: black;
+  font-weight: bold;
+}
+.journal-coc-base .journal-entry-content .journal-entry-pages .journal-entry-page .journal-page-content .journal-page-coc-base ul li.sans-puce::marker {
+  content: "";
+}
+.journal-coc-base .journal-entry-content .journal-entry-pages .journal-entry-page .journal-page-content .journal-page-coc-base .bestiaire {
+  font-size: calc(var(--font-size-standard));
+  padding: 5px;
+}
+.journal-coc-base .journal-entry-content .journal-entry-pages .journal-entry-page .journal-page-content .journal-page-coc-base .bestiaire p {
+  font-size: 1rem;
+  margin: 0 10px 0 10px;
+}
+.journal-coc-base .journal-entry-content .journal-entry-pages .journal-entry-page .journal-page-content .journal-page-coc-base .bestiaire hr {
+  margin: 10px;
+  height: 2px;
+}
+.journal-coc-base .journal-entry-content .journal-entry-pages .journal-entry-page .journal-page-content .journal-page-coc-base .bestiaire .bestiaire-titre {
+  display: flex;
+  justify-content: space-between;
+  background-color: #ceb279;
+  color: #ffffff;
+  font-family: "Mendl Serif Dusk SemiBold", serif;
+  font-variant: normal;
+  margin: 10px 0 0 20px;
+  padding: 5px;
+  align-items: center;
+  text-transform: uppercase;
+}
+.journal-coc-base .journal-entry-content .journal-entry-pages .journal-entry-page .journal-page-content .journal-page-coc-base .bestiaire .bestiaire-titre p {
+  font-size: calc(var(--font-size-standard) * 1.2);
+  text-align: center;
+}
+.journal-coc-base .journal-entry-content .journal-entry-pages .journal-entry-page .journal-page-content .journal-page-coc-base .bestiaire .bestiaire-titre .bestiaire-niveau {
+  color: #ffffff;
+  font-family: "Mendl Serif Dusk SemiBold", serif;
+  font-size: calc(var(--font-size-standard) * 1.2);
+  font-style: normal;
+  font-variant: normal;
+  font-weight: 600;
+  text-transform: none;
+  letter-spacing: 2px;
+}
+.journal-coc-base .journal-entry-content .journal-entry-pages .journal-entry-page .journal-page-content .journal-page-coc-base .bestiaire .bestiaire-onglet {
+  width: 70%;
+  margin: 10px 0 0 50px;
+  background-color: #ede2cc;
+  color: #12120d;
+  font-family: "Mendl Serif Dusk SemiBold", serif;
+  font-style: normal;
+  font-variant: normal;
+  text-align: left;
+  text-decoration: none;
+  text-indent: 0;
+  text-transform: uppercase;
+}
+.journal-coc-base .journal-entry-content .journal-entry-pages .journal-entry-page .journal-page-content .journal-page-coc-base .bestiaire .bestiaire-carac {
+  display: flex;
+  justify-content: space-between;
+  margin: 0 20px 0 20px;
+  font-size: calc(var(--font-size-standard) * 1.1);
+}
+.journal-coc-base .journal-entry-content .journal-entry-pages .journal-entry-page .journal-page-content .journal-page-coc-base .bestiaire .bestiaire-combat {
+  display: flex;
+  justify-content: space-between;
+  margin: 0 20px 0 20px;
+  font-size: calc(var(--font-size-standard) * 1.1);
+  color: #12120d;
+}
+.journal-coc-base .journal-entry-content .journal-entry-pages .journal-entry-page .journal-page-content .journal-page-coc-base .bestiaire .bestiaire-combat span {
+  margin-right: 5px;
+}
+.journal-coc-base .journal-entry-content .journal-entry-pages .journal-entry-page .journal-page-content .journal-page-coc-base .bestiaire .bestiaire-combat div {
+  display: flex;
+  justify-items: center;
+}
+.journal-coc-base .journal-entry-content .journal-entry-pages .journal-entry-page .journal-page-content .journal-page-coc-base .bestiaire .bestiaire-capacite {
+  border-top: #b99442 solid 1px;
+  border-bottom: #b99442 solid 1px;
+  text-transform: uppercase;
+  color: black;
+  margin: 10px;
+  align-items: center;
+}
+.journal-coc-base .journal-entry-content .journal-entry-pages .journal-entry-page .journal-page-content .journal-page-coc-base p.alinea::first-letter {
+  text-transform: uppercase;
+}
+.journal-coc-base .journal-entry-content .journal-entry-pages .journal-entry-page .journal-page-content .journal-page-coc-base p.alinea::after {
+  content: "\A";
+  white-space: pre;
+}
+.journal-coc-base .journal-entry-content .journal-entry-pages .journal-entry-page .journal-page-content .journal-page-coc-base .italique {
+  text-align: justify;
+  font-style: italic;
+}
+.journal-coc-base .journal-entry-content .journal-entry-pages .journal-entry-page .journal-page-content .journal-page-coc-base .gras {
+  text-align: justify;
+  font-weight: bold;
+}
+.journal-coc-base .journal-entry-content .journal-entry-pages .journal-entry-page .journal-page-content .journal-page-coc-base .underline {
+  text-transform: uppercase;
+  text-decoration: underline 2px dashed grey;
+}
+.journal-coc-base .journal-entry-content .journal-entry-pages .journal-entry-page .journal-page-content .journal-page-coc-base .droite {
+  text-align: right;
+}
+.journal-coc-base .journal-entry-content .journal-entry-pages .journal-entry-page .journal-page-content .journal-page-coc-base .centre {
+  text-align: center;
+}
+.journal-coc-base .journal-entry-content .journal-entry-pages .journal-entry-page .journal-page-content .journal-page-coc-base .citation {
+  font-size: calc(var(--font-size-standard) * 2);
+  font-family: Alana, serif;
+  text-align: center;
+  color: #626463;
+}
+.journal-coc-base .journal-entry-content .journal-entry-pages .journal-entry-page .journal-page-content .journal-page-coc-base .titre {
+  font-size: calc(var(--font-size-standard) * 3.5);
+  font-family: "Mendel Semibold", sans-serif;
+  text-align: center;
+  text-transform: capitalize;
+  font-weight: bold;
+  color: #b99442;
+}
+.journal-coc-base .journal-entry-content .journal-entry-pages .journal-entry-page .journal-page-content .journal-page-coc-base .titre-fond-blanc {
+  font-size: calc(var(--font-size-standard) * 1.2);
+  font-family: "Mendel Semibold", sans-serif;
+  text-align: left;
+  padding: 10px;
+  width: 80%;
+  margin: 10px 0 10px 30px;
+  text-transform: capitalize;
+  font-weight: bold;
+  color: #b99442;
+  background-color: #ffffff;
+  border: solid 1px #b99442;
+  text-transform: uppercase;
+}
+.journal-coc-base .journal-entry-content .journal-entry-pages .journal-entry-page .journal-page-content .journal-page-coc-base .lettrine {
+  text-indent: 0;
+  margin: 15px 0 0 20px;
+}
+.journal-coc-base .journal-entry-content .journal-entry-pages .journal-entry-page .journal-page-content .journal-page-coc-base .lettrine::first-letter {
+  font-size: calc(var(--font-size-standard) * 2.8);
+  font-family: "Mendel Semibold", sans-serif;
+  text-align: center;
+  text-transform: capitalize;
+  font-weight: bold;
+  color: #b99442;
+  float: left;
+  margin-top: -16px;
+  line-height: 1;
+}
+.journal-coc-base .journal-entry-content .journal-entry-pages .journal-entry-page .journal-page-content .journal-page-coc-base .dice {
+  color: #cbad70;
+  font-family: D6Black, sans-serif;
+  font-style: normal;
+  font-weight: normal;
+}
+.journal-coc-base .journal-entry-content .journal-entry-pages .journal-entry-page .journal-page-content .journal-page-coc-base .encart {
+  border: 3px solid #b99442;
+  font-size: calc(var(--font-size-standard));
+  font-family: "Hypatia";
+  text-indent: 0.2cm;
+  text-align: justify;
+  margin: 20px;
+  position: relative;
+}
+.journal-coc-base .journal-entry-content .journal-entry-pages .journal-entry-page .journal-page-content .journal-page-coc-base .encart h3 {
+  font-size: calc(var(--font-size-standard) * 1.5);
+  font-family: "Mendel Semibold", sans-serif;
+  text-align: center;
+  text-transform: uppercase;
+  font-weight: bold;
+  color: #ba9442;
+  background-color: #e2d2b0;
+  margin: 0;
+  padding: 5px 0 5px 0;
+}
+.journal-coc-base .journal-entry-content .journal-entry-pages .journal-entry-page .journal-page-content .journal-page-coc-base .encart p {
+  padding: 0 10px 0 10px;
+}
+.journal-coc-base .journal-entry-content .journal-entry-pages .journal-entry-page .journal-page-content .journal-page-coc-base .encart p:first-of-type {
+  padding-top: 10px;
+}
+.journal-coc-base .journal-entry-content .journal-entry-pages .journal-entry-page .journal-page-content .journal-page-coc-base .encart p:last-of-type {
+  padding-bottom: 10px;
+}
+.journal-coc-base .journal-entry-content .journal-entry-pages .journal-entry-page .journal-page-content .journal-page-coc-base .encart li {
+  margin-bottom: 5px;
+}
+.journal-coc-base .journal-entry-content .journal-entry-pages .journal-entry-page .journal-page-content .journal-page-coc-base .encart::after {
+  content: "";
+  position: absolute;
+  bottom: -15px;
+  left: 0;
+  width: 100%;
+  height: 20px;
+  /* Ajustez cette valeur selon la hauteur de votre image */
+  background: url("./assets/artwork/tableau_bord_inferieur.webp") no-repeat center bottom;
+  background-size: contain;
+  /* Ou "cover" selon le rendu désiré */
+}
+.journal-coc-base .journal-entry-content .journal-entry-pages .journal-entry-page .journal-page-content .journal-page-coc-base .encart-clair {
+  border: 3px solid #b99442;
+  font-size: calc(var(--font-size-standard));
+  font-family: "Hypatia";
+  text-indent: 0.2cm;
+  text-align: justify;
+  margin: 20px;
+  position: relative;
+  background-color: #ffffff;
+  padding-bottom: 20px;
+}
+.journal-coc-base .journal-entry-content .journal-entry-pages .journal-entry-page .journal-page-content .journal-page-coc-base .encart-clair .titre {
+  font-size: calc(var(--font-size-standard) * 1.5);
+  font-family: "Mendel Semibold", sans-serif;
+  text-align: center;
+  text-transform: uppercase;
+  font-weight: bold;
+  color: #ba9442;
+  background-color: #cac3af;
+  margin: 0;
+  padding: 0 0 5px 0;
+  height: 40px;
+}
+.journal-coc-base .journal-entry-content .journal-entry-pages .journal-entry-page .journal-page-content .journal-page-coc-base .encart-clair.fiche {
+  width: 50%;
+}
+.journal-coc-base .journal-entry-content .journal-entry-pages .journal-entry-page .journal-page-content .journal-page-coc-base .encart-clair.fiche .gris {
+  color: lightgrey;
+}
+.journal-coc-base .journal-entry-content .journal-entry-pages .journal-entry-page .journal-page-content .journal-page-coc-base .indications-mj {
+  padding: 10px;
+  margin: 10px;
+  border-top: 1px solid #b99442;
+  border-bottom: 1px solid #b99442;
+  font-size: calc(var(--font-size-standard));
+  font-family: "Hypatia";
+  text-indent: 0.2cm;
+  text-align: justify;
+  margin: 20px;
+  position: relative;
+  background-color: #f1e8d6;
+}
+.journal-coc-base .journal-entry-content .journal-entry-pages .journal-entry-page .journal-page-content .journal-page-coc-base blockquote {
+  font-size: calc(var(--font-size-standard));
+  font-family: "Hypatia";
+  text-indent: 0.2cm;
+  text-align: justify;
+  color: #a88352;
+  font-style: italic;
+  padding-left: 10px;
+}
+.journal-coc-base .journal-entry-content .journal-entry-pages .journal-entry-page .journal-page-content .journal-page-coc-base small {
+  max-width: 25%;
+  object-fit: contain;
+}
+.journal-coc-base .journal-entry-content .journal-entry-pages .journal-entry-page .journal-page-content .journal-page-coc-base .credits-titre {
+  color: #12120d;
+  font-family: "Hypatia Sans Pro", sans-serif;
+  font-size: calc(var(--font-size-standard) * 1.2);
+}
+.journal-coc-base .journal-entry-content .journal-entry-pages .journal-entry-page .journal-page-content .journal-page-coc-base .credits-texte {
+  color: #12120d;
+  font-family: "Hypatia Sans Pro", sans-serif;
+  font-size: calc(var(--font-size-standard));
+  margin: 0 10px 0 10px;
+}
+.journal-coc-base .journal-entry-content .journal-entry-pages .journal-entry-page .journal-page-content .journal-page-coc-base .alinea {
+  margin-top: 10px;
+}
+.journal-coc-base .journal-entry-content .journal-entry-pages .journal-entry-page .journal-page-content .journal-page-coc-base .exemple {
+  font-style: italic;
+  border-left: solid 2px #b99442;
+  margin: 0 10px 0 10px;
+  padding: 0 10px 0 10px;
+}
+.journal-coc-base .journal-entry-content .journal-entry-pages .journal-entry-page .journal-page-content .journal-page-coc-base .exemple .normal {
+  font-style: normal;
+}
+.journal-coc-base .journal-entry-content .journal-entry-pages .journal-entry-page .journal-page-content .journal-page-coc-base .exemple:last-of-type {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+.journal-coc-base .journal-entry-content .journal-entry-pages .journal-entry-page .journal-page-content .journal-page-coc-base ul.exemple {
+  font-style: italic;
+  border-left: solid 2px #b99442;
+  margin: 0 10px 0 10px;
+  padding: 0 10px 0 10px;
+}
+.journal-coc-base .journal-entry-content .journal-entry-pages .journal-entry-page .journal-page-content .journal-page-coc-base ul.exemple li {
+  margin-left: 15px;
+}
+.journal-coc-base .journal-entry-content .journal-entry-pages .journal-entry-page .journal-page-content .journal-page-coc-base ul.exemple li:first-of-type {
+  margin-top: 0px;
+}
+.journal-coc-base .journal-entry-content .journal-entry-pages .journal-entry-page .journal-page-content .journal-page-coc-base ul.exemple li:last-of-type {
+  margin-bottom: 0px;
+}
+.journal-coc-base .journal-entry-content .journal-entry-pages .journal-entry-page .journal-page-content .journal-page-coc-base .exposant {
+  font-size: 58%;
+  vertical-align: super;
+}
+.journal-coc-base .journal-entry-content .journal-entry-pages .journal-entry-page .journal-page-content .journal-page-coc-base table.tableau,
+.journal-coc-base .journal-entry-content .journal-entry-pages .journal-entry-page .journal-page-content .journal-page-coc-base table.variables {
+  font-family: "Hypatia", sans-serif;
+  border-collapse: collapse;
+  border-color: #12120d;
+  border-style: none;
+  border-width: 0px;
+  margin: 20px 0 30px 60px;
+  width: 90%;
+}
+.journal-coc-base .journal-entry-content .journal-entry-pages .journal-entry-page .journal-page-content .journal-page-coc-base table.tableau tr,
+.journal-coc-base .journal-entry-content .journal-entry-pages .journal-entry-page .journal-page-content .journal-page-coc-base table.variables tr {
+  border-bottom-color: #ba9442;
+  border-bottom-width: 1px;
+}
+.journal-coc-base .journal-entry-content .journal-entry-pages .journal-entry-page .journal-page-content .journal-page-coc-base table.tableau td,
+.journal-coc-base .journal-entry-content .journal-entry-pages .journal-entry-page .journal-page-content .journal-page-coc-base table.variables td {
+  text-align: center;
+  vertical-align: middle;
+}
+.journal-coc-base .journal-entry-content .journal-entry-pages .journal-entry-page .journal-page-content .journal-page-coc-base table.tableau tr.tableau-titre,
+.journal-coc-base .journal-entry-content .journal-entry-pages .journal-entry-page .journal-page-content .journal-page-coc-base table.variables tr.tableau-titre {
+  background-color: #cbad70;
+  color: #ffffff;
+  font-size: 1.1rem;
+}
+.journal-coc-base .journal-entry-content .journal-entry-pages .journal-entry-page .journal-page-content .journal-page-coc-base table.tableau tr.tableau-titre td,
+.journal-coc-base .journal-entry-content .journal-entry-pages .journal-entry-page .journal-page-content .journal-page-coc-base table.variables tr.tableau-titre td {
+  text-align: left;
+  padding: 10px;
+  letter-spacing: 2px;
+}
+.journal-coc-base .journal-entry-content .journal-entry-pages .journal-entry-page .journal-page-content .journal-page-coc-base table.tableau tr.tableau-entete,
+.journal-coc-base .journal-entry-content .journal-entry-pages .journal-entry-page .journal-page-content .journal-page-coc-base table.variables tr.tableau-entete {
+  font-weight: bold;
+  background-color: #eaddc3;
+}
+.journal-coc-base .journal-entry-content .journal-entry-pages .journal-entry-page .journal-page-content .journal-page-coc-base table.tableau tr.tableau-note,
+.journal-coc-base .journal-entry-content .journal-entry-pages .journal-entry-page .journal-page-content .journal-page-coc-base table.variables tr.tableau-note {
+  font-size: 0.8rem;
+}
+.journal-coc-base .journal-entry-content .journal-entry-pages .journal-entry-page .journal-page-content .journal-page-coc-base table.variables tr.tableau-entete {
+  font-size: 1.2rem;
+}
+.journal-coc-base .journal-entry-content .journal-entry-pages .journal-entry-page .journal-page-content .journal-page-coc-base table.variables tr.tableau-entete td {
+  text-align: center;
+}
+.journal-coc-base .journal-entry-content .journal-entry-pages .journal-entry-page .journal-page-content .journal-page-coc-base table.variables tr.exemple {
+  font-style: italic;
+  border-left: solid 2px #b99442;
+  border-right: solid 2px #b99442;
+  color: #835d0c;
+}
+.journal-coc-base .journal-entry-content .journal-entry-pages .journal-entry-page .journal-page-content .journal-page-coc-base table.variables td {
+  text-align: left;
+}
+.journal-coc-base .journal-entry-content .journal-entry-pages .journal-entry-page .journal-page-content .journal-page-coc-base table.variables td.variable {
+  font-weight: bold;
+  font-size: 1.1rem;
+}
+.journal-coc-base .journal-entry-content .journal-entry-pages .journal-entry-page .journal-page-content .journal-page-coc-base table.tableau-simple {
+  margin: 10px;
+}
+.journal-coc-base .journal-entry-content .journal-entry-pages .journal-entry-page .journal-page-content .journal-page-coc-base span.Emphasis--Technique- {
+  font-family: "Mendl Serif Dusk SemiBold", serif;
+  font-style: normal;
+  font-variant: normal;
+  font-weight: 600;
+  text-transform: none;
+}
+.journal-coc-base .journal-entry-content .journal-entry-pages .journal-entry-page .journal-page-content .journal-page-coc-base span.pipe {
+  color: #dcc79e;
+  font-style: normal;
+  font-weight: bold;
+}
+.journal-coc-base .journal-entry-content .journal-entry-pages .journal-entry-page .journal-page-content .journal-page-coc-base h2.voie {
+  color: #555756;
+  font-family: "Mendl Serif Dusk Medium", serif;
+  font-size: calc(var(--font-size-standard) * 1.8);
+  font-style: normal;
+  font-variant: normal;
+  font-weight: 500;
+  text-transform: uppercase;
+}
+.journal-coc-base .journal-entry-content .journal-entry-pages .journal-entry-page .journal-page-content .journal-page-coc-base h3.voie {
+  color: #555756;
+  font-family: "Mendl Serif Dusk Medium", serif;
+  font-size: calc(var(--font-size-standard) * 1.6);
+  font-style: normal;
+  font-variant: normal;
+  font-weight: 500;
+  text-transform: uppercase;
+  margin: 0 0 10px 25px;
+}
+.journal-coc-base .journal-entry-content .journal-entry-pages .journal-entry-page .journal-page-content .journal-page-coc-base p.voie-titre-3 {
+  background-color: #f1e8d6;
+  color: #474847;
+  font-family: "Mendl Serif Dusk SemiBold", serif;
+  font-size: calc(var(--font-size-standard) * 1.2);
+  font-style: normal;
+  font-variant: normal;
+  font-weight: 500;
+  margin-bottom: 10px;
+  padding: 5px;
+}
+.journal-coc-base .journal-entry-content .journal-entry-pages .journal-entry-page .journal-page-content .journal-page-coc-base p.notes-asterisque {
+  color: #ba9442;
+  font-family: "Hypatia Sans Pro", sans-serif;
+  font-size: 0.9rem;
+  font-style: normal;
+  font-variant: normal;
+  font-weight: normal;
+  margin: 0 10px 10px 10px;
+}
+.journal-coc-base .journal-entry-content .journal-entry-pages .journal-entry-page .journal-page-content .journal-page-coc-base .content-link,
+.journal-coc-base .journal-entry-content .journal-entry-pages .journal-entry-page .journal-page-content .journal-page-coc-base i {
+  border: none;
+  margin: 0;
+  padding: 0;
+  color: #a88452;
+  font-weight: bold;
+  text-indent: 0;
+  background: none;
+}
+.journal-coc-base .journal-entry-content .journal-entry-pages .journal-entry-page .journal-page-content .journal-page-coc-base .content-link i,
+.journal-coc-base .journal-entry-content .journal-entry-pages .journal-entry-page .journal-page-content .journal-page-coc-base i i {
+  padding-right: 5px;
+}
+.journal-coc-base .journal-entry-content .journal-entry-pages .cof2-icons {
+  color: #cbad70;
+  font-family: "BBECOF2ICons", serif;
+  font-size: calc(var(--font-size-standard) * 0.6);
+  font-style: normal;
+  font-weight: normal;
+  margin: 0 5px 0 5px;
+}
+.journal-coc-base .journal-entry-content .journal-entry-pages .cof2-icons.large {
+  font-size: calc(var(--font-size-standard) * 1.6);
+}
+.journal-coc-base .journal-entry-content .journal-entry-pages img.small {
+  width: 150px;
+  height: 150px;
+}
+/* Styles des fiches COC2 (échelle de santé, header sans niveau) */
+.co.actor.coc2 .health-scale {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 3px;
+  padding: 4px 6px 2px;
+  justify-content: center;
+}
+.co.actor.coc2 .health-scale .health-step {
+  width: 13px;
+  height: 13px;
+  border: 1px solid var(--color-border-dark, #555);
+  border-radius: 2px;
+  background: transparent;
+  cursor: pointer;
+}
+.co.actor.coc2 .health-scale .health-step:hover {
+  box-shadow: 0 0 4px var(--color-shadow-primary, #ff6400);
+}
+.co.actor.coc2 .health-scale .health-step.filled {
+  background: #8a1c1c;
+  border-color: #5c1212;
+}
+.co.actor.coc2 .health-scale .health-step.milestone {
+  border-width: 2px;
+  width: 14px;
+  height: 14px;
+}
+.co.actor.coc2 .health-scale .health-step.milestone.contusionne {
+  border-color: #b99442;
+}
+.co.actor.coc2 .health-scale .health-step.milestone.blesse {
+  border-color: #c2701d;
+}
+.co.actor.coc2 .health-scale .health-step.milestone.gravementBlesse {
+  border-color: #a33419;
+}
+.co.actor.coc2 .health-scale .health-step.milestone.mourant {
+  border-color: #511;
+}
+.co.actor.coc2 .level.xp .add-session {
+  margin-left: 4px;
+  cursor: pointer;
+}
+.co.actor.coc2 .age-bracket {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.co.actor.coc2 .age-bracket .trait-points {
+  font-size: 0.85em;
+  opacity: 0.85;
+  white-space: nowrap;
+}
+.co.actor.coc2 .health-state {
+  text-align: center;
+  font-variant: small-caps;
+  font-weight: bold;
+  padding-bottom: 4px;
+}
+.co.actor.coc2 .health-state.contusionne {
+  color: #b99442;
+}
+.co.actor.coc2 .health-state.blesse {
+  color: #c2701d;
+}
+.co.actor.coc2 .health-state.gravementBlesse {
+  color: #a33419;
+}
+.co.actor.coc2 .health-state.mourant {
+  color: #802020;
+}

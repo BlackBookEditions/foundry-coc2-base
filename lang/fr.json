@@ -1,0 +1,84 @@
+{
+  "COC2BASE": {
+    "sheet": {
+      "character": "Personnage COC2"
+    },
+    "xp": {
+      "tooltip": "XP disponibles / XP gagnés",
+      "addSession": "Fin de séance : +1 XP"
+    },
+    "notif": {
+      "warningNotEnoughXP": "Attention : les XP dépensés dépassent les XP gagnés en séances."
+    },
+    "healthScale": {
+      "label": "Échelle de santé",
+      "short": "Santé",
+      "damageTooltip": "Échelons cochés"
+    },
+    "status": {
+      "contusionne": "Contusionné",
+      "contusionneDescription": "Le personnage a atteint le 5e échelon de son échelle de santé.",
+      "blesse": "Blessé",
+      "blesseDescription": "Le personnage a atteint le 10e échelon de son échelle de santé.",
+      "gravementBlesse": "Gravement blessé",
+      "gravementBlesseDescription": "Le personnage a atteint le 15e échelon de son échelle de santé.",
+      "mourant": "Mourant",
+      "mourantDescription": "Le personnage a atteint le 20e échelon de son échelle de santé."
+    },
+    "feature": {
+      "subtypes": {
+        "domainePro": "Domaine professionnel",
+        "domaineExtraPro": "Domaine extra-professionnel",
+        "avantage": "Avantage",
+        "desavantage": "Désavantage"
+      },
+      "points": "Coût en points",
+      "traitPoints": "Traits",
+      "traitPointsTooltip": "Points d'avantages / désavantages (5 maximum à la création)"
+    },
+    "age": {
+      "label": "Tranche d'âge",
+      "jeune": "Jeune",
+      "adulte": "Adulte",
+      "experimente": "Expérimenté",
+      "veteran": "Vétéran"
+    },
+    "config": {
+      "martialTrainingWeapon": {
+        "unarmed": "Mains nues",
+        "knife": "Couteau",
+        "club": "Matraque",
+        "baseballBat": "Batte de baseball",
+        "sword": "Épée",
+        "bow": "Arc",
+        "crossbow": "Arbalète",
+        "taser": "Taser",
+        "pepperSpray": "Bombe lacrymogène",
+        "handgun": "Pistolet",
+        "revolver": "Revolver",
+        "shotgun": "Fusil à pompe",
+        "huntingRifle": "Fusil de chasse",
+        "assaultRifle": "Fusil d'assaut",
+        "submachineGun": "Pistolet-mitrailleur",
+        "sniperRifle": "Fusil de précision",
+        "machineGun": "Mitrailleuse",
+        "grenade": "Grenade"
+      },
+      "martialTrainingArmor": {
+        "reinforcedClothing": "Vêtements renforcés",
+        "lightBulletproofVest": "Gilet pare-balles léger",
+        "heavyBulletproofVest": "Gilet pare-balles lourd",
+        "militaryArmor": "Armure militaire"
+      },
+      "martialTrainingShield": {
+        "riotShield": "Bouclier anti-émeute",
+        "ballisticShield": "Bouclier balistique"
+      }
+    },
+    "Sidebar": {
+      "title": "Chroniques Oubliées Contemporain<br>Base",
+      "coc2": "Black Book Éditions",
+      "coc2Tooltip": "Retrouvez toutes les informations sur Chroniques Oubliées Contemporain sur le site de Black Book Éditions"
+    }
+  }
+}

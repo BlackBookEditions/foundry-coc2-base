@@ -1,0 +1,77 @@
+{{!log "Chroniques Oubliées | Character header" this}}
+<header class="sheet-header">
+  <div class="image-container">
+    <img class="actor-img {{#if unlocked}}resetImage{{/if}}" src="{{actor.img}}" {{#if unlocked}}data-action="editImage" data-edit="img"{{/if}} data-tooltip="{{actor.name}}" />
+    <a class="hover-icon" data-action="shareImage" data-tooltip="{{localize 'CO.ui.shareImage'}}"><i class="fas fa-image fa-fw"></i></a>
+  </div>
+  {{#if unlocked}}
+    <input class="name" name="name" type="text" value="{{actor.name}}" placeholder="{{localize 'CO.label.long.name'}}" spellcheck="false" />
+  {{else}}
+    <span class="name">{{actor.name}}</span>
+  {{/if}}
+  <div class="level xp">
+    <label class="level-label">{{localize "CO.label.short.xp"}}</label>
+    {{#if viewLimited}}
+      <span>??</span>
+    {{else}}
+      <span data-tooltip="{{localize 'COC2BASE.xp.tooltip'}}">{{xpLeft}}/{{xpMax}}</span>
+      {{#if unlocked}}
+        <a class="add-session" data-action="addSession" data-tooltip="{{localize 'COC2BASE.xp.addSession'}}"><i class="fas fa-plus-circle"></i></a>
+      {{/if}}
+    {{/if}}
+  </div>
+  <div class="traits">
+    <div class="species domaines">
+      {{#each domaines}}
+        <a class="item-img item" data-item-uuid="{{this.uuid}}" data-action="editItem" style="background-image: url('{{this.img}}')"></a>
+        <span>{{this.name}}</span>
+      {{/each}}
+    </div>
+    {{#unless viewLimited}}
+    <div class="profiles age-bracket">
+      {{#if unlocked}}
+        <select name="system.details.ageBracket" data-dtype="String" data-tooltip="{{localize 'COC2BASE.age.label'}}">
+          {{selectOptions choiceAgeBrackets selected=details.ageBracket localize=true blank=""}}
+        </select>
+      {{else}}
+        {{#if ageBracketLabel}}
+          <span data-tooltip="{{localize 'COC2BASE.age.label'}}">{{ageBracketLabel}}</span>
+        {{/if}}
+      {{/if}}
+      <span class="trait-points" data-tooltip="{{localize 'COC2BASE.feature.traitPointsTooltip'}}">
+        {{localize "COC2BASE.feature.traitPoints"}} {{avantagePoints}}/{{traitPointsMax}} − {{desavantagePoints}}/{{traitPointsMax}}
+      </span>
+    </div>
+    {{/unless}}
+  </div>
+  <ol class="abilities">
+    {{#each abilities as |ability id|}}
+      <li class="ability" data-ability="{{id}}">
+        <div class="ability-id draggable" data-roll-target="{{id}}" data-tooltip="{{localize (concat 'CO.abilities.long.' id)}}" data-tooltip-direction="UP">
+          {{localize (concat "CO.abilities.short." id)}}
+          {{#unless ../viewLimited}} 
+            {{#if ability.superior}}<i class="fas fa-asterisk"></i>{{/if}}
+          {{/unless}}
+        </div>        
+        {{#if ../viewLimited}}
+          <div class="ability-mod">??</div>
+        {{else}}
+          {{#if ../editable}}
+            <a class="ability-mod" data-action="roll" data-roll-type="skillcheck" data-roll-target="{{id}}" data-tooltip="{{ability.tooltipValue}}">
+                {{numberFormat ability.value decimals=0 sign=true}}
+              </a>            
+          {{else}}
+             <div class="ability-mod">{{numberFormat ability.value decimals=0 sign=true}}</div>
+          {{/if}}
+        {{/if}}        
+      </li>
+    {{/each}}
+    <li class="abilities-controls controls">
+      {{#if unlocked}}
+        <a class="abilities-edit" data-action="editAbilities" data-tooltip="{{localize 'CO.ui.editStats'}}">
+          <i class="fas fa-fw fa-edit"></i>
+        </a>
+      {{/if}}
+    </li>
+  </ol>
+</header>

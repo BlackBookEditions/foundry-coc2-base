@@ -1,0 +1,15 @@
+# Node Modules
+node_modules/
+
+# Foundry VTT
+packs
+styles/**/*.css
+
+# Tools
+.claudeignore
+CLAUDE.md
+.claude/
+docs/
+
+# Sources de règles (PDF/docx non redistribuables)
+source/

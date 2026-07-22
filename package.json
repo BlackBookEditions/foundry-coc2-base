@@ -1,0 +1,11 @@
+{
+  "name": "coc2-base",
+  "private": true,
+  "type": "module",
+  "dependencies": {
+    "less": "^4.2.0"
+  },
+  "scripts": {
+    "compile": "node ./tools/compile-less.mjs"
+  }
+}

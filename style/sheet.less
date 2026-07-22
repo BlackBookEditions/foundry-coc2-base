@@ -1,0 +1,87 @@
+/* Styles des fiches COC2 (échelle de santé, header sans niveau) */
+
+.co.actor.coc2 {
+  .health-scale {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 3px;
+    padding: 4px 6px 2px;
+    justify-content: center;
+
+    .health-step {
+      width: 13px;
+      height: 13px;
+      border: 1px solid var(--color-border-dark, #555);
+      border-radius: 2px;
+      background: transparent;
+      cursor: pointer;
+
+      &:hover {
+        box-shadow: 0 0 4px var(--color-shadow-primary, #ff6400);
+      }
+
+      &.filled {
+        background: #8a1c1c;
+        border-color: #5c1212;
+      }
+
+      &.milestone {
+        border-width: 2px;
+        width: 14px;
+        height: 14px;
+
+        &.contusionne {
+          border-color: #b99442;
+        }
+        &.blesse {
+          border-color: #c2701d;
+        }
+        &.gravementBlesse {
+          border-color: #a33419;
+        }
+        &.mourant {
+          border-color: #511;
+        }
+      }
+    }
+  }
+
+  .level.xp {
+    .add-session {
+      margin-left: 4px;
+      cursor: pointer;
+    }
+  }
+
+  .age-bracket {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    .trait-points {
+      font-size: 0.85em;
+      opacity: 0.85;
+      white-space: nowrap;
+    }
+  }
+
+  .health-state {
+    text-align: center;
+    font-variant: small-caps;
+    font-weight: bold;
+    padding-bottom: 4px;
+
+    &.contusionne {
+      color: #b99442;
+    }
+    &.blesse {
+      color: #c2701d;
+    }
+    &.gravementBlesse {
+      color: #a33419;
+    }
+    &.mourant {
+      color: #802020;
+    }
+  }
+}
