@@ -6,10 +6,13 @@ import {
   HEALTH_SCALE,
   HEALTH_STATES,
   HEALTH_STATE_MALUS,
-  HEALTH_STATUS_EFFECTS,
   PHYSICAL_ABILITIES,
+  COC2_STATUS_CHANGES,
+  REMOVED_STATUS_IDS,
+  STATE_TEST_MALUS,
   FEATURE_SUBTYPES_COC2,
   MARTIAL_TRAININGS,
+  buildStatusEffects,
   hideMagicUI,
 } from "./module/config/coc2.mjs"
 
@@ -18,9 +21,14 @@ import {
  * pour qu'un module d'univers puisse la modifier depuis son propre hook init quel que soit l'ordre
  * de chargement des modules.
  *
- * Surchargeables : name, img, description et changes des états de santé, la table des malus et la
- * liste des caractéristiques physiques. Les ids et les seuils pilotent la mécanique (pose automatique
- * des statuts, flags, classes CSS du ruban) et ne doivent pas être modifiés.
+ * Surchargeables : name, img, description et changes des états de santé, les tables de malus, la
+ * liste des caractéristiques physiques et la composition de la liste des états. Les ids et les seuils
+ * pilotent la mécanique (pose automatique des statuts, flags, classes CSS du ruban) et ne doivent pas
+ * être modifiés.
+ *
+ * Attention : statusChanges et removedStatusIds sont lus au moment du hook init de coc2-base, un
+ * module d'univers qui les modifie doit donc être chargé avant. Les libellés et stateTestMalus, eux,
+ * sont lus au rendu et peuvent être modifiés à tout moment.
  *
  * @example Renommer un état depuis un module d'univers
  * Hooks.once("init", () => {
@@ -32,6 +40,9 @@ CONFIG.COC2BASE = {
   healthStates: HEALTH_STATES,
   healthStateMalus: HEALTH_STATE_MALUS,
   physicalAbilities: PHYSICAL_ABILITIES,
+  statusChanges: COC2_STATUS_CHANGES,
+  removedStatusIds: REMOVED_STATUS_IDS,
+  stateTestMalus: STATE_TEST_MALUS,
 }
 
 Hooks.once("init", () => {
@@ -44,8 +55,8 @@ Hooks.once("init", () => {
 
   foundry.documents.collections.Actors.registerSheet("coc2-base", COC2CharacterSheet, { types: ["character"], makeDefault: true, label: "COC2BASE.sheet.character" })
 
-  // États préjudiciables de l'échelle de santé : localisés et triés ensuite par le hook i18nInit du système
-  CONFIG.statusEffects.push(...HEALTH_STATUS_EFFECTS)
+  // Liste des états alignée sur le livre de règles COC2 : localisée et triée ensuite par le hook i18nInit du système
+  CONFIG.statusEffects = buildStatusEffects()
 
   // Domaines et traits distinctifs : nouveaux sous-types de features proposés dans la fiche feature
   Object.assign(game.system.CONST.FEATURE_SUBTYPE, FEATURE_SUBTYPES_COC2)

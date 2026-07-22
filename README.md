@@ -10,6 +10,7 @@ Contrairement à `cof2-base`, ce module ne contient pas de compendiums : il adap
 - **Progression sans niveaux** : le niveau est gelé et masqué ; les XP gagnés en séance (bouton « +1 séance » dans le header) sont dépensés directement en rangs de voies. Le contrôle de niveau minimal des capacités est supprimé, la progression séquentielle dans la voie est conservée.
 - **Initiative et Défense** : Init = 10 + INT + PER, DEF = 10 + AGI + PER (+ armure/bouclier).
 - **Attaques** : ATC = FOR et ATD = AGI, sans bonus de niveau. L'attaque magique et les points de magie de COF2 sont retirés de l'interface.
+- **États préjudiciables** : la liste des statuts est alignée sur le livre de règles COC2. Affaibli (le dé malus de COF2), Étourdi, Invalide et Paralysé sont retirés — sans équivalent en COC2 ; Asphyxié, Fatigué et Épuisé sont ajoutés ; les malus des états conservés sont réécrits aux valeurs COC2 (Ralenti passe de « aucun effet chiffré » à −5 en Init./DEF/attaques et 5 m, Essoufflé gagne −2 en Init. et DEF, etc.). Les malus qui portent « à tous les tests », « à toutes les actions » ou « aux actions basées sur la vue » ne sont pas appliqués d'office mais proposés à cocher dans les fenêtres de jet.
 - **Création** : sous-types de features pour les Domaines professionnels/extra-professionnels et les Traits distinctifs (avantages/désavantages avec coût en points), tranche d'âge sur la fiche.
 - **Entraînements martiaux contemporains** : armes à feu, protections balistiques, etc.
 
@@ -28,12 +29,19 @@ Hooks.once("init", () => {
 
 Sont prévus pour être surchargés :
 
-| Clé | Rôle |
-|---|---|
-| `healthStates[<id>].name` / `.img` / `.description` | Libellé, icône et description d'un état |
-| `healthStates[<id>].changes` | Changes d'ActiveEffect appliqués d'office (Init. et DEF) |
-| `healthStateMalus[<id>]` | Valeur proposée à cocher sur les tests de caractéristique |
-| `physicalAbilities` | Caractéristiques auxquelles cette ligne est proposée |
+| Clé | Rôle | Lue |
+|---|---|---|
+| `healthStates[<id>].name` / `.img` / `.description` | Libellé, icône et description d'un état de santé | au rendu |
+| `healthStates[<id>].changes` | Changes d'ActiveEffect appliqués d'office (Init. et DEF) | à la pose du statut |
+| `healthStateMalus[<id>]` | Valeur proposée à cocher sur les tests de caractéristique | au rendu |
+| `physicalAbilities` | Caractéristiques auxquelles la ligne des états de santé est proposée | au rendu |
+| `stateTestMalus[<id>]` | Malus proposés à cocher pour les autres états (`{ malus, abilities, hint }`) | au rendu |
+| `statusChanges[<id>]` | Malus chiffrés des états préjudiciables (`{ init, def, melee, ranged, movement }`) | **au hook `init`** |
+| `removedStatusIds` | États du système retirés de la liste | **au hook `init`** |
+
+`statusChanges` et `removedStatusIds` servent à reconstruire `CONFIG.statusEffects` pendant le hook
+`init` de coc2-base : un module d'univers qui les modifie doit donc être chargé avant lui. Les autres
+clés sont lues au moment du rendu et peuvent être modifiées à tout moment.
 
 ```js
 CONFIG.COC2BASE.healthStates.blesse.changes = [{ key: "system.combat.def.bonuses.effects", mode: 2, value: -5 }]

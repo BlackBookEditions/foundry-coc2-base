@@ -27,7 +27,18 @@
       "blesse": "Blessé",
       "blesseDescription": "15e échelon de l'échelle de santé. Malus de -5, appliqué automatiquement à l'Initiative et à la Défense, à reporter à la main sur les actions physiques. Le personnage perd sa prochaine action et ses déplacements sont réduits de moitié ; toute action physique impose un test de CON difficulté 15, l'échec infligeant 1 DM et l'inconscience pendant 1d6 rounds. Guérison et stabilisation : test d'INT difficulté 15.",
       "mourant": "Mourant",
-      "mourantDescription": "20e échelon de l'échelle de santé. Malus de -10, appliqué automatiquement à l'Initiative et à la Défense, à reporter à la main sur les actions physiques. Tout déplacement est impossible ; le personnage est inconscient pendant 1d6 rounds puis doit réussir un test de CON difficulté 20, sous peine de coma et de mort au bout de CON minutes s'il n'est pas stabilisé. Stabilisation : test d'INT difficulté 20."
+      "mourantDescription": "20e échelon de l'échelle de santé. Malus de -10, appliqué automatiquement à l'Initiative et à la Défense, à reporter à la main sur les actions physiques. Tout déplacement est impossible ; le personnage est inconscient pendant 1d6 rounds puis doit réussir un test de CON difficulté 20, sous peine de coma et de mort au bout de CON minutes s'il n'est pas stabilisé. Stabilisation : test d'INT difficulté 20.",
+      "asphyxie": "Asphyxié",
+      "asphyxieDescription": "Le personnage ne peut plus respirer. -5 en Initiative et en Défense, appliqué automatiquement, et -5 à toutes les actions, proposé dans les fenêtres de jet. Il subit 1d4 DM par tour jusqu'à ce qu'il puisse de nouveau respirer, à appliquer manuellement.",
+      "fatigue": "Fatigué",
+      "fatigueDescription": "-2 à tous les tests tant que dure l'état, proposé dans les fenêtres de jet.",
+      "epuise": "Épuisé",
+      "epuiseDescription": "-5 à tous les tests tant que dure l'état, proposé dans les fenêtres de jet. Le personnage est irascible : il doit réussir un test de VOL difficulté 15 chaque fois qu'il est contrarié, sous peine de faire preuve d'agressivité verbale ou de fondre en larmes sans se soucier des conséquences.",
+      "pathName": "État",
+      "hint": {
+        "actions": "Uniquement sur les actions",
+        "sight": "Uniquement sur les actions basées sur la vue"
+      }
     },
     "feature": {
       "subtypes": {

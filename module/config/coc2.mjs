@@ -29,21 +29,51 @@ export const HEALTH_STATE_MALUS = {
  */
 export const PHYSICAL_ABILITIES = ["for", "agi", "con"]
 
+/** Champs visés par les malus chiffrés des états, dans l'ordre d'affichage des tooltips */
+const COMBAT_CHANGE_KEYS = {
+  init: "system.combat.init.bonuses.effects",
+  def: "system.combat.def.bonuses.effects",
+  melee: "system.combat.melee.bonuses.effects",
+  ranged: "system.combat.ranged.bonuses.effects",
+}
+
 /**
- * Changes d'ActiveEffect portant le malus d'un état de santé (ACTIVE_EFFECT_MODES : ADD = 2).
+ * Traduit une description abrégée de malus en changes d'ActiveEffect.
+ * ACTIVE_EFFECT_MODES : ADD = 2, OVERRIDE = 5.
+ * @param {object} spec Malus par cible : init, def, melee, ranged, et movement en mètres
+ * @returns {Array<object>}
+ */
+function buildChanges({ init, def, melee, ranged, movement } = {}) {
+  const changes = []
+
+  for (const [target, value] of Object.entries({ init, def, melee, ranged })) {
+    if (value) changes.push({ key: COMBAT_CHANGE_KEYS[target], mode: 2, value })
+  }
+
+  // Le mouvement est forcé sur ses trois composantes, comme le font outOfBreath et immobilized dans co2
+  if (movement !== undefined) {
+    changes.push(
+      { key: "system.attributes.movement.base", mode: 5, value: movement },
+      { key: "system.attributes.movement.bonuses.sheet", mode: 5, value: 0 },
+      { key: "system.attributes.movement.bonuses.effects", mode: 5, value: 0 },
+    )
+  }
+
+  return changes
+}
+
+/**
+ * Changes d'ActiveEffect portant le malus d'un état de santé.
  * Seules l'Init. et la DEF sont appliquées d'office. La DEF et les attaques dérivant des
  * caractéristiques dans co2 (DEF = 10 + AGI + PER, ATC = FOR, ATD = AGI), poser aussi le malus sur
- * AGI ou FOR le compterait deux fois : les tests de caractéristique passent par getHealthStateSkillBonus.
- * Les états s'excluant mutuellement, ces malus ne se cumulent jamais.
+ * AGI ou FOR le compterait deux fois : les tests de caractéristique passent par getStateSkillBonuses.
+ * Les états de santé s'excluant mutuellement, ces malus ne se cumulent jamais.
  * @param {string} id Identifiant de l'état de santé
  * @returns {Array<object>}
  */
 function healthStateChanges(id) {
   const malus = HEALTH_STATE_MALUS[id]
-  return [
-    { key: "system.combat.init.bonuses.effects", mode: 2, value: malus },
-    { key: "system.combat.def.bonuses.effects", mode: 2, value: malus },
-  ]
+  return buildChanges({ init: malus, def: malus })
 }
 
 /**
@@ -86,6 +116,76 @@ export const HEALTH_STATUS_EFFECTS = [
  * Les objets sont ceux de HEALTH_STATUS_EFFECTS : muter un nom ici le mute partout.
  */
 export const HEALTH_STATES = Object.fromEntries(HEALTH_STATUS_EFFECTS.map((effect) => [effect.id, effect]))
+
+/**
+ * Malus chiffrés des états préjudiciables COC2 (LdR ch. 4), par identifiant de statut du système.
+ * Les valeurs de COF2 sont écrasées : la table COC2 diffère pour presque tous les états conservés.
+ */
+export const COC2_STATUS_CHANGES = {
+  blind: { def: -5 },
+  slowed: { init: -5, def: -5, melee: -5, ranged: -5, movement: 5 },
+  immobilized: { def: -5, movement: 0 },
+  unconscious: { def: -5, movement: 0 },
+  surprised: { def: -5 },
+  overturned: { def: -5, melee: -5, ranged: -5 },
+  outOfBreath: { init: -2, def: -2, movement: 5 },
+  asphyxie: { init: -5, def: -5 },
+}
+
+/** États préjudiciables de COF2 sans équivalent dans le livre de règles COC2 */
+export const REMOVED_STATUS_IDS = ["weakened", "stun", "invalid", "paralysis"]
+
+/**
+ * États propres à COC2, absents de COF2. Libellés et descriptions suivent la convention
+ * COC2BASE.status.<id> / <id>Description. Icônes core provisoires, comme pour l'échelle de santé.
+ */
+export const COC2_STATUS_EFFECTS = [
+  { id: "asphyxie", img: "icons/svg/silenced.svg" },
+  { id: "fatigue", img: "icons/svg/sleep.svg" },
+  { id: "epuise", img: "icons/svg/downgrade.svg" },
+]
+
+/**
+ * Malus proposés à cocher dans les fenêtres de jet, par identifiant de statut.
+ * Ils couvrent ce qu'un ActiveEffect ne peut pas exprimer : « à toutes les actions », « à tous les
+ * tests », « aux actions basées sur la vue ». Les poser sur les caractéristiques baisserait aussi la
+ * DEF et les attaques qui en dérivent, d'où ce canal, où le joueur arbitre au cas par cas.
+ * abilities absent = proposé sur toutes les caractéristiques.
+ */
+export const STATE_TEST_MALUS = {
+  // États de santé : le livre de règles limite leur malus aux actions physiques
+  ...Object.fromEntries(
+    Object.entries(HEALTH_STATE_MALUS).map(([id, malus]) => [id, { malus, abilities: PHYSICAL_ABILITIES, hint: "COC2BASE.healthScale.malusHint" }]),
+  ),
+  fatigue: { malus: -2 },
+  epuise: { malus: -5 },
+  asphyxie: { malus: -5, hint: "COC2BASE.status.hint.actions" },
+  blind: { malus: -10, hint: "COC2BASE.status.hint.sight" },
+}
+
+/**
+ * Reconstruit la liste des statuts pour COC2 : retire les états absents du livre de règles, réécrit
+ * les malus des états conservés, puis ajoute les états propres à COC2 et ceux de l'échelle de santé.
+ * Les entrées modifiées sont recopiées et non mutées : le tableau du système reste intact, désactiver
+ * le module restaure la liste COF2.
+ * À appeler depuis le hook init, avant le hook i18nInit du système qui localise et trie la liste.
+ * @returns {Array<object>} Nouvelle valeur de CONFIG.statusEffects
+ */
+export function buildStatusEffects() {
+  const kept = CONFIG.statusEffects
+    .filter((effect) => !REMOVED_STATUS_IDS.includes(effect.id))
+    .map((effect) => (COC2_STATUS_CHANGES[effect.id] ? { ...effect, changes: buildChanges(COC2_STATUS_CHANGES[effect.id]) } : effect))
+
+  const added = COC2_STATUS_EFFECTS.map(({ id, img }) => ({
+    id,
+    img,
+    name: `COC2BASE.status.${id}`,
+    description: `COC2BASE.status.${id}Description`,
+    changes: buildChanges(COC2_STATUS_CHANGES[id]),
+  }))
+
+  return [...kept, ...added, ...HEALTH_STATUS_EFFECTS]
+}
 
 /**
  * Sous-types de features COC2, ajoutés à SYSTEM.FEATURE_SUBTYPE :
@@ -224,32 +324,35 @@ export function getHealthState(damage, max) {
 }
 
 /**
- * Ligne de malus à proposer dans la fenêtre de jet pour un test de caractéristique physique.
- * Le système affiche ces lignes décochées : c'est au joueur de l'appliquer quand le test correspond
- * bien à une action physique au sens du livre de règles, ce qui évite notamment de pénaliser les
- * tests de CON que les états de santé imposent eux-mêmes.
+ * Lignes de malus à proposer dans la fenêtre de jet d'un test de caractéristique, pour les états
+ * actifs sur l'acteur. Le système affiche ces lignes décochées : c'est au joueur de les appliquer
+ * quand le test entre bien dans le champ de l'état, ce qui évite notamment de pénaliser les tests de
+ * CON que les états de santé imposent eux-mêmes.
  * @param {Actor} actor Acteur qui effectue le test
  * @param {string} ability Caractéristique testée
- * @returns {object|null} Bonus au format attendu par les fenêtres de jet, ou null s'il n'y a rien à proposer
+ * @returns {Array<object>} Bonus au format attendu par les fenêtres de jet
  */
-export function getHealthStateSkillBonus(actor, ability) {
-  if (!PHYSICAL_ABILITIES.includes(ability)) return null
+export function getStateSkillBonuses(actor, ability) {
+  const bonuses = []
 
-  // Un seul état de santé est actif à la fois : applyHealthScaleStatuses retire les autres
-  const state = HEALTH_SCALE.states.find((s) => actor.statuses.has(s.id))
-  const malus = state ? HEALTH_STATE_MALUS[state.id] : 0
-  if (!malus) return null
+  for (const [id, entry] of Object.entries(STATE_TEST_MALUS)) {
+    if (!entry.malus || !actor.statuses.has(id)) continue
+    if (entry.abilities && !entry.abilities.includes(ability)) continue
 
-  const name = game.i18n.localize(HEALTH_STATES[state.id].name)
-  return {
-    sourceType: "healthState",
-    name,
-    description: name,
-    pathName: game.i18n.localize("COC2BASE.healthScale.label"),
-    hasPathName: true,
-    value: malus,
-    additionalInfos: game.i18n.localize("COC2BASE.healthScale.malusHint"),
+    // Après le hook i18nInit du système les noms sont déjà localisés ; localize les laisse alors inchangés
+    const name = game.i18n.localize(CONFIG.statusEffects.find((effect) => effect.id === id)?.name ?? id)
+    bonuses.push({
+      sourceType: "coc2State",
+      name,
+      description: name,
+      pathName: game.i18n.localize("COC2BASE.status.pathName"),
+      hasPathName: true,
+      value: entry.malus,
+      additionalInfos: entry.hint ? game.i18n.localize(entry.hint) : "",
+    })
   }
+
+  return bonuses
 }
 
 /**
