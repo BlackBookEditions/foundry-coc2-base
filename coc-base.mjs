@@ -3,6 +3,7 @@ import COC2EncounterData from "./module/models/encounter.mjs"
 import COC2CapacityData from "./module/models/capacity.mjs"
 import COC2Actor from "./module/documents/actor.mjs"
 import COC2CharacterSheet from "./module/applications/character-sheet.mjs"
+import COC2PartySheet from "./module/applications/party-sheet.mjs"
 import {
   HEALTH_SCALE,
   HEALTH_STATES,
@@ -110,8 +111,37 @@ Hooks.once("init", () => {
   console.info("COC2 Base | Fin de l'initialisation du module")
 })
 
-Hooks.once("ready", async () => {
+Hooks.once("ready", () => {
   console.info("COC2 Base | Module prêt")
+
+  // Groupe de joueurs COC2 : on impose notre sous-classe à game.system.partySheet (la sidebar et co.mjs lisent
+  // cette instance ; remplacer CONFIG ne suffirait pas, la référence importée y est figée).
+  //
+  // Attention à la course : le système assigne game.system.partySheet à la FIN de sa propre ready asynchrone
+  // (co.mjs:255), APRÈS des await (co.mjs:244/249). Cette affectation retombe donc APRÈS ce hook et écraserait
+  // une simple réaffectation. On remplace donc la propriété par un accesseur qui n'accepte QUE la sous-classe
+  // COC2 et ignore l'instance COF2 du système, quel que soit l'ordre d'exécution des deux ready.
+  const existing = game.system.partySheet
+  let instance = existing instanceof COC2PartySheet ? existing : null
+
+  // Si le système a déjà posé (et, pour le MJ, rendu) sa version COF2 avant ce hook, on la ferme.
+  const replacedRendered = existing && !instance && existing.rendered
+  if (existing && !instance) existing.close()
+
+  Object.defineProperty(game.system, "partySheet", {
+    configurable: true,
+    enumerable: true,
+    get() {
+      return (instance ??= new COC2PartySheet())
+    },
+    set(value) {
+      // On ignore l'affectation de la classe système (COPartySheet) ; seule la sous-classe COC2 est acceptée.
+      if (value instanceof COC2PartySheet) instance = value
+    },
+  })
+
+  // Reproduit l'auto-rendu MJ du système, mais avec notre version, si sa fenêtre était déjà ouverte.
+  if (game.user.isGM && replacedRendered) game.system.partySheet.render({ force: true })
 })
 
 /*
