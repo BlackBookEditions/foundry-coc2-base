@@ -78,36 +78,45 @@ export default class COC2CharacterData extends CharacterData {
   }
 
   /**
-   * Initiative COC2 : 10 + INT + PER
+   * Initiative COC2 : 10 + INT + PER, là où COF2 ne compte que 10 + PER
    * @param {*} skill
    * @param {*} abilityBonus Valeur de la perception
    * @param {*} bonuses
    */
   _prepareInit(skill, abilityBonus, bonuses) {
     super._prepareInit(skill, abilityBonus, bonuses)
-
-    const intValue = this.abilities.int.value
-    skill.base += intValue
-    skill.value += intValue
-    const intTooltip = Utils.getTooltip(Utils.getAbilityName("int"), intValue)
-    skill.tooltipBase = skill.tooltipBase.concat(intTooltip)
-    skill.tooltipValue = skill.tooltipValue.concat(intTooltip)
+    this.#addSecondaryAbility(skill, game.system.CONST.COMBAT.init.id, "int", bonuses)
   }
 
   /**
-   * Défense COC2 : 10 + AGI + PER + armure + bouclier
+   * Défense COC2 : 10 + AGI + PER, là où COF2 ne compte que 10 + AGI
+   * L'armure et le bouclier ajoutés par COF2 restent pris en compte tant que les protections
+   * COC2 (RD au lieu de DEF) ne sont pas implémentées
    * @param {*} skill
    * @param {*} abilityBonus Valeur de l'agilité
    * @param {*} bonuses
    */
   _prepareDef(skill, abilityBonus, bonuses) {
     super._prepareDef(skill, abilityBonus, bonuses)
+    this.#addSecondaryAbility(skill, game.system.CONST.COMBAT.def.id, "per", bonuses)
+  }
 
-    const perValue = this.abilities.per.value
-    skill.base += perValue
-    skill.value += perValue
-    const perTooltip = Utils.getTooltip(Utils.getAbilityName("per"), perValue)
-    skill.tooltipBase = skill.tooltipBase.concat(perTooltip)
-    skill.tooltipValue = skill.tooltipValue.concat(perTooltip)
+  /**
+   * Ajoute une caractéristique secondaire à une valeur de combat déjà calculée par le système,
+   * et reconstruit tooltipValue à partir de tooltipBase pour conserver l'ordre
+   * base + caractéristiques, puis modifiers, puis bonus de fiche.
+   * @param {*} skill Valeur de combat préparée par le système (combat.init ou combat.def)
+   * @param {string} combatId Identifiant de la valeur de combat, pour retrouver ses modifiers
+   * @param {string} abilityKey Caractéristique à ajouter
+   * @param {number} bonuses Somme des bonus de la fiche et des active effects
+   */
+  #addSecondaryAbility(skill, combatId, abilityKey, bonuses) {
+    const value = this.abilities[abilityKey].value
+    skill.base += value
+    skill.value += value
+    skill.tooltipBase = skill.tooltipBase.concat(Utils.getTooltip(Utils.getAbilityName(abilityKey), value))
+
+    const modifiers = this.computeTotalModifiersByTarget(this.combatModifiers, combatId)
+    skill.tooltipValue = skill.tooltipBase.concat(modifiers.tooltip, Utils.getTooltip("Bonus", bonuses))
   }
 }

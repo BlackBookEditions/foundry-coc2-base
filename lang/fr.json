@@ -10,6 +10,9 @@
     "notif": {
       "warningNotEnoughXP": "Attention : les XP dépensés dépassent les XP gagnés en séances."
     },
+    "combat": {
+      "formulaTooltip": "Formule de calcul fixée par les règles de Chroniques Oubliées Contemporain"
+    },
     "healthScale": {
       "label": "Échelle de santé",
       "short": "Santé",

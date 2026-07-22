@@ -61,6 +61,11 @@ export default class COC2CharacterSheet extends COCharacterSheet {
     const currentBracket = AGE_BRACKETS[this.document.system.details.ageBracket]
     context.ageBracketLabel = currentBracket ? game.i18n.localize(currentBracket.label) : null
 
+    // Formules des caractéristiques secondaires : figées par les règles, affichées à la place des selects de COF2
+    const shortAbility = (key) => game.i18n.localize(`CO.abilities.short.${key}`)
+    context.initFormula = `10 + ${shortAbility("int")} + ${shortAbility("per")}`
+    context.defFormula = `10 + ${shortAbility("agi")} + ${shortAbility("per")}`
+
     // Traits distinctifs : compteur informatif des points d'avantages et de désavantages
     const traitPoints = (subtype) =>
       features.filter((f) => f.system.subtype === subtype).reduce((acc, f) => acc + (f.getFlag("coc2-base", "points") ?? 1), 0)

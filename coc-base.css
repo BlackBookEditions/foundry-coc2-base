@@ -749,6 +749,9 @@
   height: 150px;
 }
 /* Styles des fiches COC2 (échelle de santé, header sans niveau) */
+.co.actor.coc2 {
+  /* Formule figée d'Initiative et de Défense, à la place du select de caractéristique de COF2 */
+}
 .co.actor.coc2 .health-scale {
   display: flex;
   flex-wrap: wrap;
@@ -801,6 +804,15 @@
   font-size: 0.85em;
   opacity: 0.85;
   white-space: nowrap;
+}
+.co.actor.coc2 .combat-formula {
+  flex: 1;
+  text-align: center;
+  font-variant: small-caps;
+  font-size: 0.9em;
+  opacity: 0.75;
+  white-space: nowrap;
+  cursor: help;
 }
 .co.actor.coc2 .health-state {
   text-align: center;

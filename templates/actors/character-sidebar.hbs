@@ -185,9 +185,7 @@
       {{#if unlocked}}
         <div class="sidebar-section-content">
           <div class="field">
-            <select name="system.combat.init.ability" data-type="String">
-              {{selectOptions choiceAbilities selected=combat.init.ability localize=true}}
-            </select>
+            <span class="combat-formula" data-tooltip="{{localize 'COC2BASE.combat.formulaTooltip'}}">{{initFormula}}</span>
           </div>
         </div>
         <div class="sidebar-section-content">
@@ -238,9 +236,7 @@
       {{#if unlocked}}
         <div class="sidebar-section-content">
           <div class="field">
-            <select name="system.combat.def.ability" data-type="String">
-              {{selectOptions choiceAbilities selected=combat.def.ability localize=true}}
-            </select>
+            <span class="combat-formula" data-tooltip="{{localize 'COC2BASE.combat.formulaTooltip'}}">{{defFormula}}</span>
           </div>
         </div>
         <div class="sidebar-section-content">
