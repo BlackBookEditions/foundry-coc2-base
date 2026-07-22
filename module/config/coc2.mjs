@@ -132,6 +132,41 @@ export const AGE_BRACKETS = {
 }
 
 /**
+ * Sous-type de regroupement attribué aux cibles de modificateurs à masquer.
+ * Les fiches d'items construisent leurs listes déroulantes en filtrant MODIFIERS_TARGET sur des sous-types
+ * connus (ability, combat, attack, attribute, resource, state) : une valeur inconnue les fait disparaître
+ * de toutes les listes, sans supprimer l'entrée du système.
+ */
+export const HIDDEN_MODIFIER_SUBTYPE = "coc2Hidden"
+
+/**
+ * Éléments de COF2 sans objet en COC2, retirés de l'interface au chargement du module.
+ * Le livre de règles ne connaît que l'ATC (FOR) et l'ATD (AGI) : ni attaque magique, ni points de magie.
+ */
+export const HIDDEN_MAGIC_UI = {
+  // Cibles de modificateurs retirées des listes déroulantes de l'éditeur de modificateurs
+  modifierTargets: ["magic", "damMagic", "mp"],
+  // Sous-types retirés du select des items de type attaque
+  attackTypes: ["magic"],
+}
+
+/**
+ * Retire de l'interface les éléments de magie hérités de COF2.
+ * Les cibles de modificateurs sont masquées et non supprimées : elles restent des valeurs valides pour le
+ * champ target du schéma Modifier (validé par `choices`) et pour les libellés des effets déjà en place.
+ */
+export function hideMagicUI() {
+  for (const target of HIDDEN_MAGIC_UI.modifierTargets) {
+    const modifierTarget = game.system.CONST.MODIFIERS_TARGET[target]
+    if (modifierTarget) modifierTarget.subtype = HIDDEN_MODIFIER_SUBTYPE
+  }
+
+  for (const attackType of HIDDEN_MAGIC_UI.attackTypes) {
+    delete game.system.CONST.ATTACK_TYPE[attackType]
+  }
+}
+
+/**
  * Retourne l'id de l'état de santé atteint pour un nombre d'échelons cochés, ou null si aucun
  * @param {number} damage Nombre d'échelons cochés (hp.max - hp.value)
  * @param {number} max Taille de l'échelle

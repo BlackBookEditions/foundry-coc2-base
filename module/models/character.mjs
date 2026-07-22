@@ -78,6 +78,26 @@ export default class COC2CharacterData extends CharacterData {
   }
 
   /**
+   * Attaques COC2 : la valeur est strictement égale à la caractéristique (ATC = FOR, ATD = AGI),
+   * sans le bonus de niveau de COF2 puisque les niveaux n'existent pas.
+   * Réécriture complète de la méthode du système, dont le bonus de niveau n'est pas isolable.
+   * @param {string} key Clef de la valeur de combat : melee, ranged ou magic
+   * @param {*} skill
+   * @param {*} abilityBonus Valeur de la caractéristique associée
+   * @param {*} bonuses Somme des bonus de la fiche et des active effects
+   * @override
+   */
+  _prepareAttack(key, skill, abilityBonus, bonuses) {
+    const combatModifiers = this.computeTotalModifiersByTarget(this.combatModifiers, key)
+
+    skill.base = abilityBonus
+    skill.tooltipBase = Utils.getTooltip(Utils.getAbilityName(skill.ability), abilityBonus)
+
+    skill.value = skill.base + bonuses + combatModifiers.total
+    skill.tooltipValue = skill.tooltipBase.concat(combatModifiers.tooltip, Utils.getTooltip("Bonus", bonuses))
+  }
+
+  /**
    * Initiative COC2 : 10 + INT + PER, là où COF2 ne compte que 10 + PER
    * @param {*} skill
    * @param {*} abilityBonus Valeur de la perception

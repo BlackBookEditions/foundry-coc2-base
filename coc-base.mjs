@@ -2,7 +2,7 @@ import COC2CharacterData from "./module/models/character.mjs"
 import COC2EncounterData from "./module/models/encounter.mjs"
 import COC2Actor from "./module/documents/actor.mjs"
 import COC2CharacterSheet from "./module/applications/character-sheet.mjs"
-import { HEALTH_STATUS_EFFECTS, FEATURE_SUBTYPES_COC2, MARTIAL_TRAININGS } from "./module/config/coc2.mjs"
+import { HEALTH_STATUS_EFFECTS, FEATURE_SUBTYPES_COC2, MARTIAL_TRAININGS, hideMagicUI } from "./module/config/coc2.mjs"
 
 Hooks.once("init", () => {
   console.info("COC2 Base | Initialisation du module...")
@@ -19,6 +19,9 @@ Hooks.once("init", () => {
 
   // Domaines et traits distinctifs : nouveaux sous-types de features proposés dans la fiche feature
   Object.assign(game.system.CONST.FEATURE_SUBTYPE, FEATURE_SUBTYPES_COC2)
+
+  // Attaque magique et points de magie : notions de COF2 absentes du livre de règles COC2
+  hideMagicUI()
 
   // Entraînements martiaux contemporains (même pattern que cof2-base)
   if (game.system.CONST.martialTrainingsWeapons.length === 0) {
