@@ -13,6 +13,7 @@ Contrairement à `cof2-base`, ce module ne contient pas de compendiums : il adap
 - **États préjudiciables** : la liste des statuts est alignée sur le livre de règles COC2. Affaibli (le dé malus de COF2), Étourdi, Invalide et Paralysé sont retirés — sans équivalent en COC2 ; Asphyxié, Fatigué et Épuisé sont ajoutés ; les malus des états conservés sont réécrits aux valeurs COC2 (Ralenti passe de « aucun effet chiffré » à −5 en Init./DEF/attaques et 5 m, Essoufflé gagne −2 en Init. et DEF, etc.). Les malus qui portent « à tous les tests », « à toutes les actions » ou « aux actions basées sur la vue » ne sont pas appliqués d'office mais proposés à cocher dans les fenêtres de jet.
 - **Création** : sous-types de features pour les Domaines professionnels/extra-professionnels et les Traits distinctifs (avantages/désavantages avec coût en points), tranche d'âge sur la fiche.
 - **Entraînements martiaux contemporains** : armes à feu, protections balistiques, etc.
+- **Thème monochrome** : `style/palette.less` surcharge la palette du système (`systems/co2/styles/palette.less`) par une échelle de gris — l'or, le bleu, le rouge et le vert de la Fantasy disparaissent des fiches, de la sidebar, des fenêtres de jet, des fiches d'objets et des cartes de chat. Les couleurs des résultats de jet (`--co-result-*`) ne sont volontairement pas surchargées : succès, échec, critique et fumble restent des repères de lecture.
 
 ## Configuration par un module d'univers
 

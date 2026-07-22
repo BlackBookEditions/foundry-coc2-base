@@ -1,0 +1,84 @@
+/*
+ * CONTRASTE DU TEXTE SUR LES SURFACES SOMBRES
+ *
+ * co2 fait varier ensemble le fond et la couleur du texte, en supposant que le mode clair a des
+ * surfaces claires : le texte clair n'est posé qu'en mode sombre (styles/co.less, règle h4/label/span),
+ * et les fiches d'objets écrivent en sombre sur var(--co-item-light) en mode clair.
+ *
+ * La palette COC2 étant identique dans les deux modes et ses surfaces sombres, ces règles laisseraient
+ * du texte sombre sur fond sombre en mode clair. On impose donc le texte clair, uniquement sur les
+ * surfaces qui viennent de notre palette.
+ *
+ * Ne sont volontairement pas touchées les surfaces hors palette, où le texte sombre reste correct :
+ * corps des messages de chat (fond --color-light-3 de Foundry), pastille de difficulté des fenêtres
+ * de jet (fond blanc en dur), et les jalons du ruban de santé (fond --co-surface, resté clair).
+ *
+ * Portée .co.actor / .co.item et non .coc2 : la classe du module n'est posée que par la fiche de
+ * personnage, alors que le header de rencontre et les fiches d'objets sont concernés aussi.
+ * .co.actor .sheet-header h4 (0,3,1) l'emporte sur .theme-dark .co h4 (0,2,1) du système.
+ */
+
+// Bandeau des fiches d'acteur, fond --co-sheet-accent ou --co-encounter-accent
+// et bandeau des fiches d'objet, dégradé de --co-item-dark / --co-item-light
+.co.actor .sheet-header,
+.co.item .sheet-header {
+  color: var(--co-text-light);
+
+  h4,
+  label,
+  span,
+  .name,
+  input.name {
+    color: var(--co-text-light);
+  }
+}
+
+// Nom de l'objet : c'est un input à fond transparent posé sur le bandeau, et un input n'hérite pas
+// de la couleur de son parent — il faut donc le viser explicitement.
+.co.item .sheet-header .name input[type="text"] {
+  color: var(--co-text-light);
+}
+
+// Type de l'objet : pastille avec son propre fond, posée sur le bandeau. Le fond est fixé ici en clair
+// dans les deux modes — co2 le prend de --color-dark-3 en mode sombre, ce qui rendrait le texte noir
+// illisible. Spécificité alignée sur celle du système (0,8,0) pour l'emporter par l'ordre de chargement.
+.co.application.sheet.item .window-content .sheet-header .adjustment-select .trait {
+  background-color: var(--co-surface);
+  color: var(--co-text-dark);
+}
+
+// Titres de section des fiches d'objet, fond --co-item-light en mode clair
+.co.item .form-header {
+  color: var(--co-text-light);
+}
+
+// Onglets principaux des fiches d'objet : ils remontent de 38 px pour chevaucher le bandeau
+// (systems/co2/styles/applications/sheets/items/common.less:106), donc sur fond sombre.
+// Enfant direct uniquement : les sous-onglets de l'onglet Actions sont, eux, sur le fond de contenu.
+.co.item .window-content > .sheet-tabs [data-tab] {
+  color: var(--co-text-light);
+}
+
+/* Contenu des onglets en mode lecture seule : le texte passe en sombre pour rester lisible.
+   Le mode est lisible en CSS via le sélecteur d'attribut de l'interrupteur d'édition, dont la
+   propriété checked est réfléchie (systems/co2/module/elements/checkbox.mjs:102-108). L'absence
+   d'interrupteur — utilisateur non propriétaire — est également un cas de lecture seule. */
+.co.item:not(:has(.mode-slider[checked])) .window-content .tab {
+  color: var(--co-text-dark);
+
+  h4,
+  label,
+  span,
+  p,
+  li,
+  legend {
+    color: var(--co-text-dark);
+  }
+
+  // Les bandeaux de section sont des h4 posés sur un fond de la palette : leur texte reste clair.
+  // Écrit ici, et non à la racine, pour l'emporter sur la règle h4 ci-dessus.
+  .form-header,
+  .form-header * {
+    color: var(--co-text-light);
+  }
+}

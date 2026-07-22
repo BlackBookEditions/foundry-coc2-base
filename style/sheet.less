@@ -28,8 +28,8 @@
       /* Foundry pose margin: 2rem 0 1rem sur les h4 : la marge basse subsistante décentrerait
          la bande, align-self centrant la boîte marges comprises */
       margin: 0;
-      background-color: var(--color-characterSheet);
-      color: var(--color-textLight);
+      background-color: var(--co-sheet-accent);
+      color: var(--co-text-light);
       font-weight: bold;
       padding: 2px 8px;
       white-space: nowrap;
@@ -72,8 +72,8 @@
       text-align: center;
       font-weight: bold;
       cursor: pointer;
-      background-color: var(--color-background-grey);
-      color: var(--color-characterSheet);
+      background-color: var(--co-surface);
+      color: var(--co-sheet-accent);
       clip-path: polygon(0 0, calc(100% - 0.5em) 0, 100% 50%, calc(100% - 0.5em) 100%, 0 100%, 0.5em 50%);
 
       /* Première case : bord gauche droit, comme sur la fiche officielle */
@@ -87,7 +87,7 @@
 
       &.filled {
         background-color: @coc2-damage;
-        color: var(--color-textLight);
+        color: var(--co-text-light);
       }
 
       /* Jalons 5/10/15/20 : même fond que les autres échelons, mais liseré et chiffre noirs.
@@ -106,7 +106,7 @@
           inset: 1px;
           z-index: -1;
           clip-path: inherit;
-          background-color: var(--color-background-grey);
+          background-color: var(--co-surface);
         }
 
         &.filled::before {
@@ -147,7 +147,7 @@
   }
 
   /* Nom de l'état atteint, affiché sous le bloc coeur. La couleur de l'état est portée par le jalon
-     correspondant dans le ruban, le libellé reste en noir pour rester lisible sur le fond du header. */
+     correspondant dans le ruban ; le libellé suit le texte du header, posé sur --co-sheet-accent. */
   .health-state {
     position: absolute;
     top: 100%;
@@ -158,6 +158,6 @@
     font-weight: bold;
     font-size: 0.85em;
     white-space: nowrap;
-    color: #000;
+    color: var(--co-text-light);
   }
 }

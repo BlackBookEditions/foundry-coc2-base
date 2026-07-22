@@ -54,6 +54,72 @@
   font-family: "MinionPro";
   src: url("./fonts/minion-pro-regular.otf");
 }
+/*
+ * THÈME MONOCHROME COC2
+ *
+ * Surcharge de la palette du système (systems/co2/styles/palette.less) : le contemporain se passe de
+ * l'or, du bleu, du rouge et du vert de la Fantasy. On redéclare les mêmes sélecteurs de thème ; la
+ * feuille du module étant chargée après celle du système, ces valeurs l'emportent.
+ *
+ * UN SEUL JEU DE VALEURS pour les deux modes : COC2 a le même habillage en clair et en sombre.
+ * Les suffixes -dark / -light de co2 ne désignent pas une luminosité mais le mode auquel la valeur
+ * s'applique : chaque paire reçoit donc ici la même couleur. Les surfaces étant sombres dans les deux
+ * modes, style/contrast.less impose le texte clair là où co2 ne le fait qu'en mode sombre.
+ *
+ * NE SONT PAS SURCHARGÉES les variables --co-result-* : succès, échec, critique et fumble portent une
+ * information de lecture, elles restent colorées.
+ *
+ * --co-surface reste un gris CLAIR : co2 s'en sert à la fois comme fond (.ability-mod) et comme
+ * couleur de texte dans sa règle h4/label/span du mode sombre. L'assombrir rendrait ce texte illisible.
+ */
+.theme-light,
+.theme-dark {
+  --co-sheet-accent: #2b2b2b;
+  --co-sheet-accent-alt: #4f4f4f;
+  --co-surface: #ececec;
+  --co-encounter-accent: rgba(28, 28, 28, 0.6);
+  --co-window-content: rgba(61, 61, 61, 0.42);
+  --co-text-light: #f5f5f5;
+  --co-text-dark: #1c1c1c;
+  --co-green: #5c5c5c;
+  --co-grey: #b3b3b3;
+  --co-stat-attack: #2b2b2b;
+  --co-stat-initiative: #4f4f4f;
+  --co-stat-defense: #3d3d3d;
+  --co-stat-health: #5c5c5c;
+  --co-stat-damages: #6b6b6b;
+  --co-stat-resource: #7a7a7a;
+  --co-chat-skill: #4f4f4f;
+  --co-chat-attack: #2b2b2b;
+  --co-chat-damages: #1c1c1c;
+  --co-chat-heal: #6b6b6b;
+  --co-chat-rest: #7a7a7a;
+  --co-chat-save: #5c5c5c;
+  --co-chat-item: #8a8a8a;
+  --co-chat-shadow: #b3b3b3;
+  --co-dialog-attack-bg: rgba(43, 43, 43, 0.55);
+  --co-dialog-skill-bg: rgba(79, 79, 79, 0.42);
+  --co-dialog-attack-accent: #1c1c1c;
+  --co-dialog-attack-surface: #2b2b2b;
+  --co-dialog-skill-accent: #2b2b2b;
+  --co-dialog-skill-highlight: #6b6b6b;
+  --co-dialog-muted: #b3b3b3;
+  --co-dialog-overlay: #ffffff57;
+  --co-item-capacity-dark: #4f4f4f;
+  --co-item-capacity-light: #4f4f4f;
+  --co-item-equipment-dark: #4f4f4f;
+  --co-item-equipment-light: #4f4f4f;
+  --co-item-container-dark: #4f4f4f;
+  --co-item-container-light: #4f4f4f;
+  --co-item-feature-dark: #4f4f4f;
+  --co-item-feature-light: #4f4f4f;
+  --co-item-path-dark: #4f4f4f;
+  --co-item-path-light: #4f4f4f;
+  --co-item-profile-dark: #4f4f4f;
+  --co-item-profile-light: #4f4f4f;
+  --co-item-attack-dark: #4f4f4f;
+  --co-item-attack-light: #4f4f4f;
+}
 :root {
   --font-size-standard: 16px;
   --font-normal-style: normal;
@@ -755,7 +821,7 @@
   /* Ruban de l'échelle de santé : libellé, bloc coeur, 20 échelons, état atteint */
   /* Formule figée d'Initiative et de Défense, à la place du select de caractéristique de COF2 */
   /* Nom de l'état atteint, affiché sous le bloc coeur. La couleur de l'état est portée par le jalon
-     correspondant dans le ruban, le libellé reste en noir pour rester lisible sur le fond du header. */
+     correspondant dans le ruban ; le libellé suit le texte du header, posé sur --co-sheet-accent. */
 }
 .co.actor.coc2 .window-content .sheet-header {
   grid-template-rows: auto auto auto;
@@ -778,8 +844,8 @@
   /* Foundry pose margin: 2rem 0 1rem sur les h4 : la marge basse subsistante décentrerait
          la bande, align-self centrant la boîte marges comprises */
   margin: 0;
-  background-color: var(--color-characterSheet);
-  color: var(--color-textLight);
+  background-color: var(--co-sheet-accent);
+  color: var(--co-text-light);
   font-weight: bold;
   padding: 2px 8px;
   white-space: nowrap;
@@ -814,8 +880,8 @@
   text-align: center;
   font-weight: bold;
   cursor: pointer;
-  background-color: var(--color-background-grey);
-  color: var(--color-characterSheet);
+  background-color: var(--co-surface);
+  color: var(--co-sheet-accent);
   clip-path: polygon(0 0, calc(100% - 0.5em) 0, 100% 50%, calc(100% - 0.5em) 100%, 0 100%, 0.5em 50%);
   /* Première case : bord gauche droit, comme sur la fiche officielle */
   /* Jalons 5/10/15/20 : même fond que les autres échelons, mais liseré et chiffre noirs.
@@ -831,7 +897,7 @@
 }
 .co.actor.coc2 .health-bar .health-step.filled {
   background-color: #8a1c1c;
-  color: var(--color-textLight);
+  color: var(--co-text-light);
 }
 .co.actor.coc2 .health-bar .health-step.milestone {
   position: relative;
@@ -845,7 +911,7 @@
   inset: 1px;
   z-index: -1;
   clip-path: inherit;
-  background-color: var(--color-background-grey);
+  background-color: var(--co-surface);
 }
 .co.actor.coc2 .health-bar .health-step.milestone.filled::before {
   background-color: #8a1c1c;
@@ -883,5 +949,72 @@
   font-weight: bold;
   font-size: 0.85em;
   white-space: nowrap;
-  color: #000;
+  color: var(--co-text-light);
+}
+/*
+ * CONTRASTE DU TEXTE SUR LES SURFACES SOMBRES
+ *
+ * co2 fait varier ensemble le fond et la couleur du texte, en supposant que le mode clair a des
+ * surfaces claires : le texte clair n'est posé qu'en mode sombre (styles/co.less, règle h4/label/span),
+ * et les fiches d'objets écrivent en sombre sur var(--co-item-light) en mode clair.
+ *
+ * La palette COC2 étant identique dans les deux modes et ses surfaces sombres, ces règles laisseraient
+ * du texte sombre sur fond sombre en mode clair. On impose donc le texte clair, uniquement sur les
+ * surfaces qui viennent de notre palette.
+ *
+ * Ne sont volontairement pas touchées les surfaces hors palette, où le texte sombre reste correct :
+ * corps des messages de chat (fond --color-light-3 de Foundry), pastille de difficulté des fenêtres
+ * de jet (fond blanc en dur), et les jalons du ruban de santé (fond --co-surface, resté clair).
+ *
+ * Portée .co.actor / .co.item et non .coc2 : la classe du module n'est posée que par la fiche de
+ * personnage, alors que le header de rencontre et les fiches d'objets sont concernés aussi.
+ * .co.actor .sheet-header h4 (0,3,1) l'emporte sur .theme-dark .co h4 (0,2,1) du système.
+ */
+.co.actor .sheet-header,
+.co.item .sheet-header {
+  color: var(--co-text-light);
+}
+.co.actor .sheet-header h4,
+.co.item .sheet-header h4,
+.co.actor .sheet-header label,
+.co.item .sheet-header label,
+.co.actor .sheet-header span,
+.co.item .sheet-header span,
+.co.actor .sheet-header .name,
+.co.item .sheet-header .name,
+.co.actor .sheet-header input.name,
+.co.item .sheet-header input.name {
+  color: var(--co-text-light);
+}
+.co.item .sheet-header .name input[type="text"] {
+  color: var(--co-text-light);
+}
+.co.application.sheet.item .window-content .sheet-header .adjustment-select .trait {
+  background-color: var(--co-surface);
+  color: var(--co-text-dark);
+}
+.co.item .form-header {
+  color: var(--co-text-light);
+}
+.co.item .window-content > .sheet-tabs [data-tab] {
+  color: var(--co-text-light);
+}
+/* Contenu des onglets en mode lecture seule : le texte passe en sombre pour rester lisible.
+   Le mode est lisible en CSS via le sélecteur d'attribut de l'interrupteur d'édition, dont la
+   propriété checked est réfléchie (systems/co2/module/elements/checkbox.mjs:102-108). L'absence
+   d'interrupteur — utilisateur non propriétaire — est également un cas de lecture seule. */
+.co.item:not(:has(.mode-slider[checked])) .window-content .tab {
+  color: var(--co-text-dark);
+}
+.co.item:not(:has(.mode-slider[checked])) .window-content .tab h4,
+.co.item:not(:has(.mode-slider[checked])) .window-content .tab label,
+.co.item:not(:has(.mode-slider[checked])) .window-content .tab span,
+.co.item:not(:has(.mode-slider[checked])) .window-content .tab p,
+.co.item:not(:has(.mode-slider[checked])) .window-content .tab li,
+.co.item:not(:has(.mode-slider[checked])) .window-content .tab legend {
+  color: var(--co-text-dark);
+}
+.co.item:not(:has(.mode-slider[checked])) .window-content .tab .form-header,
+.co.item:not(:has(.mode-slider[checked])) .window-content .tab .form-header * {
+  color: var(--co-text-light);
 }

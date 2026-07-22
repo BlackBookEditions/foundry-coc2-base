@@ -1,0 +1,91 @@
+/*
+ * THÈME MONOCHROME COC2
+ *
+ * Surcharge de la palette du système (systems/co2/styles/palette.less) : le contemporain se passe de
+ * l'or, du bleu, du rouge et du vert de la Fantasy. On redéclare les mêmes sélecteurs de thème ; la
+ * feuille du module étant chargée après celle du système, ces valeurs l'emportent.
+ *
+ * UN SEUL JEU DE VALEURS pour les deux modes : COC2 a le même habillage en clair et en sombre.
+ * Les suffixes -dark / -light de co2 ne désignent pas une luminosité mais le mode auquel la valeur
+ * s'applique : chaque paire reçoit donc ici la même couleur. Les surfaces étant sombres dans les deux
+ * modes, style/contrast.less impose le texte clair là où co2 ne le fait qu'en mode sombre.
+ *
+ * NE SONT PAS SURCHARGÉES les variables --co-result-* : succès, échec, critique et fumble portent une
+ * information de lecture, elles restent colorées.
+ *
+ * --co-surface reste un gris CLAIR : co2 s'en sert à la fois comme fond (.ability-mod) et comme
+ * couleur de texte dans sa règle h4/label/span du mode sombre. L'assombrir rendrait ce texte illisible.
+ */
+
+// Échelle de gris, du plus sombre au plus clair
+@ink: #1c1c1c;
+@charcoal: #2b2b2b;
+@slate: #3d3d3d;
+@steel: #4f4f4f;
+@stone: #5c5c5c;
+@ash: #6b6b6b;
+@smoke: #7a7a7a;
+@fog: #8a8a8a;
+@mist: #b3b3b3;
+@paper: #ececec;
+
+// Couleur unique de toutes les fiches d'objets, quel que soit le type
+@item: @steel;
+
+.theme-light,
+.theme-dark {
+  // Chrome et feuilles
+  --co-sheet-accent: @charcoal;
+  --co-sheet-accent-alt: @steel;
+  --co-surface: @paper;
+  --co-encounter-accent: fade(@ink, 60%);
+  --co-window-content: fade(@slate, 42%);
+  --co-text-light: #f5f5f5;
+  --co-text-dark: @ink;
+  --co-green: @stone;
+  --co-grey: @mist;
+
+  // Valeurs de combat de la sidebar
+  --co-stat-attack: @charcoal;
+  --co-stat-initiative: @steel;
+  --co-stat-defense: @slate;
+  --co-stat-health: @stone;
+  --co-stat-damages: @ash;
+  --co-stat-resource: @smoke;
+
+  // Cartes de chat : co2 y pose du texte blanc sur ces fonds, ils restent donc sombres
+  --co-chat-skill: @steel;
+  --co-chat-attack: @charcoal;
+  --co-chat-damages: @ink;
+  --co-chat-heal: @ash;
+  --co-chat-rest: @smoke;
+  --co-chat-save: @stone;
+  --co-chat-item: @fog;
+  --co-chat-shadow: @mist;
+
+  // Fenêtres de jet
+  --co-dialog-attack-bg: fade(@charcoal, 55%);
+  --co-dialog-skill-bg: fade(@steel, 42%);
+  --co-dialog-attack-accent: @ink;
+  --co-dialog-attack-surface: @charcoal;
+  --co-dialog-skill-accent: @charcoal;
+  --co-dialog-skill-highlight: @ash;
+  --co-dialog-muted: @mist;
+  --co-dialog-overlay: #ffffff57;
+
+  // Types d'objets : une seule couleur pour tous, celle du trait, et la même dans les deux modes
+  --co-item-capacity-dark: @item;
+  --co-item-capacity-light: @item;
+  --co-item-equipment-dark: @item;
+  --co-item-equipment-light: @item;
+  --co-item-container-dark: @item;
+  --co-item-container-light: @item;
+  --co-item-feature-dark: @item;
+  --co-item-feature-light: @item;
+  --co-item-path-dark: @item;
+  --co-item-path-light: @item;
+  --co-item-profile-dark: @item;
+  --co-item-profile-light: @item;
+  --co-item-attack-dark: @item;
+  --co-item-attack-light: @item;
+}
