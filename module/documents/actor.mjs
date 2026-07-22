@@ -1,5 +1,5 @@
 import COActor from "../../../../systems/co2/module/documents/actor.mjs"
-import { getStateSkillBonuses } from "../config/coc2.mjs"
+import { getStateSkillBonuses, getAgeBracket } from "../config/coc2.mjs"
 
 /**
  * Document Actor COC2 : adapte le document COF2 aux règles de Chroniques Oubliées Contemporain
@@ -7,7 +7,8 @@ import { getStateSkillBonuses } from "../config/coc2.mjs"
 export default class COC2Actor extends COActor {
   /**
    * Progression COC2 : pas de niveau minimal pour apprendre une capacité,
-   * seule la progression séquentielle dans la voie s'applique
+   * seule la progression séquentielle dans la voie s'applique.
+   * Le rang maximum de la tranche d'âge est signalé mais n'interdit pas l'achat.
    * @override
    */
   canLearnCapacity(capacity, path) {
@@ -23,6 +24,19 @@ export default class COC2Actor extends COActor {
         ui.notifications.warn(game.i18n.localize("CO.notif.warningNeedLearnedCapacities"))
         return false
       }
+    }
+
+    // RULE : à la création, le rang de voie accessible est plafonné par la tranche d'âge.
+    // Simple avertissement : le MJ reste maître des exceptions, et le compteur de l'onglet Voies signale le dépassement.
+    const bracket = getAgeBracket(this.system)
+    if (bracket && this.system.isCreation && capacity.system.rank > bracket.maxRank) {
+      ui.notifications.warn(
+        game.i18n.format("COC2BASE.notif.warningRankAboveAgeBracket", {
+          rank: capacity.system.rank,
+          maxRank: bracket.maxRank,
+          bracket: game.i18n.localize(bracket.label),
+        }),
+      )
     }
 
     return true

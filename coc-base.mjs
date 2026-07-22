@@ -1,5 +1,6 @@
 import COC2CharacterData from "./module/models/character.mjs"
 import COC2EncounterData from "./module/models/encounter.mjs"
+import COC2CapacityData from "./module/models/capacity.mjs"
 import COC2Actor from "./module/documents/actor.mjs"
 import COC2CharacterSheet from "./module/applications/character-sheet.mjs"
 import {
@@ -13,6 +14,7 @@ import {
   REMOVED_STATUS_IDS,
   STATE_TEST_MALUS,
   FEATURE_SUBTYPES_COC2,
+  AGE_BRACKETS,
   MARTIAL_TRAININGS,
   buildStatusEffects,
   hideMagicUI,
@@ -45,6 +47,7 @@ CONFIG.COC2BASE = {
   statusChanges: COC2_STATUS_CHANGES,
   removedStatusIds: REMOVED_STATUS_IDS,
   stateTestMalus: STATE_TEST_MALUS,
+  ageBrackets: AGE_BRACKETS,
   /**
    * Seconde échelle (« Échelle ») : compteur avec libellé de palier affiché sur la fiche, SANS statut de
    * token (rien dans CONFIG.statusEffects). Masquée par défaut : son affichage est commandé par le réglage
@@ -78,6 +81,9 @@ Hooks.once("init", () => {
   CONFIG.Actor.documentClass = COC2Actor
   CONFIG.Actor.dataModels.character = COC2CharacterData
   CONFIG.Actor.dataModels.encounter = COC2EncounterData
+
+  // Coût uniforme d'un rang de voie : 1 point de capacité, quel que soit le rang
+  CONFIG.Item.dataModels.capacity = COC2CapacityData
 
   foundry.documents.collections.Actors.registerSheet("coc2-base", COC2CharacterSheet, { types: ["character"], makeDefault: true, label: "COC2BASE.sheet.character" })
 

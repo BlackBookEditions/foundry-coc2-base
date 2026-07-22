@@ -4,11 +4,12 @@
       "character": "Personnage COC2"
     },
     "xp": {
-      "tooltip": "XP disponibles / XP gagnés",
+      "tooltip": "Points de capacité disponibles / total (points de création de la tranche d'âge + 1 XP par séance)",
       "addSession": "Fin de séance : +1 XP"
     },
     "notif": {
-      "warningNotEnoughXP": "Attention : les XP dépensés dépassent les XP gagnés en séances."
+      "warningNotEnoughXP": "Attention : les points de capacité dépensés dépassent les points disponibles.",
+      "warningRankAboveAgeBracket": "Attention : rang {rank} au-delà du rang maximum de {maxRank} accessible à la création pour la tranche d'âge « {bracket} »."
     },
     "combat": {
       "formulaTooltip": "Formule de calcul fixée par les règles de Chroniques Oubliées Contemporain"
@@ -74,10 +75,15 @@
     },
     "age": {
       "label": "Tranche d'âge",
-      "jeune": "Jeune",
-      "adulte": "Adulte",
-      "experimente": "Expérimenté",
-      "veteran": "Vétéran"
+      "jeune": "Jeune (16 à 30 ans)",
+      "adulte": "Adulte (31 à 50 ans)",
+      "experimente": "Expérimenté (51 à 65 ans)",
+      "limits": {
+        "label": "Création — {bracket} : {pathCount}/{maxPaths} voies, rang max {highestRank}/{maxRank}",
+        "noBracket": "Aucune tranche d'âge choisie : le personnage n'a aucun point de capacité de création.",
+        "tooManyPaths": "trop de voies",
+        "rankTooHigh": "rang de voie trop élevé"
+      }
     },
     "config": {
       "martialTrainingWeapon": {

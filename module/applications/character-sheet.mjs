@@ -1,5 +1,5 @@
 import COCharacterSheet from "../../../../systems/co2/module/applications/sheets/character-sheet.mjs"
-import { HEALTH_SCALE, HEALTH_STATUS_EFFECTS, getHealthState, SECOND_SCALE, getSecondScaleState, FEATURE_SUBTYPES_COC2, AGE_BRACKETS, TRAIT_POINTS_MAX } from "../config/coc2.mjs"
+import { HEALTH_SCALE, HEALTH_STATUS_EFFECTS, getHealthState, SECOND_SCALE, getSecondScaleState, FEATURE_SUBTYPES_COC2, getAgeBracket, TRAIT_POINTS_MAX } from "../config/coc2.mjs"
 
 /**
  * Fiche de personnage COC2 : reprend la fiche COF2 en surchargeant les parties spécifiques (échelle de santé, progression sans niveaux)
@@ -87,10 +87,27 @@ export default class COC2CharacterSheet extends COCharacterSheet {
     const features = this.document.items.filter((item) => item.type === "feature")
     context.domaines = features.filter((f) => [FEATURE_SUBTYPES_COC2.domainePro.id, FEATURE_SUBTYPES_COC2.domaineExtraPro.id].includes(f.system.subtype))
 
-    // Tranche d'âge
-    context.choiceAgeBrackets = Object.fromEntries(Object.entries(AGE_BRACKETS).map(([key, bracket]) => [key, bracket.label]))
-    const currentBracket = AGE_BRACKETS[this.document.system.details.ageBracket]
+    // Tranche d'âge : liste lue depuis CONFIG pour rester surchargeable par un module d'univers
+    const brackets = CONFIG.COC2BASE.ageBrackets
+    context.choiceAgeBrackets = Object.fromEntries(Object.entries(brackets).map(([key, bracket]) => [key, bracket.label]))
+    const currentBracket = getAgeBracket(this.document.system)
     context.ageBracketLabel = currentBracket ? game.i18n.localize(currentBracket.label) : null
+
+    // Plafonds de création liés à la tranche d'âge : compteur injecté dans l'onglet Voies par _onRender.
+    // null dès que le personnage a gagné un XP de séance : la progression n'est plus plafonnée.
+    context.ageLimits =
+      currentBracket && this.document.system.isCreation
+        ? {
+            bracket: context.ageBracketLabel,
+            pathCount: this.document.paths.filter((p) => p.system.numberLearnedCapacities > 0).length,
+            maxPaths: currentBracket.maxPaths,
+            // Le plafond porte sur les rangs de voie : les capacités hors voie sont hors sujet
+            highestRank: Math.max(0, ...this.document.learnedCapacities.filter((c) => c.system.path !== null).map((c) => c.system.rank ?? 0)),
+            maxRank: currentBracket.maxRank,
+          }
+        : null
+    // Sans tranche d'âge, le personnage n'a aucun point de capacité de création : signalé en permanence
+    context.missingAgeBracket = !currentBracket
 
     // Formules des caractéristiques secondaires : figées par les règles, affichées à la place des selects de COF2
     const shortAbility = (key) => game.i18n.localize(`CO.abilities.short.${key}`)
@@ -117,8 +134,16 @@ export default class COC2CharacterSheet extends COCharacterSheet {
   async _onRender(context, options) {
     await super._onRender(context, options)
 
-    // Compteur des traits distinctifs : injecté en tête de l'onglet Biographie, avant le bloc « Profils & Traits ».
-    // Injection DOM plutôt qu'un override du template biographie (propriété du système co2) afin de ne pas le dupliquer.
+    this.#renderTraitBalance(context)
+    this.#renderAgeLimits(context)
+  }
+
+  /**
+   * Compteur des traits distinctifs : injecté en tête de l'onglet Biographie, avant le bloc « Profils & Traits ».
+   * Injection DOM plutôt qu'un override du template biographie (propriété du système co2) afin de ne pas le dupliquer.
+   * @param {object} context Contexte de rendu
+   */
+  #renderTraitBalance(context) {
     const biographyPart = this.element?.querySelector('[data-application-part="biography"]')
     if (!biographyPart) return
 
@@ -139,6 +164,45 @@ export default class COC2CharacterSheet extends COCharacterSheet {
     const suffix = context.traitValid ? "" : game.i18n.localize("COC2BASE.feature.traitError")
     const status = context.traitValid ? "info" : "error"
     const html = `<div class="notification ${status} permanent coc2-trait-balance">${message}${suffix}</div>`
+    target.insertAdjacentHTML("beforebegin", html)
+  }
+
+  /**
+   * Compteur des plafonds de création (voies et rang de voie) issus de la tranche d'âge : injecté dans
+   * l'onglet Voies, sous les notifications d'XP du système. Même motif d'injection DOM que le compteur
+   * des traits distinctifs, pour ne pas dupliquer le template paths.hbs du système.
+   * @param {object} context Contexte de rendu
+   */
+  #renderAgeLimits(context) {
+    const pathsPart = this.element?.querySelector('[data-application-part="paths"]')
+    if (!pathsPart) return
+
+    // Idempotence : on retire toute injection précédente (re-render partiel de l'onglet)
+    pathsPart.querySelector(".coc2-age-limits")?.remove()
+
+    const target = pathsPart.querySelector(".path-grid") ?? pathsPart.lastElementChild
+    if (!target) return
+
+    // Tranche d'âge non renseignée : aucun point de capacité de création, signalé en permanence
+    if (context.missingAgeBracket) {
+      const message = game.i18n.localize("COC2BASE.age.limits.noBracket")
+      target.insertAdjacentHTML("beforebegin", `<div class="notification info permanent coc2-age-limits">${message}</div>`)
+      return
+    }
+
+    // Le personnage a déjà joué : la progression par XP n'est plus plafonnée
+    const limits = context.ageLimits
+    if (!limits) return
+
+    const tooManyPaths = limits.pathCount > limits.maxPaths
+    const rankTooHigh = limits.highestRank > limits.maxRank
+    const message = game.i18n.format("COC2BASE.age.limits.label", limits)
+    const errors = []
+    if (tooManyPaths) errors.push(game.i18n.localize("COC2BASE.age.limits.tooManyPaths"))
+    if (rankTooHigh) errors.push(game.i18n.localize("COC2BASE.age.limits.rankTooHigh"))
+    const suffix = errors.length ? ` — ${errors.join(", ")}` : ""
+    const status = errors.length ? "error" : "info"
+    const html = `<div class="notification ${status} permanent coc2-age-limits">${message}${suffix}</div>`
     target.insertAdjacentHTML("beforebegin", html)
   }
 

@@ -1,6 +1,6 @@
 import CharacterData from "../../../../systems/co2/module/models/character.mjs"
 import Utils from "../../../../systems/co2/module/helpers/utils.mjs"
-import { HEALTH_SCALE, applyHealthScaleStatuses, SECOND_SCALE } from "../config/coc2.mjs"
+import { HEALTH_SCALE, applyHealthScaleStatuses, SECOND_SCALE, getAgeBracket } from "../config/coc2.mjs"
 
 /**
  * Data model des personnages COC2 : adapte le modèle COF2 aux règles de Chroniques Oubliées Contemporain
@@ -40,12 +40,22 @@ export default class COC2CharacterData extends CharacterData {
   }
 
   /**
-   * Progression COC2 : pas de niveaux, le plafond d'XP dépensables est le total gagné en séances
+   * Phase de création : le personnage n'a encore joué aucune séance. Les plafonds de voies et de rang
+   * de la tranche d'âge ne sont signalés que pendant cette phase, la progression par XP étant libre ensuite.
+   * @returns {boolean}
+   */
+  get isCreation() {
+    return this.attributes.xp.earned === 0
+  }
+
+  /**
+   * Progression COC2 : pas de niveaux, le plafond de points de capacité est la somme des points
+   * accordés par la tranche d'âge à la création et des XP gagnés en séances
    * @inheritDoc
    */
   prepareDerivedData() {
     super.prepareDerivedData()
-    this.attributes.xp.max = this.attributes.xp.earned
+    this.attributes.xp.max = (getAgeBracket(this)?.capacityPoints ?? 0) + this.attributes.xp.earned
 
     // Seconde échelle : taille fixe issue de la config. TODO : bonus/modifiers d'échelle étendue, comme _prepareHPMax.
     this.attributes.secondScale.max = SECOND_SCALE.max

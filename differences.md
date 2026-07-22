@@ -24,6 +24,18 @@ Ce document synthétise les différences majeures entre les deux systèmes, avec
 > « Le nombre de voies et de rangs par voie accessible à la création est déterminé par la tranche d’âge du PJ... » [8]
 > « CHOISIR SES TRAITS DISTINCTIFS : Si vous le souhaitez, vous pouvez enrichir l’historique de votre personnage en acquérant jusqu’à cinq points d’avantages et autant de désavantages dans les listes suivantes. » [9]
 
+Quotas par tranche d'âge :
+
+| Tranche d'âge | Points de capacité | Nombre max de voies | Rang max de voies |
+|---|---|---|---|
+| 16 à 30 ans | 4 | 4 | 2 |
+| 31 à 50 ans | 7 | 5 | 3 |
+| 51 à 65 ans | 10 | 6 | 4 |
+
+Le coût d'un rang diffère également de COF2, où les rangs 3 et plus valaient 2 points de capacité :
+
+> « Un point de capacité permet d’acheter un rang dans une voie. »
+
 ## 4. Le calcul des Caractéristiques Secondaires
 **Résumé :** Bien que le jeu ajoute officiellement la Volonté (VOL) pour porter le nombre de caractéristiques à 7 [10], c'est surtout le mode de calcul des statistiques de combat qui diffère de COF2 pour rééquilibrer le système [2]. L'Initiative intègre désormais l'Intelligence, et la Défense intègre la Perception [11].
 

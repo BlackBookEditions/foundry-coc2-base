@@ -7,11 +7,19 @@ Contrairement à `cof2-base`, ce module ne contient pas de compendiums : il adap
 ## Adaptations apportées
 
 - **Échelle de santé** : les Points de Vigueur sont remplacés par une échelle de 20 échelons avec 4 états préjudiciables posés automatiquement (Contusionné à 5, Affaibli à 10, Blessé à 15, Mourant à 20). Elle est rendue en ruban pleine largeur dans le header, sous les caractéristiques. Le malus de l'état atteint (−1 / −3 / −5 / −10) est appliqué automatiquement à l'Initiative et à la Défense, et proposé à cocher dans la fenêtre de jet des tests de FOR, AGI et CON — le livre de règles ne le fait porter que sur les actions physiques, ce que le système ne peut pas deviner. Les états s'excluant mutuellement, les malus ne se cumulent jamais. Le stockage réutilise `attributes.hp` (échelons cochés = `hp.max - hp.value`), ce qui conserve sans modification toute la chaîne de dégâts/soins du système (boutons de chat, queries, barres de token).
-- **Progression sans niveaux** : le niveau est gelé et masqué ; les XP gagnés en séance (bouton « +1 séance » dans le header) sont dépensés directement en rangs de voies. Le contrôle de niveau minimal des capacités est supprimé, la progression séquentielle dans la voie est conservée.
+- **Progression sans niveaux** : le niveau est gelé et masqué ; les points de capacité accordés à la création par la tranche d'âge, puis les XP gagnés en séance (bouton « +1 séance » dans le header), sont dépensés directement en rangs de voies. **Un point achète un rang, quel que soit le rang** — là où COF2 facturait 2 points aux rangs 3 et plus. Le contrôle de niveau minimal des capacités est supprimé, la progression séquentielle dans la voie est conservée.
 - **Initiative et Défense** : Init = 10 + INT + PER, DEF = 10 + AGI + PER (+ armure/bouclier).
 - **Attaques** : ATC = FOR et ATD = AGI, sans bonus de niveau. L'attaque magique et les points de magie de COF2 sont retirés de l'interface.
 - **États préjudiciables** : la liste des statuts est alignée sur le livre de règles COC2. Affaibli (le dé malus de COF2), Étourdi, Invalide et Paralysé sont retirés — sans équivalent en COC2 ; Asphyxié, Fatigué et Épuisé sont ajoutés ; les malus des états conservés sont réécrits aux valeurs COC2 (Ralenti passe de « aucun effet chiffré » à −5 en Init./DEF/attaques et 5 m, Essoufflé gagne −2 en Init. et DEF, etc.). Les malus qui portent « à tous les tests », « à toutes les actions » ou « aux actions basées sur la vue » ne sont pas appliqués d'office mais proposés à cocher dans les fenêtres de jet.
-- **Création** : sous-types de features pour les Domaines professionnels/extra-professionnels et les Traits distinctifs (avantages/désavantages avec coût en points), tranche d'âge sur la fiche.
+- **Création** : sous-types de features pour les Domaines professionnels/extra-professionnels et les Traits distinctifs (avantages/désavantages avec coût en points). La tranche d'âge choisie sur la fiche pilote le budget de points de capacité et les plafonds de création :
+
+  | Tranche d'âge | Points de capacité | Nb max de voies | Rang max de voie |
+  |---|---|---|---|
+  | Jeune (16 à 30 ans) | 4 | 4 | 2 |
+  | Adulte (31 à 50 ans) | 7 | 5 | 3 |
+  | Expérimenté (51 à 65 ans) | 10 | 6 | 4 |
+
+  Les points alimentent `attributes.xp.max` et sont donc décomptés par les compteurs d'XP du système. Les plafonds de voies et de rang ne sont **que signalés** (compteur permanent dans l'onglet Voies, avertissement à l'achat), jamais bloquants, et uniquement tant que le personnage n'a gagné aucun XP de séance : passée la création, la progression est libre.
 - **Entraînements martiaux contemporains** : armes à feu, protections balistiques, etc.
 - **Thème monochrome** : `style/palette.less` surcharge la palette du système (`systems/co2/styles/palette.less`) par une échelle de gris — l'or, le bleu, le rouge et le vert de la Fantasy disparaissent des fiches, de la sidebar, des fenêtres de jet, des fiches d'objets et des cartes de chat. Les couleurs des résultats de jet (`--co-result-*`) ne sont volontairement pas surchargées : succès, échec, critique et fumble restent des repères de lecture.
 
@@ -37,6 +45,7 @@ Sont prévus pour être surchargés :
 | `healthStateMalus[<id>]` | Valeur proposée à cocher sur les tests de caractéristique | au rendu |
 | `physicalAbilities` | Caractéristiques auxquelles la ligne des états de santé est proposée | au rendu |
 | `stateTestMalus[<id>]` | Malus proposés à cocher pour les autres états (`{ malus, abilities, hint }`) | au rendu |
+| `ageBrackets[<id>].label` / `.capacityPoints` / `.maxPaths` / `.maxRank` | Libellé et quotas de création d'une tranche d'âge | au rendu |
 | `statusChanges[<id>]` | Malus chiffrés des états préjudiciables (`{ init, def, melee, ranged, movement }`) | **au hook `init`** |
 | `removedStatusIds` | États du système retirés de la liste | **au hook `init`** |
 
