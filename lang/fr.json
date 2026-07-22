@@ -24,14 +24,14 @@
       "short": "Échelle",
       "damageTooltip": "Échelons cochés",
       "status": {
-        "secondState1": "État 1",
-        "secondState1Description": "TODO : premier état de la seconde échelle (seuil 25 %). Malus provisoire -1, cibles à définir.",
-        "secondState2": "État 2",
-        "secondState2Description": "TODO : deuxième état de la seconde échelle (seuil 50 %). Malus provisoire -3, cibles à définir.",
-        "secondState3": "État 3",
-        "secondState3Description": "TODO : troisième état de la seconde échelle (seuil 75 %). Malus provisoire -5, cibles à définir.",
-        "secondState4": "État 4",
-        "secondState4Description": "TODO : quatrième état de la seconde échelle (seuil 100 %). Malus provisoire -10, cibles à définir."
+        "secondState1": "Palier 1",
+        "secondState1Description": "5e échelon de la seconde échelle. Affichage seul, aucun modificateur.",
+        "secondState2": "Palier 2",
+        "secondState2Description": "10e échelon de la seconde échelle. Affichage seul, aucun modificateur.",
+        "secondState3": "Palier 3",
+        "secondState3Description": "15e échelon de la seconde échelle. Affichage seul, aucun modificateur.",
+        "secondState4": "Palier 4",
+        "secondState4Description": "20e échelon de la seconde échelle. Affichage seul, aucun modificateur."
       }
     },
     "settings": {

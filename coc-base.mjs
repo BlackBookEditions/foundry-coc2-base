@@ -8,7 +8,6 @@ import {
   HEALTH_STATE_MALUS,
   SECOND_SCALE,
   SECOND_SCALE_STATES,
-  SECOND_SCALE_STATE_MALUS,
   PHYSICAL_ABILITIES,
   COC2_STATUS_CHANGES,
   REMOVED_STATUS_IDS,
@@ -47,15 +46,14 @@ CONFIG.COC2BASE = {
   removedStatusIds: REMOVED_STATUS_IDS,
   stateTestMalus: STATE_TEST_MALUS,
   /**
-   * Seconde échelle (« Échelle »). Masquée par défaut : son affichage est commandé par le réglage
-   * `showSecondScale` OU par le flag `forced` ci-dessous. Un module d'univers (cth) la force et la
-   * renomme en modifiant ces champs depuis son hook init (label/labelShort = clés i18n ou libellés
-   * littéraux, lus au rendu ; states.<id>.name pour renommer un état).
+   * Seconde échelle (« Échelle ») : compteur avec libellé de palier affiché sur la fiche, SANS statut de
+   * token (rien dans CONFIG.statusEffects). Masquée par défaut : son affichage est commandé par le réglage
+   * `showSecondScale` OU par le flag `forced` ci-dessous. Un module d'univers (cth) la force, la renomme
+   * (label/labelShort) et renomme ses paliers (states.<id>.name/description) depuis son hook init.
    */
   secondScale: {
     scale: SECOND_SCALE,
     states: SECOND_SCALE_STATES,
-    stateMalus: SECOND_SCALE_STATE_MALUS,
     max: SECOND_SCALE.max,
     forced: false,
     label: "COC2BASE.secondScale.label",

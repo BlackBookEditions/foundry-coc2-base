@@ -53,14 +53,15 @@ export default class COC2CharacterSheet extends COCharacterSheet {
     context.healthStateId = currentState
     context.healthStateLabel = currentState ? stateLabels[currentState] : null
 
-    // Seconde échelle : affichée si le réglage est actif ou si un module d'univers la force.
-    // Libellés et noms d'états lus depuis CONFIG.COC2BASE pour rester surchargeables (cf. cth).
+    // Seconde échelle : compteur d'échelons + libellé du palier atteint (affichage seul, aucun statut de token).
+    // Affichée si le réglage est actif ou si un module d'univers la force. Libellés des paliers lus depuis
+    // CONFIG.COC2BASE.secondScale.states pour rester surchargeables (cf. cth → conscience).
     const secondScaleConfig = CONFIG.COC2BASE.secondScale
     context.showSecondScale = game.settings.get("coc2-base", "showSecondScale") || secondScaleConfig.forced
     if (context.showSecondScale) {
       const scaleMax = this.document.system.attributes.secondScale.max
       const checked = this.document.system.attributes.secondScale.value
-      const secondStateLabels = Object.fromEntries(Object.entries(secondScaleConfig.states).map(([id, effect]) => [id, game.i18n.localize(effect.name)]))
+      const secondStateLabels = Object.fromEntries(Object.entries(secondScaleConfig.states).map(([id, state]) => [id, game.i18n.localize(state.name)]))
       const secondThresholds = SECOND_SCALE.states.map((state) => ({ echelon: Math.ceil(state.threshold * scaleMax), id: state.id }))
 
       context.secondScaleValue = checked

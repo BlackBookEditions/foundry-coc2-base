@@ -1,6 +1,6 @@
 import CharacterData from "../../../../systems/co2/module/models/character.mjs"
 import Utils from "../../../../systems/co2/module/helpers/utils.mjs"
-import { HEALTH_SCALE, applyHealthScaleStatuses, SECOND_SCALE, applySecondScaleStatuses } from "../config/coc2.mjs"
+import { HEALTH_SCALE, applyHealthScaleStatuses, SECOND_SCALE } from "../config/coc2.mjs"
 
 /**
  * Data model des personnages COC2 : adapte le modèle COF2 aux règles de Chroniques Oubliées Contemporain
@@ -72,9 +72,6 @@ export default class COC2CharacterData extends CharacterData {
   async _preUpdate(changes, options, user) {
     if (foundry.utils.hasProperty(changes, "system.attributes.hp.value")) {
       await applyHealthScaleStatuses(this.parent, changes.system.attributes.hp.value, this.attributes.hp.max)
-    }
-    if (foundry.utils.hasProperty(changes, "system.attributes.secondScale.value")) {
-      await applySecondScaleStatuses(this.parent, changes.system.attributes.secondScale.value, this.attributes.secondScale.max)
     }
   }
 
