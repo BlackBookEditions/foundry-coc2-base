@@ -3,14 +3,24 @@
 /* Couleur des échelons cochés de l'échelle de santé */
 @coc2-damage: #8a1c1c;
 
+/* Couleur des échelons cochés de la seconde échelle (distincte du rouge santé) */
+@coc2-secondscale: #3a5a8a;
+
+/* Largeurs partagées par les deux rubans (santé + seconde échelle) : le libellé et le bloc résumé
+   ont la même largeur d'une ligne à l'autre, donc le bloc icône X/Y et le début du ruban s'alignent
+   verticalement. Dimensionnées pour le plus long libellé attendu (« Conscience »). */
+@coc2-scale-label-width: 8em;
+@coc2-scale-summary-width: 5em;
+
 .co.actor.coc2 {
   /* Rangée supplémentaire pleine largeur dans le header, sous les caractéristiques */
   .window-content .sheet-header {
-    grid-template-rows: auto auto auto;
+    grid-template-rows: auto auto auto auto;
     grid-template-areas:
       "img   name      traits   level"
       "img abilities abilities abilities"
-      "health health health health";
+      "health health health health"
+      "secondscale secondscale secondscale secondscale";
   }
 
   /* Ruban de l'échelle de santé : libellé, bloc coeur, 20 échelons, état atteint */
@@ -28,6 +38,10 @@
       /* Foundry pose margin: 2rem 0 1rem sur les h4 : la marge basse subsistante décentrerait
          la bande, align-self centrant la boîte marges comprises */
       margin: 0;
+      /* Largeur fixe partagée avec la seconde échelle : aligne le bloc coeur d'une ligne à l'autre */
+      width: @coc2-scale-label-width;
+      box-sizing: border-box;
+      text-align: center;
       background-color: var(--co-sheet-accent);
       color: var(--co-text-light);
       font-weight: bold;
@@ -40,6 +54,8 @@
        donc son apparition ne décale pas la ligne libellé / coeur / ruban. */
     .health-summary {
       position: relative;
+      /* Largeur minimale partagée avec la seconde échelle : aligne le début du ruban d'une ligne à l'autre */
+      min-width: @coc2-scale-summary-width;
       white-space: nowrap;
       text-align: center;
     }
@@ -113,6 +129,118 @@
           background-color: @coc2-damage;
         }
       }
+    }
+  }
+
+  /* Ruban de la seconde échelle : même structure que .health-bar, couleur et emplacement propres */
+  .second-scale-bar {
+    grid-area: secondscale;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    min-width: 0;
+    /* Réserve la hauteur du libellé d'état, positionné en absolu sous le bloc résumé */
+    padding-bottom: 1.1em;
+
+    .scale-label {
+      align-self: center;
+      margin: 0;
+      /* Même largeur que .health-label : aligne le bloc icône X/Y d'une échelle à l'autre */
+      width: @coc2-scale-label-width;
+      box-sizing: border-box;
+      text-align: center;
+      background-color: var(--co-sheet-accent);
+      color: var(--co-text-light);
+      font-weight: bold;
+      padding: 2px 8px;
+      white-space: nowrap;
+      cursor: help;
+    }
+
+    .scale-summary {
+      position: relative;
+      /* Même largeur minimale que .health-summary : aligne le début du ruban d'une échelle à l'autre */
+      min-width: @coc2-scale-summary-width;
+      white-space: nowrap;
+      text-align: center;
+    }
+
+    .scale-points {
+      font-weight: bold;
+
+      .slash {
+        margin: 0 1px;
+      }
+    }
+
+    .scale-steps {
+      display: flex;
+      align-items: center;
+      flex: 1;
+      gap: 1px;
+      min-width: 0;
+    }
+
+    .scale-step {
+      flex: 1 1 0;
+      min-width: 0;
+      overflow: hidden;
+      font-size: 0.7rem;
+      height: 1.5em;
+      line-height: 1.5em;
+      text-align: center;
+      font-weight: bold;
+      cursor: pointer;
+      background-color: var(--co-surface);
+      color: var(--co-sheet-accent);
+      clip-path: polygon(0 0, calc(100% - 0.5em) 0, 100% 50%, calc(100% - 0.5em) 100%, 0 100%, 0.5em 50%);
+
+      &:first-child {
+        clip-path: polygon(0 0, calc(100% - 0.5em) 0, 100% 50%, calc(100% - 0.5em) 100%, 0 100%);
+      }
+
+      &:hover {
+        filter: brightness(1.25);
+      }
+
+      &.filled {
+        background-color: @coc2-secondscale;
+        color: var(--co-text-light);
+      }
+
+      &.milestone {
+        position: relative;
+        z-index: 0;
+        background-color: #000;
+        color: #000;
+
+        &::before {
+          content: "";
+          position: absolute;
+          inset: 1px;
+          z-index: -1;
+          clip-path: inherit;
+          background-color: var(--co-surface);
+        }
+
+        &.filled::before {
+          background-color: @coc2-secondscale;
+        }
+      }
+    }
+
+    /* Nom de l'état atteint, sous le bloc résumé (comme .health-state) */
+    .scale-state {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      right: 0;
+      text-align: center;
+      font-variant: small-caps;
+      font-weight: bold;
+      font-size: 0.85em;
+      white-space: nowrap;
+      color: var(--co-text-light);
     }
   }
 

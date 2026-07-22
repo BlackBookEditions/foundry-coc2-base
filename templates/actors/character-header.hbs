@@ -108,4 +108,40 @@
       </div>
     {{/unless}}
   </div>
+  {{#if showSecondScale}}
+    {{!-- Seconde échelle : même ruban que la santé, affiché sous elle ; libellé fourni par la config (surchargeable par un module d'univers) --}}
+    <div class="second-scale-bar">
+      <h4 class="scale-label" data-tooltip="{{secondScaleLabel}}">{{secondScaleShort}}</h4>
+      <div class="scale-summary">
+        <div class="scale-points">
+          <i class="fas fa-fw fa-brain"></i>
+          {{#if viewLimited}}
+            ??
+          {{else}}
+            <span class="current">{{secondScaleValue}}</span>
+            <span class="slash">/</span>
+            <span class="max">{{secondScaleMax}}</span>
+          {{/if}}
+        </div>
+        {{#unless viewLimited}}
+          {{#if secondScaleStateLabel}}
+            <div class="scale-state {{secondScaleStateId}}">{{secondScaleStateLabel}}</div>
+          {{/if}}
+        {{/unless}}
+      </div>
+      {{#unless viewLimited}}
+        <div class="scale-steps">
+          {{#each secondScale}}
+            <a
+              class="scale-step{{#if this.filled}} filled{{/if}}{{#if this.milestone}} milestone {{this.state}}{{/if}}"
+              data-action="clickSecondScale"
+              data-echelon="{{this.echelon}}"
+              data-tooltip="{{this.tooltip}}"
+              data-tooltip-direction="UP"
+            >{{this.echelon}}</a>
+          {{/each}}
+        </div>
+      {{/unless}}
+    </div>
+  {{/if}}
 </header>

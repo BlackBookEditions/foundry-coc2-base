@@ -14,6 +14,23 @@ export const HEALTH_SCALE = {
 }
 
 /**
+ * Seconde échelle COC2 (« Échelle » dans coc2-base, « Échelle de conscience » dans un module d'univers).
+ * Même structure que l'échelle de santé : 20 échelons, 4 états à seuils. Son affichage est commandé par
+ * le réglage `showSecondScale` (ou le flag `CONFIG.COC2BASE.secondScale.forced`).
+ * Le stockage utilise attributes.secondScale.value = nombre d'échelons cochés (0 = échelle vide).
+ * TODO : renseigner les ids, seuils et libellés définitifs des états (placeholders provisoires).
+ */
+export const SECOND_SCALE = {
+  max: 20,
+  states: [
+    { id: "secondState1", threshold: 0.25 },
+    { id: "secondState2", threshold: 0.5 },
+    { id: "secondState3", threshold: 0.75 },
+    { id: "secondState4", threshold: 1 },
+  ],
+}
+
+/**
  * Malus de chaque état de santé (LdR ch. 5, table « Les états de santé »).
  * Le livre de règles l'applique à l'Init., à la DEF et à toutes les actions physiques.
  */
@@ -22,6 +39,17 @@ export const HEALTH_STATE_MALUS = {
   affaibli: -3,
   blesse: -5,
   mourant: -10,
+}
+
+/**
+ * Malus de chaque état de la seconde échelle.
+ * TODO : renseigner les valeurs définitives (placeholders calqués sur l'échelle de santé).
+ */
+export const SECOND_SCALE_STATE_MALUS = {
+  secondState1: -1,
+  secondState2: -3,
+  secondState3: -5,
+  secondState4: -10,
 }
 
 /**
@@ -118,6 +146,38 @@ export const HEALTH_STATUS_EFFECTS = [
 export const HEALTH_STATES = Object.fromEntries(HEALTH_STATUS_EFFECTS.map((effect) => [effect.id, effect]))
 
 /**
+ * Changes d'ActiveEffect portant le malus d'un état de la seconde échelle.
+ * TODO : les cibles du malus restent à définir. Tant qu'elles ne le sont pas, aucune cible n'est
+ * câblée (l'état est posé/retiré, mais ne modifie encore aucune valeur). Renseigner un buildChanges
+ * dès que les règles fixent les cibles, ex. buildChanges({ init: malus, def: malus }).
+ * @param {string} id Identifiant de l'état de la seconde échelle
+ * @returns {Array<object>}
+ */
+function secondScaleStateChanges(id) {
+  // TODO : câbler les cibles depuis SECOND_SCALE_STATE_MALUS[id], ex. buildChanges({ init: malus, def: malus })
+  return buildChanges({})
+}
+
+/**
+ * Statuts des états de la seconde échelle, ajoutés à CONFIG.statusEffects.
+ * Icônes core provisoires, à remplacer par des icônes dédiées dans assets/icons.
+ * TODO : renseigner libellés et descriptions définitifs (clés i18n COC2BASE.secondScale.status.<id>).
+ */
+export const SECOND_SCALE_STATUS_EFFECTS = SECOND_SCALE.states.map((state) => ({
+  id: state.id,
+  name: `COC2BASE.secondScale.status.${state.id}`,
+  img: "icons/svg/aura.svg",
+  description: `COC2BASE.secondScale.status.${state.id}Description`,
+  changes: secondScaleStateChanges(state.id),
+}))
+
+/**
+ * États de la seconde échelle indexés par id, pour la configuration publique du module.
+ * Les objets sont ceux de SECOND_SCALE_STATUS_EFFECTS : muter un nom ici le mute partout.
+ */
+export const SECOND_SCALE_STATES = Object.fromEntries(SECOND_SCALE_STATUS_EFFECTS.map((effect) => [effect.id, effect]))
+
+/**
  * Malus chiffrés des états préjudiciables COC2 (LdR ch. 4), par identifiant de statut du système.
  * Les valeurs de COF2 sont écrasées : la table COC2 diffère pour presque tous les états conservés.
  */
@@ -184,7 +244,7 @@ export function buildStatusEffects() {
     changes: buildChanges(COC2_STATUS_CHANGES[id]),
   }))
 
-  return [...kept, ...added, ...HEALTH_STATUS_EFFECTS]
+  return [...kept, ...added, ...HEALTH_STATUS_EFFECTS, ...SECOND_SCALE_STATUS_EFFECTS]
 }
 
 /**
@@ -372,6 +432,42 @@ export async function applyHealthScaleStatuses(actor, newHp, max) {
     } else if (state.id !== target && active && actor.getFlag("coc2-base", `statuses.${state.id}FromHealthScale`)) {
       await actor.toggleStatusEffect(state.id, { active: false })
       await actor.unsetFlag("coc2-base", `statuses.${state.id}FromHealthScale`)
+    }
+  }
+}
+
+/**
+ * Retourne l'id de l'état de la seconde échelle atteint pour un nombre d'échelons cochés, ou null si aucun.
+ * Contrairement à l'échelle de santé, la valeur stockée est déjà le nombre d'échelons cochés.
+ * @param {number} checked Nombre d'échelons cochés (attributes.secondScale.value)
+ * @param {number} max Taille de l'échelle
+ * @returns {string|null}
+ */
+export function getSecondScaleState(checked, max) {
+  let current = null
+  for (const state of SECOND_SCALE.states) {
+    if (checked >= Math.ceil(state.threshold * max)) current = state.id
+  }
+  return current
+}
+
+/**
+ * Pose/retire automatiquement les statuts d'état de la seconde échelle selon sa nouvelle valeur.
+ * Seul l'état le plus grave atteint est actif ; seuls les statuts posés par cette automatisation sont retirés.
+ * @param {Actor} actor
+ * @param {number} newValue Nouveau nombre d'échelons cochés (attributes.secondScale.value)
+ * @param {number} max Taille de l'échelle
+ */
+export async function applySecondScaleStatuses(actor, newValue, max) {
+  const target = getSecondScaleState(newValue, max)
+  for (const state of SECOND_SCALE.states) {
+    const active = actor.statuses.has(state.id)
+    if (state.id === target && !active) {
+      await actor.toggleStatusEffect(state.id, { active: true })
+      await actor.setFlag("coc2-base", `statuses.${state.id}FromSecondScale`, true)
+    } else if (state.id !== target && active && actor.getFlag("coc2-base", `statuses.${state.id}FromSecondScale`)) {
+      await actor.toggleStatusEffect(state.id, { active: false })
+      await actor.unsetFlag("coc2-base", `statuses.${state.id}FromSecondScale`)
     }
   }
 }

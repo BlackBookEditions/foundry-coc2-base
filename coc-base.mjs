@@ -6,6 +6,9 @@ import {
   HEALTH_SCALE,
   HEALTH_STATES,
   HEALTH_STATE_MALUS,
+  SECOND_SCALE,
+  SECOND_SCALE_STATES,
+  SECOND_SCALE_STATE_MALUS,
   PHYSICAL_ABILITIES,
   COC2_STATUS_CHANGES,
   REMOVED_STATUS_IDS,
@@ -43,10 +46,35 @@ CONFIG.COC2BASE = {
   statusChanges: COC2_STATUS_CHANGES,
   removedStatusIds: REMOVED_STATUS_IDS,
   stateTestMalus: STATE_TEST_MALUS,
+  /**
+   * Seconde échelle (« Échelle »). Masquée par défaut : son affichage est commandé par le réglage
+   * `showSecondScale` OU par le flag `forced` ci-dessous. Un module d'univers (cth) la force et la
+   * renomme en modifiant ces champs depuis son hook init (label/labelShort = clés i18n ou libellés
+   * littéraux, lus au rendu ; states.<id>.name pour renommer un état).
+   */
+  secondScale: {
+    scale: SECOND_SCALE,
+    states: SECOND_SCALE_STATES,
+    stateMalus: SECOND_SCALE_STATE_MALUS,
+    max: SECOND_SCALE.max,
+    forced: false,
+    label: "COC2BASE.secondScale.label",
+    labelShort: "COC2BASE.secondScale.short",
+  },
 }
 
 Hooks.once("init", () => {
   console.info("COC2 Base | Initialisation du module...")
+
+  // Réglage commandant l'affichage de la seconde échelle sur les fiches (premier réglage du module)
+  game.settings.register("coc2-base", "showSecondScale", {
+    name: "COC2BASE.settings.showSecondScale.name",
+    hint: "COC2BASE.settings.showSecondScale.hint",
+    scope: "world",
+    config: true,
+    type: Boolean,
+    default: false,
+  })
 
   // Remplacement des classes du système par les variantes COC2 : le hook init du module s'exécute après celui du système
   CONFIG.Actor.documentClass = COC2Actor

@@ -1,6 +1,6 @@
 import CharacterData from "../../../../systems/co2/module/models/character.mjs"
 import Utils from "../../../../systems/co2/module/helpers/utils.mjs"
-import { HEALTH_SCALE, applyHealthScaleStatuses } from "../config/coc2.mjs"
+import { HEALTH_SCALE, applyHealthScaleStatuses, SECOND_SCALE, applySecondScaleStatuses } from "../config/coc2.mjs"
 
 /**
  * Data model des personnages COC2 : adapte le modèle COF2 aux règles de Chroniques Oubliées Contemporain
@@ -27,6 +27,15 @@ export default class COC2CharacterData extends CharacterData {
     ageBracket.parent = details
     details.fields.ageBracket = ageBracket
 
+    // Seconde échelle : value = nombre d'échelons cochés (0 = échelle vide). max dérivé en prepareDerivedData.
+    const attributes = schema.attributes
+    const secondScale = new fields.SchemaField({
+      value: new fields.NumberField({ required: true, nullable: false, integer: true, initial: 0, min: 0 }),
+    })
+    secondScale.name = "secondScale"
+    secondScale.parent = attributes
+    attributes.fields.secondScale = secondScale
+
     return schema
   }
 
@@ -37,6 +46,10 @@ export default class COC2CharacterData extends CharacterData {
   prepareDerivedData() {
     super.prepareDerivedData()
     this.attributes.xp.max = this.attributes.xp.earned
+
+    // Seconde échelle : taille fixe issue de la config. TODO : bonus/modifiers d'échelle étendue, comme _prepareHPMax.
+    this.attributes.secondScale.max = SECOND_SCALE.max
+    if (this.attributes.secondScale.value > this.attributes.secondScale.max) this.attributes.secondScale.value = this.attributes.secondScale.max
   }
 
   /** @inheritDoc */
@@ -57,8 +70,12 @@ export default class COC2CharacterData extends CharacterData {
    * @inheritDoc
    */
   async _preUpdate(changes, options, user) {
-    if (!foundry.utils.hasProperty(changes, "system.attributes.hp.value")) return
-    await applyHealthScaleStatuses(this.parent, changes.system.attributes.hp.value, this.attributes.hp.max)
+    if (foundry.utils.hasProperty(changes, "system.attributes.hp.value")) {
+      await applyHealthScaleStatuses(this.parent, changes.system.attributes.hp.value, this.attributes.hp.max)
+    }
+    if (foundry.utils.hasProperty(changes, "system.attributes.secondScale.value")) {
+      await applySecondScaleStatuses(this.parent, changes.system.attributes.secondScale.value, this.attributes.secondScale.max)
+    }
   }
 
   /**

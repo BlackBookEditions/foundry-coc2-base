@@ -1,5 +1,5 @@
 import COCharacterSheet from "../../../../systems/co2/module/applications/sheets/character-sheet.mjs"
-import { HEALTH_SCALE, HEALTH_STATUS_EFFECTS, getHealthState, FEATURE_SUBTYPES_COC2, AGE_BRACKETS, TRAIT_POINTS_MAX } from "../config/coc2.mjs"
+import { HEALTH_SCALE, HEALTH_STATUS_EFFECTS, getHealthState, SECOND_SCALE, getSecondScaleState, FEATURE_SUBTYPES_COC2, AGE_BRACKETS, TRAIT_POINTS_MAX } from "../config/coc2.mjs"
 
 /**
  * Fiche de personnage COC2 : reprend la fiche COF2 en surchargeant les parties spécifiques (échelle de santé, progression sans niveaux)
@@ -9,6 +9,7 @@ export default class COC2CharacterSheet extends COCharacterSheet {
     classes: ["coc2"],
     actions: {
       clickHealthScale: COC2CharacterSheet.#onClickHealthScale,
+      clickSecondScale: COC2CharacterSheet.#onClickSecondScale,
       addSession: COC2CharacterSheet.#onAddSession,
     },
   }
@@ -52,6 +53,35 @@ export default class COC2CharacterSheet extends COCharacterSheet {
     context.healthStateId = currentState
     context.healthStateLabel = currentState ? stateLabels[currentState] : null
 
+    // Seconde échelle : affichée si le réglage est actif ou si un module d'univers la force.
+    // Libellés et noms d'états lus depuis CONFIG.COC2BASE pour rester surchargeables (cf. cth).
+    const secondScaleConfig = CONFIG.COC2BASE.secondScale
+    context.showSecondScale = game.settings.get("coc2-base", "showSecondScale") || secondScaleConfig.forced
+    if (context.showSecondScale) {
+      const scaleMax = this.document.system.attributes.secondScale.max
+      const checked = this.document.system.attributes.secondScale.value
+      const secondStateLabels = Object.fromEntries(Object.entries(secondScaleConfig.states).map(([id, effect]) => [id, game.i18n.localize(effect.name)]))
+      const secondThresholds = SECOND_SCALE.states.map((state) => ({ echelon: Math.ceil(state.threshold * scaleMax), id: state.id }))
+
+      context.secondScaleValue = checked
+      context.secondScaleMax = scaleMax
+      context.secondScaleLabel = game.i18n.localize(secondScaleConfig.label)
+      context.secondScaleShort = game.i18n.localize(secondScaleConfig.labelShort)
+      context.secondScale = Array.fromRange(scaleMax, 1).map((echelon) => {
+        const milestone = secondThresholds.find((t) => t.echelon === echelon)
+        return {
+          echelon,
+          filled: echelon <= checked,
+          milestone: !!milestone,
+          state: milestone?.id ?? "",
+          tooltip: milestone ? `${echelon} — ${secondStateLabels[milestone.id]}` : String(echelon),
+        }
+      })
+      const secondCurrentState = getSecondScaleState(checked, scaleMax)
+      context.secondScaleStateId = secondCurrentState
+      context.secondScaleStateLabel = secondCurrentState ? secondStateLabels[secondCurrentState] : null
+    }
+
     // Domaines : remplacent peuple et profils dans le header
     const features = this.document.items.filter((item) => item.type === "feature")
     context.domaines = features.filter((f) => [FEATURE_SUBTYPES_COC2.domainePro.id, FEATURE_SUBTYPES_COC2.domaineExtraPro.id].includes(f.system.subtype))
@@ -87,6 +117,19 @@ export default class COC2CharacterSheet extends COCharacterSheet {
     const damage = max - this.document.system.attributes.hp.value
     const newDamage = echelon === damage ? echelon - 1 : echelon
     await this.document.update({ "system.attributes.hp.value": max - newDamage })
+  }
+
+  /**
+   * Clic sur un échelon de la seconde échelle : coche jusqu'à l'échelon cliqué, ou décoche le dernier.
+   * La valeur stockée est directement le nombre d'échelons cochés (0 = échelle vide).
+   * @param {PointerEvent} event
+   * @param {HTMLElement} target
+   */
+  static async #onClickSecondScale(event, target) {
+    const echelon = Number(target.dataset.echelon)
+    const value = this.document.system.attributes.secondScale.value
+    const newValue = echelon === value ? echelon - 1 : echelon
+    await this.document.update({ "system.attributes.secondScale.value": newValue })
   }
 
   /**

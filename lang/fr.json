@@ -19,6 +19,27 @@
       "damageTooltip": "Échelons cochés",
       "malusHint": "Uniquement sur les actions physiques"
     },
+    "secondScale": {
+      "label": "Échelle",
+      "short": "Échelle",
+      "damageTooltip": "Échelons cochés",
+      "status": {
+        "secondState1": "État 1",
+        "secondState1Description": "TODO : premier état de la seconde échelle (seuil 25 %). Malus provisoire -1, cibles à définir.",
+        "secondState2": "État 2",
+        "secondState2Description": "TODO : deuxième état de la seconde échelle (seuil 50 %). Malus provisoire -3, cibles à définir.",
+        "secondState3": "État 3",
+        "secondState3Description": "TODO : troisième état de la seconde échelle (seuil 75 %). Malus provisoire -5, cibles à définir.",
+        "secondState4": "État 4",
+        "secondState4Description": "TODO : quatrième état de la seconde échelle (seuil 100 %). Malus provisoire -10, cibles à définir."
+      }
+    },
+    "settings": {
+      "showSecondScale": {
+        "name": "Afficher la seconde échelle",
+        "hint": "Affiche, sous l'échelle de santé, une seconde échelle (« Échelle ») sur les fiches de personnage."
+      }
+    },
     "status": {
       "contusionne": "Contusionné",
       "contusionneDescription": "5e échelon de l'échelle de santé. Malus de -1, appliqué automatiquement à l'Initiative et à la Défense, à reporter à la main sur les actions physiques. Aucun autre effet, et aucun test de médecine n'est nécessaire pour entamer la guérison.",
