@@ -1,5 +1,13 @@
 import COCharacterSheet from "../../../../systems/co2/module/applications/sheets/character-sheet.mjs"
-import { HEALTH_SCALE, HEALTH_STATUS_EFFECTS, getHealthState, SECOND_SCALE, getSecondScaleState, FEATURE_SUBTYPES_COC2, getAgeBracket, TRAIT_POINTS_MAX } from "../config/coc2.mjs"
+import {
+  getHealthScaleContext,
+  getSecondScaleContext,
+  updateHealthScale,
+  updateSecondScale,
+  FEATURE_SUBTYPES_COC2,
+  getAgeBracket,
+  TRAIT_POINTS_MAX,
+} from "../config/coc2.mjs"
 
 /**
  * Fiche de personnage COC2 : reprend la fiche COF2 en surchargeant les parties spécifiques (échelle de santé, progression sans niveaux)
@@ -28,60 +36,9 @@ export default class COC2CharacterSheet extends COCharacterSheet {
   async _prepareContext() {
     const context = await super._prepareContext()
 
-    // Échelle de santé : échelons cochés = hp.max - hp.value
-    const max = this.document.system.attributes.hp.max
-    const damage = max - this.document.system.attributes.hp.value
-    const stateLabels = HEALTH_STATUS_EFFECTS.reduce((obj, effect) => {
-      obj[effect.id] = game.i18n.localize(effect.name)
-      return obj
-    }, {})
-    const thresholds = HEALTH_SCALE.states.map((state) => ({ echelon: Math.ceil(state.threshold * max), id: state.id }))
-
-    context.healthDamage = damage
-    context.healthScale = Array.fromRange(max, 1).map((echelon) => {
-      const milestone = thresholds.find((t) => t.echelon === echelon)
-      return {
-        echelon,
-        filled: echelon <= damage,
-        milestone: !!milestone,
-        state: milestone?.id ?? "",
-        tooltip: milestone ? `${echelon} — ${stateLabels[milestone.id]}` : String(echelon),
-      }
-    })
-
-    const currentState = getHealthState(damage, max)
-    context.healthStateId = currentState
-    context.healthStateLabel = currentState ? stateLabels[currentState] : null
-
-    // Seconde échelle : compteur d'échelons + libellé du palier atteint (affichage seul, aucun statut de token).
-    // Affichée si le réglage est actif ou si un module d'univers la force. Libellés des paliers lus depuis
-    // CONFIG.COC2BASE.secondScale.states pour rester surchargeables (cf. cth → conscience).
-    const secondScaleConfig = CONFIG.COC2BASE.secondScale
-    context.showSecondScale = game.settings.get("coc2-base", "showSecondScale") || secondScaleConfig.forced
-    if (context.showSecondScale) {
-      const scaleMax = this.document.system.attributes.secondScale.max
-      const checked = this.document.system.attributes.secondScale.value
-      const secondStateLabels = Object.fromEntries(Object.entries(secondScaleConfig.states).map(([id, state]) => [id, game.i18n.localize(state.name)]))
-      const secondThresholds = SECOND_SCALE.states.map((state) => ({ echelon: Math.ceil(state.threshold * scaleMax), id: state.id }))
-
-      context.secondScaleValue = checked
-      context.secondScaleMax = scaleMax
-      context.secondScaleLabel = game.i18n.localize(secondScaleConfig.label)
-      context.secondScaleShort = game.i18n.localize(secondScaleConfig.labelShort)
-      context.secondScale = Array.fromRange(scaleMax, 1).map((echelon) => {
-        const milestone = secondThresholds.find((t) => t.echelon === echelon)
-        return {
-          echelon,
-          filled: echelon <= checked,
-          milestone: !!milestone,
-          state: milestone?.id ?? "",
-          tooltip: milestone ? `${echelon} — ${secondStateLabels[milestone.id]}` : String(echelon),
-        }
-      })
-      const secondCurrentState = getSecondScaleState(checked, scaleMax)
-      context.secondScaleStateId = secondCurrentState
-      context.secondScaleStateLabel = secondCurrentState ? secondStateLabels[secondCurrentState] : null
-    }
+    // Échelle de santé et seconde échelle : contextes mutualisés avec la Vue actions (cf. config/coc2.mjs)
+    Object.assign(context, getHealthScaleContext(this.document))
+    Object.assign(context, getSecondScaleContext(this.document))
 
     // Domaines : remplacent peuple et profils dans le header
     const features = this.document.items.filter((item) => item.type === "feature")
@@ -212,11 +169,7 @@ export default class COC2CharacterSheet extends COCharacterSheet {
    * @param {HTMLElement} target
    */
   static async #onClickHealthScale(event, target) {
-    const echelon = Number(target.dataset.echelon)
-    const max = this.document.system.attributes.hp.max
-    const damage = max - this.document.system.attributes.hp.value
-    const newDamage = echelon === damage ? echelon - 1 : echelon
-    await this.document.update({ "system.attributes.hp.value": max - newDamage })
+    await updateHealthScale(this.document, Number(target.dataset.echelon))
   }
 
   /**
@@ -226,10 +179,7 @@ export default class COC2CharacterSheet extends COCharacterSheet {
    * @param {HTMLElement} target
    */
   static async #onClickSecondScale(event, target) {
-    const echelon = Number(target.dataset.echelon)
-    const value = this.document.system.attributes.secondScale.value
-    const newValue = echelon === value ? echelon - 1 : echelon
-    await this.document.update({ "system.attributes.secondScale.value": newValue })
+    await updateSecondScale(this.document, Number(target.dataset.echelon))
   }
 
   /**

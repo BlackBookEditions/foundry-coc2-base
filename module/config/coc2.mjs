@@ -440,3 +440,105 @@ export function getSecondScaleState(checked, max) {
   return current
 }
 
+/**
+ * Contexte de rendu du ruban de l'échelle de santé, partagé par la fiche complète et la Vue actions.
+ * Réutilise attributes.hp : échelons cochés = hp.max - hp.value.
+ * @param {Actor} actor
+ * @returns {{ healthDamage: number, healthScale: Array<object>, healthStateId: string|null, healthStateLabel: string|null }}
+ */
+export function getHealthScaleContext(actor) {
+  const max = actor.system.attributes.hp.max
+  const damage = max - actor.system.attributes.hp.value
+  const stateLabels = HEALTH_STATUS_EFFECTS.reduce((obj, effect) => {
+    obj[effect.id] = game.i18n.localize(effect.name)
+    return obj
+  }, {})
+  const thresholds = HEALTH_SCALE.states.map((state) => ({ echelon: Math.ceil(state.threshold * max), id: state.id }))
+
+  const healthScale = Array.fromRange(max, 1).map((echelon) => {
+    const milestone = thresholds.find((t) => t.echelon === echelon)
+    return {
+      echelon,
+      filled: echelon <= damage,
+      milestone: !!milestone,
+      state: milestone?.id ?? "",
+      tooltip: milestone ? `${echelon} — ${stateLabels[milestone.id]}` : String(echelon),
+    }
+  })
+
+  const currentState = getHealthState(damage, max)
+  return {
+    healthDamage: damage,
+    healthScale,
+    healthStateId: currentState,
+    healthStateLabel: currentState ? stateLabels[currentState] : null,
+  }
+}
+
+/**
+ * Contexte de rendu du ruban de la seconde échelle, partagé par la fiche complète et la Vue actions.
+ * Affichée si le réglage `showSecondScale` est actif ou si un module d'univers la force ; renvoie
+ * `{ showSecondScale: false }` sinon. Libellés lus depuis CONFIG.COC2BASE.secondScale (surchargeables).
+ * @param {Actor} actor
+ * @returns {object}
+ */
+export function getSecondScaleContext(actor) {
+  const secondScaleConfig = CONFIG.COC2BASE.secondScale
+  const showSecondScale = game.settings.get("coc2-base", "showSecondScale") || secondScaleConfig.forced
+  if (!showSecondScale) return { showSecondScale: false }
+
+  const scaleMax = actor.system.attributes.secondScale.max
+  const checked = actor.system.attributes.secondScale.value
+  const secondStateLabels = Object.fromEntries(Object.entries(secondScaleConfig.states).map(([id, state]) => [id, game.i18n.localize(state.name)]))
+  const secondThresholds = SECOND_SCALE.states.map((state) => ({ echelon: Math.ceil(state.threshold * scaleMax), id: state.id }))
+
+  const secondScale = Array.fromRange(scaleMax, 1).map((echelon) => {
+    const milestone = secondThresholds.find((t) => t.echelon === echelon)
+    return {
+      echelon,
+      filled: echelon <= checked,
+      milestone: !!milestone,
+      state: milestone?.id ?? "",
+      tooltip: milestone ? `${echelon} — ${secondStateLabels[milestone.id]}` : String(echelon),
+    }
+  })
+
+  const secondCurrentState = getSecondScaleState(checked, scaleMax)
+  return {
+    showSecondScale: true,
+    secondScaleValue: checked,
+    secondScaleMax: scaleMax,
+    secondScaleLabel: game.i18n.localize(secondScaleConfig.label),
+    secondScaleShort: game.i18n.localize(secondScaleConfig.labelShort),
+    secondScale,
+    secondScaleStateId: secondCurrentState,
+    secondScaleStateLabel: secondCurrentState ? secondStateLabels[secondCurrentState] : null,
+  }
+}
+
+/**
+ * Coche/décoche l'échelle de santé jusqu'à l'échelon cliqué (ou décoche le dernier échelon coché).
+ * Partagé par la fiche complète et la Vue actions.
+ * @param {Actor} actor
+ * @param {number} echelon Échelon cliqué
+ */
+export async function updateHealthScale(actor, echelon) {
+  const max = actor.system.attributes.hp.max
+  const damage = max - actor.system.attributes.hp.value
+  const newDamage = echelon === damage ? echelon - 1 : echelon
+  await actor.update({ "system.attributes.hp.value": max - newDamage })
+}
+
+/**
+ * Coche/décoche la seconde échelle jusqu'à l'échelon cliqué (ou décoche le dernier échelon coché).
+ * La valeur stockée est directement le nombre d'échelons cochés (0 = échelle vide).
+ * Partagé par la fiche complète et la Vue actions.
+ * @param {Actor} actor
+ * @param {number} echelon Échelon cliqué
+ */
+export async function updateSecondScale(actor, echelon) {
+  const value = actor.system.attributes.secondScale.value
+  const newValue = echelon === value ? echelon - 1 : echelon
+  await actor.update({ "system.attributes.secondScale.value": newValue })
+}
+

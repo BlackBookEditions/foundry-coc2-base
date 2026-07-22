@@ -294,6 +294,20 @@
   }
 }
 
+/* Vue actions (mini-fiche) : en-tête réduit aux caractéristiques + rubans Santé/Échelle (portrait, nom,
+   niveau et traits retirés par le hook renderCOMiniCharacterSheet). Plus spécifique que la grille de la
+   fiche complète (.co.actor.coc2) : une seule colonne pleine largeur, trois rangées empilées. */
+.co.actor.coc2.character-mini {
+  .window-content .sheet-header {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: auto auto auto;
+    grid-template-areas:
+      "abilities"
+      "health"
+      "secondscale";
+  }
+}
+
 /* Groupe de joueurs COC2 : libellé d'état (santé) / de palier (seconde échelle) affiché en discret après la valeur */
 .co.party-sheet.coc2 .party-table {
   .health-state-label,
