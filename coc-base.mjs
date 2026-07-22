@@ -2,7 +2,37 @@ import COC2CharacterData from "./module/models/character.mjs"
 import COC2EncounterData from "./module/models/encounter.mjs"
 import COC2Actor from "./module/documents/actor.mjs"
 import COC2CharacterSheet from "./module/applications/character-sheet.mjs"
-import { HEALTH_STATUS_EFFECTS, FEATURE_SUBTYPES_COC2, MARTIAL_TRAININGS, hideMagicUI } from "./module/config/coc2.mjs"
+import {
+  HEALTH_SCALE,
+  HEALTH_STATES,
+  HEALTH_STATE_MALUS,
+  HEALTH_STATUS_EFFECTS,
+  PHYSICAL_ABILITIES,
+  FEATURE_SUBTYPES_COC2,
+  MARTIAL_TRAININGS,
+  hideMagicUI,
+} from "./module/config/coc2.mjs"
+
+/**
+ * Configuration publique du module. Exposée dès le chargement du script, et non dans le hook init,
+ * pour qu'un module d'univers puisse la modifier depuis son propre hook init quel que soit l'ordre
+ * de chargement des modules.
+ *
+ * Surchargeables : name, img, description et changes des états de santé, la table des malus et la
+ * liste des caractéristiques physiques. Les ids et les seuils pilotent la mécanique (pose automatique
+ * des statuts, flags, classes CSS du ruban) et ne doivent pas être modifiés.
+ *
+ * @example Renommer un état depuis un module d'univers
+ * Hooks.once("init", () => {
+ *   CONFIG.COC2BASE.healthStates.affaibli.name = "MONMODULE.status.choque" // clé i18n ou libellé littéral
+ * })
+ */
+CONFIG.COC2BASE = {
+  healthScale: HEALTH_SCALE,
+  healthStates: HEALTH_STATES,
+  healthStateMalus: HEALTH_STATE_MALUS,
+  physicalAbilities: PHYSICAL_ABILITIES,
+}
 
 Hooks.once("init", () => {
   console.info("COC2 Base | Initialisation du module...")

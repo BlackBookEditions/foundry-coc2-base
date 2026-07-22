@@ -7,10 +7,43 @@ export const HEALTH_SCALE = {
   max: 20,
   states: [
     { id: "contusionne", threshold: 0.25 },
-    { id: "blesse", threshold: 0.5 },
-    { id: "gravementBlesse", threshold: 0.75 },
+    { id: "affaibli", threshold: 0.5 },
+    { id: "blesse", threshold: 0.75 },
     { id: "mourant", threshold: 1 },
   ],
+}
+
+/**
+ * Malus de chaque état de santé (LdR ch. 5, table « Les états de santé »).
+ * Le livre de règles l'applique à l'Init., à la DEF et à toutes les actions physiques.
+ */
+export const HEALTH_STATE_MALUS = {
+  contusionne: -1,
+  affaibli: -3,
+  blesse: -5,
+  mourant: -10,
+}
+
+/**
+ * Caractéristiques concernées par le malus des états de santé : la règle vise les actions physiques.
+ */
+export const PHYSICAL_ABILITIES = ["for", "agi", "con"]
+
+/**
+ * Changes d'ActiveEffect portant le malus d'un état de santé (ACTIVE_EFFECT_MODES : ADD = 2).
+ * Seules l'Init. et la DEF sont appliquées d'office. La DEF et les attaques dérivant des
+ * caractéristiques dans co2 (DEF = 10 + AGI + PER, ATC = FOR, ATD = AGI), poser aussi le malus sur
+ * AGI ou FOR le compterait deux fois : les tests de caractéristique passent par getHealthStateSkillBonus.
+ * Les états s'excluant mutuellement, ces malus ne se cumulent jamais.
+ * @param {string} id Identifiant de l'état de santé
+ * @returns {Array<object>}
+ */
+function healthStateChanges(id) {
+  const malus = HEALTH_STATE_MALUS[id]
+  return [
+    { key: "system.combat.init.bonuses.effects", mode: 2, value: malus },
+    { key: "system.combat.def.bonuses.effects", mode: 2, value: malus },
+  ]
 }
 
 /**
@@ -23,26 +56,36 @@ export const HEALTH_STATUS_EFFECTS = [
     name: "COC2BASE.status.contusionne",
     img: "icons/svg/blood.svg",
     description: "COC2BASE.status.contusionneDescription",
+    changes: healthStateChanges("contusionne"),
+  },
+  {
+    id: "affaibli",
+    name: "COC2BASE.status.affaibli",
+    img: "icons/svg/degen.svg",
+    description: "COC2BASE.status.affaibliDescription",
+    changes: healthStateChanges("affaibli"),
   },
   {
     id: "blesse",
     name: "COC2BASE.status.blesse",
-    img: "icons/svg/degen.svg",
-    description: "COC2BASE.status.blesseDescription",
-  },
-  {
-    id: "gravementBlesse",
-    name: "COC2BASE.status.gravementBlesse",
     img: "icons/svg/falling.svg",
-    description: "COC2BASE.status.gravementBlesseDescription",
+    description: "COC2BASE.status.blesseDescription",
+    changes: healthStateChanges("blesse"),
   },
   {
     id: "mourant",
     name: "COC2BASE.status.mourant",
     img: "icons/svg/bones.svg",
     description: "COC2BASE.status.mourantDescription",
+    changes: healthStateChanges("mourant"),
   },
 ]
+
+/**
+ * États de santé indexés par id, pour la configuration publique du module (CONFIG.COC2BASE).
+ * Les objets sont ceux de HEALTH_STATUS_EFFECTS : muter un nom ici le mute partout.
+ */
+export const HEALTH_STATES = Object.fromEntries(HEALTH_STATUS_EFFECTS.map((effect) => [effect.id, effect]))
 
 /**
  * Sous-types de features COC2, ajoutés à SYSTEM.FEATURE_SUBTYPE :
@@ -178,6 +221,35 @@ export function getHealthState(damage, max) {
     if (damage >= Math.ceil(state.threshold * max)) current = state.id
   }
   return current
+}
+
+/**
+ * Ligne de malus à proposer dans la fenêtre de jet pour un test de caractéristique physique.
+ * Le système affiche ces lignes décochées : c'est au joueur de l'appliquer quand le test correspond
+ * bien à une action physique au sens du livre de règles, ce qui évite notamment de pénaliser les
+ * tests de CON que les états de santé imposent eux-mêmes.
+ * @param {Actor} actor Acteur qui effectue le test
+ * @param {string} ability Caractéristique testée
+ * @returns {object|null} Bonus au format attendu par les fenêtres de jet, ou null s'il n'y a rien à proposer
+ */
+export function getHealthStateSkillBonus(actor, ability) {
+  if (!PHYSICAL_ABILITIES.includes(ability)) return null
+
+  // Un seul état de santé est actif à la fois : applyHealthScaleStatuses retire les autres
+  const state = HEALTH_SCALE.states.find((s) => actor.statuses.has(s.id))
+  const malus = state ? HEALTH_STATE_MALUS[state.id] : 0
+  if (!malus) return null
+
+  const name = game.i18n.localize(HEALTH_STATES[state.id].name)
+  return {
+    sourceType: "healthState",
+    name,
+    description: name,
+    pathName: game.i18n.localize("COC2BASE.healthScale.label"),
+    hasPathName: true,
+    value: malus,
+    additionalInfos: game.i18n.localize("COC2BASE.healthScale.malusHint"),
+  }
 }
 
 /**

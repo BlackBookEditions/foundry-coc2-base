@@ -1,4 +1,5 @@
 import COActor from "../../../../systems/co2/module/documents/actor.mjs"
+import { getHealthStateSkillBonus } from "../config/coc2.mjs"
 
 /**
  * Document Actor COC2 : adapte le document COF2 aux règles de Chroniques Oubliées Contemporain
@@ -25,6 +26,20 @@ export default class COC2Actor extends COActor {
     }
 
     return true
+  }
+
+  /**
+   * Propose le malus de l'état de santé dans la fenêtre de jet des tests de caractéristique physique.
+   * Le livre de règles applique ce malus aux actions physiques ; l'Init. et la DEF sont déjà couvertes
+   * par les changes des statuts, et les caractéristiques ne sont volontairement pas modifiées pour ne
+   * pas pénaliser deux fois la DEF et les attaques qui en dérivent.
+   * @inheritDoc
+   */
+  getSkillBonuses(ability) {
+    const bonuses = super.getSkillBonuses(ability)
+    const healthBonus = getHealthStateSkillBonus(this, ability)
+    if (healthBonus) bonuses.push(healthBonus)
+    return bonuses
   }
 
   /**

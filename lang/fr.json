@@ -16,17 +16,18 @@
     "healthScale": {
       "label": "Échelle de santé",
       "short": "Santé",
-      "damageTooltip": "Échelons cochés"
+      "damageTooltip": "Échelons cochés",
+      "malusHint": "Uniquement sur les actions physiques"
     },
     "status": {
       "contusionne": "Contusionné",
-      "contusionneDescription": "Le personnage a atteint le 5e échelon de son échelle de santé.",
+      "contusionneDescription": "5e échelon de l'échelle de santé. Malus de -1, appliqué automatiquement à l'Initiative et à la Défense, à reporter à la main sur les actions physiques. Aucun autre effet, et aucun test de médecine n'est nécessaire pour entamer la guérison.",
+      "affaibli": "Affaibli",
+      "affaibliDescription": "10e échelon de l'échelle de santé. Malus de -3, appliqué automatiquement à l'Initiative et à la Défense, à reporter à la main sur les actions physiques. Le personnage doit réussir un test de CON difficulté 10 pour ne pas perdre sa prochaine action. Guérison : test d'INT difficulté 10.",
       "blesse": "Blessé",
-      "blesseDescription": "Le personnage a atteint le 10e échelon de son échelle de santé.",
-      "gravementBlesse": "Gravement blessé",
-      "gravementBlesseDescription": "Le personnage a atteint le 15e échelon de son échelle de santé.",
+      "blesseDescription": "15e échelon de l'échelle de santé. Malus de -5, appliqué automatiquement à l'Initiative et à la Défense, à reporter à la main sur les actions physiques. Le personnage perd sa prochaine action et ses déplacements sont réduits de moitié ; toute action physique impose un test de CON difficulté 15, l'échec infligeant 1 DM et l'inconscience pendant 1d6 rounds. Guérison et stabilisation : test d'INT difficulté 15.",
       "mourant": "Mourant",
-      "mourantDescription": "Le personnage a atteint le 20e échelon de son échelle de santé."
+      "mourantDescription": "20e échelon de l'échelle de santé. Malus de -10, appliqué automatiquement à l'Initiative et à la Défense, à reporter à la main sur les actions physiques. Tout déplacement est impossible ; le personnage est inconscient pendant 1d6 rounds puis doit réussir un test de CON difficulté 20, sous peine de coma et de mort au bout de CON minutes s'il n'est pas stabilisé. Stabilisation : test d'INT difficulté 20."
     },
     "feature": {
       "subtypes": {

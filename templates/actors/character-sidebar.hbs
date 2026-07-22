@@ -257,35 +257,7 @@
         </div>
       {{/if}}
     </div>
-    <!-- Échelle de santé -->
-    <div class="sidebar-section health-section">
-      <div class="sidebar-section-header">
-        <div class="sidebar-label">
-          <h4 data-tooltip="{{localize 'COC2BASE.healthScale.label'}}">{{localize "COC2BASE.healthScale.short"}}</h4>
-        </div>
-        <div class="hit-points labelled-field">
-        {{#if viewLimited}}
-          <i class="fas fa-fw fa-heart"></i>??
-        </div>
-        {{else}}
-          <i class="fas fa-fw fa-heart"></i>
-          <span class="current" data-tooltip="{{localize 'COC2BASE.healthScale.damageTooltip'}}">{{healthDamage}}</span>
-          <span class="slash">/</span>
-          <span class="max" data-tooltip="{{attributes.hp.tooltip}}">{{attributes.hp.max}}</span>
-        </div>
-        {{/if}}
-      </div>
-      {{#unless viewLimited}}
-        <div class="health-scale">
-          {{#each healthScale}}
-            <a class="health-step{{#if this.filled}} filled{{/if}}{{#if this.milestone}} milestone {{this.state}}{{/if}}" data-action="clickHealthScale" data-echelon="{{this.echelon}}" data-tooltip="{{this.tooltip}}"></a>
-          {{/each}}
-        </div>
-        {{#if healthStateLabel}}
-          <div class="health-state {{healthStateId}}">{{healthStateLabel}}</div>
-        {{/if}}
-      {{/unless}}
-    </div>
+    {{!-- L'échelle de santé est rendue en ruban pleine largeur dans le header --}}
     <!-- Temp HP -->
     <div class="sidebar-section health-section">
       <div class="sidebar-section-header">

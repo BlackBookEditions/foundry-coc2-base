@@ -74,4 +74,37 @@
       {{/if}}
     </li>
   </ol>
+  {{!-- Échelle de santé : ruban pleine largeur, à l'image de la bande de la fiche officielle COC2 --}}
+  <div class="health-bar">
+    <h4 class="health-label" data-tooltip="{{localize 'COC2BASE.healthScale.label'}}">{{localize "COC2BASE.healthScale.short"}}</h4>
+    <div class="health-summary">
+      <div class="health-points">
+        <i class="fas fa-fw fa-heart"></i>
+        {{#if viewLimited}}
+          ??
+        {{else}}
+          <span class="current" data-tooltip="{{localize 'COC2BASE.healthScale.damageTooltip'}}">{{healthDamage}}</span>
+          <span class="slash">/</span>
+          <span class="max" data-tooltip="{{attributes.hp.tooltip}}">{{attributes.hp.max}}</span>
+        {{/if}}
+      </div>
+      {{#unless viewLimited}}
+        {{#if healthStateLabel}}
+          <div class="health-state {{healthStateId}}">{{healthStateLabel}}</div>
+        {{/if}}
+      {{/unless}}
+    </div>
+    {{#unless viewLimited}}
+      <div class="health-scale">
+        {{#each healthScale}}
+          <a
+            class="health-step{{#if this.filled}} filled{{/if}}{{#if this.milestone}} milestone {{this.state}}{{/if}}"
+            data-action="clickHealthScale"
+            data-echelon="{{this.echelon}}"
+            data-tooltip="{{this.tooltip}}"
+          >{{this.echelon}}</a>
+        {{/each}}
+      </div>
+    {{/unless}}
+  </div>
 </header>
