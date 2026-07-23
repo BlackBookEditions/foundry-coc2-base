@@ -250,6 +250,39 @@ export const FEATURE_SUBTYPES_COC2 = {
   },
 }
 
+/**
+ * Sous-types de traits de COF2 sans équivalent dans le livre de règles COC2 : ils sont retirés de la liste
+ * déroulante de la fiche de trait au rendu, et non de SYSTEM.FEATURE_SUBTYPE (que le système déréférence
+ * directement, cf. COActor#peoples).
+ */
+export const REMOVED_FEATURE_SUBTYPE_IDS = ["people"]
+
+/**
+ * Sous-types de voies de COF2 sans équivalent dans le livre de règles COC2 : même retrait au rendu que pour
+ * les traits. SYSTEM.PATH_TYPES reste intact, le système le déréférence (cf. PathData#displayRank) et
+ * s'en sert comme liste de valeurs valides du champ subtype des voies.
+ */
+export const REMOVED_PATH_SUBTYPE_IDS = ["people"]
+
+/**
+ * Retire de la liste déroulante des sous-types d'une fiche d'item les options sans équivalent COC2.
+ * L'option est conservée si l'item porte déjà ce sous-type (item hérité de COF2), afin que la valeur affichée
+ * reste celle de l'item et ne soit pas remplacée en silence à la première sauvegarde.
+ * À appeler depuis un hook de rendu de fiche d'item.
+ * @param {HTMLElement} element   Élément racine de la fiche
+ * @param {Item} item             Item affiché
+ * @param {string[]} removedIds   Ids des sous-types à masquer
+ */
+export function removeSubtypeOptions(element, item, removedIds) {
+  const select = element.querySelector('select[name="system.subtype"]')
+  if (!select) return
+
+  for (const id of removedIds) {
+    if (id === item.system.subtype) continue
+    select.querySelector(`option[value="${id}"]`)?.remove()
+  }
+}
+
 /** Plafond de points d'avantages (et autant de désavantages) à la création */
 export const TRAIT_POINTS_MAX = 5
 

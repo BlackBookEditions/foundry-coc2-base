@@ -19,6 +19,9 @@ import {
   REMOVED_STATUS_IDS,
   STATE_TEST_MALUS,
   FEATURE_SUBTYPES_COC2,
+  REMOVED_FEATURE_SUBTYPE_IDS,
+  REMOVED_PATH_SUBTYPE_IDS,
+  removeSubtypeOptions,
   AGE_BRACKETS,
   ENCOUNTER_ARCHETYPES,
   CREATURE_SIZES,
@@ -60,6 +63,10 @@ CONFIG.COC2BASE = {
   statusChanges: COC2_STATUS_CHANGES,
   removedStatusIds: REMOVED_STATUS_IDS,
   stateTestMalus: STATE_TEST_MALUS,
+  // Sous-types masqués dans la liste déroulante des fiches de trait et de voie. Lues au rendu, donc
+  // modifiables à tout moment par un module d'univers (ajout ou retrait d'un id).
+  removedFeatureSubtypeIds: REMOVED_FEATURE_SUBTYPE_IDS,
+  removedPathSubtypeIds: REMOVED_PATH_SUBTYPE_IDS,
   ageBrackets: AGE_BRACKETS,
   // Adversaires : archétypes humains (Figurant / Second rôle / Premier rôle) et table des créatures par
   // TAI. Lus au rendu de la fiche et au pré-remplissage, donc modifiables à tout moment par un module
@@ -191,6 +198,17 @@ Hooks.once("ready", () => {
 
   // Reproduit l'auto-rendu MJ du système, mais avec notre version, si sa fenêtre était déjà ouverte.
   if (game.user.isGM && replacedRendered) game.system.partySheet.render({ force: true })
+})
+
+/*
+ * Sous-types sans équivalent COC2 (peuple) : options retirées des listes déroulantes des fiches de trait et de voie
+ */
+Hooks.on("renderCoFeatureSheet", (application, element, context, options) => {
+  removeSubtypeOptions(element, application.document, CONFIG.COC2BASE.removedFeatureSubtypeIds)
+})
+
+Hooks.on("renderCoPathSheet", (application, element, context, options) => {
+  removeSubtypeOptions(element, application.document, CONFIG.COC2BASE.removedPathSubtypeIds)
 })
 
 /*
