@@ -127,6 +127,7 @@
     "equipment": {
       "rd": "RD (réduction de dégâts)",
       "rdShort": "RD",
+      "rdTooltip": "Réduction des dommages",
       "encumbrance": "Encombrement",
       "encumbranceShort": "Enc.",
       "encumbranceHint": "Malus fixe appliqué à l'Initiative, aux tests d'AGI et à l'attaque au contact.",
@@ -142,8 +143,8 @@
       "cumulativeNo": "Non cumulable : concurrence les autres protections non cumulables",
       "protectionIgnored": "Protection non retenue : une autre protection non cumulable, mieux protectrice, est portée. Elle n'apporte pas de RD et n'impose pas son encombrement.",
       "protectionIgnoredWarning": "Protections non cumulables : seule « {retained} » est prise en compte. Écartée(s) : {ignored}.",
-      "bc": "BC (bonus critique)",
-      "bcHint": "Dommages fixes ajoutés au jet sur une réussite critique. Laissé vide : {auto}, le maximum du dé de dommages.",
+      "bcShort": "BC",
+      "bcTooltip": "Bonus critique : dommages fixes ajoutés au jet sur une réussite critique. Laissé vide : {auto}, le maximum du dé de dommages.",
       "bcFlavor": "BC"
     },
     "age": {

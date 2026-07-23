@@ -1,4 +1,4 @@
-# 0.1.0
+# 0.7.0
 
 Première version du module : adaptation du système `co2` aux règles de Chroniques Oubliées Contemporain 2e édition.
 

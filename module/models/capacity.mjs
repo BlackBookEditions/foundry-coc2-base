@@ -7,8 +7,7 @@ export default class COC2CapacityData extends CapacityData {
   /**
    * RULE : le coût d'un rang dépend de la PHASE de vie où il est acheté.
    * - À la création (budget de la tranche d'âge), un point achète un rang, quel que soit le rang → coût 1.
-   * - Une fois la création terminée, la progression par expérience coûte le numéro du rang visé
-   *   (rang 1 → 1, rang 2 → 2, … rang 5 → 5).
+   * - Une fois la création terminée, la progression par expérience coûte le numéro du rang visé (rang 1 → 1, rang 2 → 2, … rang 5 → 5).
    *
    * La phase est mémorisée par capacité au moment de l'apprentissage via le flag `coc2-base.learnedInPlay`
    * (posé par COC2Actor.toggleCapacityLearned) : le coût ne se recalcule jamais, sinon l'entrée en jeu

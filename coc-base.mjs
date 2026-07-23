@@ -258,9 +258,13 @@ Hooks.on("renderCoEquipmentSheet", (application, element, context, options) => {
   if (!defense) return
   const defenseGroup = defense.closest(".form-group") ?? defense
 
-  // Relabelliser Défense → RD (idempotent)
+  // Relabelliser Défense → RD (idempotent). Comme l'encombrement et la case Cumulable, le libellé est
+  // réduit à son sigle et l'explication portée en infobulle, pour ne pas déséquilibrer la mise en page.
   const defenseLabel = defenseGroup.querySelector?.("label")
-  if (defenseLabel) defenseLabel.textContent = game.i18n.localize("COC2BASE.equipment.rd")
+  if (defenseLabel) {
+    defenseLabel.textContent = game.i18n.localize("COC2BASE.equipment.rdShort")
+    defenseLabel.dataset.tooltip = game.i18n.localize("COC2BASE.equipment.rdTooltip")
+  }
 
   // Masquer la défense magique (idempotent : null après première suppression)
   element.querySelector('[name="system.magicalDefense"]')?.closest(".form-group")?.remove()
@@ -282,10 +286,27 @@ Hooks.on("renderCoEquipmentSheet", (application, element, context, options) => {
   defenseGroup.insertAdjacentHTML("afterend", html)
 })
 
+/*
+ * Catégorie martiale : notion de formation martiale COF2 (arme/armure/bouclier restreint par profil), neutralisée
+ * en COC2 (cf. COC2Actor#isTrainedWith* qui renvoie toujours true). Le champ système reste inerte : on retire son
+ * groupe de formulaire de la fiche pour ne pas afficher un réglage sans effet. La valeur éventuellement stockée sur
+ * l'item est conservée, simplement plus éditable (même traitement que system.magicalDefense ci-dessus).
+ */
+Hooks.on("renderCoEquipmentSheet", (application, element, context, options) => {
+  const item = application.document
+  if (!["weapon", "armor", "shield"].includes(item.system.subtype)) return
+  // Idempotent : null après la première suppression (la fiche peut être rendue partiellement)
+  element.querySelector('[name="system.martialCategory"]')?.closest(".form-group")?.remove()
+})
+
 /**
  * Construit le groupe de formulaire du bonus critique, commun à la fiche d'arme et à la fiche d'attaque.
- * Le champ est nullable : laissé vide, il affiche en indication la valeur déduite du dé de dommages, qui
- * est celle réellement utilisée en jeu.
+ * Le champ est nullable : laissé vide, il affiche en indication (placeholder) la valeur déduite du dé de
+ * dommages, qui est celle réellement utilisée en jeu.
+ *
+ * Sur le même principe que les champs de protection de l'armure, le libellé est réduit à son sigle et
+ * l'explication portée en infobulle plutôt qu'en `p.hint` sous le champ : la fiche d'équipement est dense,
+ * un paragraphe d'aide y déséquilibrerait la mise en page.
  * @param {number|null} value La valeur saisie sur l'item
  * @param {string} damageFormula La formule de dommages de référence, pour l'indication de valeur automatique
  * @param {boolean} locked Vrai si la fiche est verrouillée
@@ -293,11 +314,10 @@ Hooks.on("renderCoEquipmentSheet", (application, element, context, options) => {
  */
 function criticalBonusFormGroup(value, damageFormula, locked) {
   const auto = computeAutoCriticalBonus(damageFormula)
-  const hint = game.i18n.format("COC2BASE.equipment.bcHint", { auto })
+  const tooltip = game.i18n.format("COC2BASE.equipment.bcTooltip", { auto })
   return `<div class="form-group coc2-critical-bonus">
-    <label>${game.i18n.localize("COC2BASE.equipment.bc")}</label>
+    <label data-tooltip="${tooltip}">${game.i18n.localize("COC2BASE.equipment.bcShort")}</label>
     <input type="number" name="system.criticalBonus" value="${value ?? ""}" placeholder="${auto}" min="0" step="1" data-dtype="Number" ${locked ? "disabled" : ""} />
-    <p class="hint">${hint}</p>
   </div>`
 }
 
