@@ -76,6 +76,10 @@
       "traitBalance": "Traits distinctifs : {av}/{max} avantages − {dav}/{max} désavantages",
       "traitError": " — déséquilibre : les avantages doivent égaler les désavantages (5 max)"
     },
+    "equipment": {
+      "encumbrance": "Encombrement",
+      "encumbranceHint": "Malus fixe appliqué à l'Initiative, à l'AGI et à l'attaque au contact (ex. −2 gilet souple, −4 gilet rigide ou plaques)."
+    },
     "age": {
       "label": "Tranche d'âge",
       "jeune": "Jeune (16 à 30 ans)",

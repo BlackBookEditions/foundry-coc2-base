@@ -56,6 +56,48 @@ export default class COC2Actor extends COActor {
   }
 
   /**
+   * Maîtrise des armes COC2 : les formations martiales de COF2 (armes restreintes par profil) n'existent pas.
+   * N'importe quel personnage utilise n'importe quelle arme sans dé malus.
+   * En renvoyant toujours `true`, on neutralise le dé malus d'arme non maîtrisée de rollAttack et on affiche
+   * systématiquement l'arme comme maîtrisée dans l'inventaire.
+   * @override
+   */
+  isTrainedWithWeapon(itemId) {
+    return true
+  }
+
+  /**
+   * Maîtrise des armures COC2 : le port d'une protection n'est plus conditionné par une maîtrise et ne bloque
+   * plus les capacités. En renvoyant toujours `true`, canUseCapacities reste vrai quelle que soit l'armure portée.
+   * @override
+   */
+  isTrainedWithArmor(itemId) {
+    return true
+  }
+
+  /**
+   * Maîtrise des boucliers COC2 : même règle que les armures, aucun blocage de capacité selon le bouclier porté.
+   * @override
+   */
+  isTrainedWithShield(itemId) {
+    return true
+  }
+
+  /**
+   * Malus d'encombrement COC2 : somme des malus de toutes les protections équipées (armures ET boucliers),
+   * renvoyée en négatif. Remplace le calcul COF2 (première armure équipée uniquement) pour prendre en compte
+   * le port simultané de plusieurs protections. Source unique du malus fixe : jets d'AGI (rollSkill du système),
+   * Initiative et attaque au contact (appliqués par COC2CharacterData).
+   * @returns {number} Le malus d'encombrement total (≤ 0).
+   * @override
+   */
+  get malusFromArmor() {
+    const protections = [...this.equippedArmors, ...this.equippedShields]
+    const total = protections.reduce((sum, item) => sum + (item.system.overloadMalus ?? 0), 0)
+    return -total
+  }
+
+  /**
    * Contrôle informatif des XP disponibles après apprentissage : en COC2 les rangs s'achètent avec les XP de séance
    * @inheritDoc
    */

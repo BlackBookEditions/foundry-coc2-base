@@ -1,6 +1,7 @@
 import COC2CharacterData from "./module/models/character.mjs"
 import COC2EncounterData from "./module/models/encounter.mjs"
 import COC2CapacityData from "./module/models/capacity.mjs"
+import COC2EquipmentData from "./module/models/equipment.mjs"
 import COC2Actor from "./module/documents/actor.mjs"
 import COC2CharacterSheet from "./module/applications/character-sheet.mjs"
 import COC2PartySheet from "./module/applications/party-sheet.mjs"
@@ -94,6 +95,9 @@ Hooks.once("init", () => {
   // Coût uniforme d'un rang de voie : 1 point de capacité, quel que soit le rang
   CONFIG.Item.dataModels.capacity = COC2CapacityData
 
+  // Encombrement des protections : malus fixe (Init/AGI/ATC) en lieu et place du plafond d'AGI de COF2
+  CONFIG.Item.dataModels.equipment = COC2EquipmentData
+
   foundry.documents.collections.Actors.registerSheet("coc2-base", COC2CharacterSheet, { types: ["character"], makeDefault: true, label: "COC2BASE.sheet.character" })
 
   // Liste des états alignée sur le livre de règles COC2 : localisée et triée ensuite par le hook i18nInit du système
@@ -173,6 +177,29 @@ Hooks.on("renderCoFeatureSheet", (application, element, context, options) => {
     <input type="number" name="flags.coc2-base.points" value="${points}" min="0" step="1" data-dtype="Number" />
   </div>`
   const group = select.closest(".form-group") ?? select
+  group.insertAdjacentHTML("afterend", html)
+})
+
+/*
+ * Encombrement des protections : champ injecté dans la fiche d'équipement (armure/bouclier uniquement),
+ * stocké dans le champ système system.encumbrance ajouté par COC2EquipmentData. On injecte plutôt que de
+ * surcharger la feuille CoEquipmentSheet du système, pour ne pas dupliquer son template.
+ */
+Hooks.on("renderCoEquipmentSheet", (application, element, context, options) => {
+  const item = application.document
+  if (!["armor", "shield"].includes(item.system.subtype)) return
+
+  const defense = element.querySelector('[name="system.defense"]')
+  if (!defense || element.querySelector(".coc2-encumbrance")) return
+
+  const value = item.system.encumbrance ?? 0
+  const locked = context.locked ? "disabled" : ""
+  const html = `<div class="form-group coc2-encumbrance">
+    <label>${game.i18n.localize("COC2BASE.equipment.encumbrance")}</label>
+    <input type="number" name="system.encumbrance" value="${value}" min="0" step="1" data-dtype="Number" ${locked} />
+    <p class="hint">${game.i18n.localize("COC2BASE.equipment.encumbranceHint")}</p>
+  </div>`
+  const group = defense.closest(".form-group") ?? defense
   group.insertAdjacentHTML("afterend", html)
 })
 

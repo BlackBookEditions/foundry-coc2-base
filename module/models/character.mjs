@@ -102,9 +102,36 @@ export default class COC2CharacterData extends CharacterData {
   }
 
   /**
+   * Caractéristiques COC2 : réécriture complète de la méthode du système pour supprimer le plafonnement
+   * de l'AGI par l'armure (COF2 : max = 8 − DEF de l'armure). En COC2, le port d'une protection n'impose
+   * plus de plafond d'AGI mais un malus fixe d'encombrement (cf. #applyArmorEncumbrance), appliqué à Init,
+   * ATC et aux jets d'AGI. Le bloc de plafonnement n'étant pas isolable, on reprend la boucle du système
+   * sans lui — même parti pris que _prepareAttack.
+   * @override
+   */
+  _prepareAbilities() {
+    for (const [key, ability] of Object.entries(this.abilities)) {
+      const bonuses = Object.values(ability.bonuses).reduce((prev, curr) => prev + curr)
+      const abilityModifiers = this.computeTotalModifiersByTarget(this.abilityModifiers, key)
+
+      // Prise en compte d'un modifier qui donne un dé bonus
+      if (this.bonusDiceModifiers) {
+        const bonusDice = this.bonusDiceModifiers.find((m) => m.target === key)
+        if (bonusDice) ability.superior = true
+      }
+
+      ability.modifiers = abilityModifiers.total
+      ability.value = ability.base + bonuses + ability.modifiers
+      ability.tooltipValue = Utils.getTooltip(Utils.getAbilityName(key), ability.base).concat(abilityModifiers.tooltip, Utils.getTooltip("Bonus", bonuses))
+    }
+  }
+
+  /**
    * Attaques COC2 : la valeur est strictement égale à la caractéristique (ATC = FOR, ATD = AGI),
    * sans le bonus de niveau de COF2 puisque les niveaux n'existent pas.
    * Réécriture complète de la méthode du système, dont le bonus de niveau n'est pas isolable.
+   * L'attaque au contact (ATC) subit en plus le malus fixe d'encombrement de l'armure ; l'attaque à
+   * distance (ATD) n'est pas concernée.
    * @param {string} key Clef de la valeur de combat : melee, ranged ou magic
    * @param {*} skill
    * @param {*} abilityBonus Valeur de la caractéristique associée
@@ -119,10 +146,13 @@ export default class COC2CharacterData extends CharacterData {
 
     skill.value = skill.base + bonuses + combatModifiers.total
     skill.tooltipValue = skill.tooltipBase.concat(combatModifiers.tooltip, Utils.getTooltip("Bonus", bonuses))
+
+    if (key === game.system.CONST.COMBAT.melee.id) this.#applyArmorEncumbrance(skill)
   }
 
   /**
-   * Initiative COC2 : 10 + INT + PER, là où COF2 ne compte que 10 + PER
+   * Initiative COC2 : 10 + INT + PER, là où COF2 ne compte que 10 + PER.
+   * L'Initiative subit en plus le malus fixe d'encombrement de l'armure.
    * @param {*} skill
    * @param {*} abilityBonus Valeur de la perception
    * @param {*} bonuses
@@ -130,6 +160,21 @@ export default class COC2CharacterData extends CharacterData {
   _prepareInit(skill, abilityBonus, bonuses) {
     super._prepareInit(skill, abilityBonus, bonuses)
     this.#addSecondaryAbility(skill, game.system.CONST.COMBAT.init.id, "int", bonuses)
+    this.#applyArmorEncumbrance(skill)
+  }
+
+  /**
+   * Applique le malus fixe d'encombrement de l'armure équipée à une valeur de combat (Init ou ATC).
+   * La source est le getter `malusFromArmor` de l'acteur (valeur négative), rebranché sur le champ
+   * `encumbrance` de la protection via COC2EquipmentData. Le même malus alimente déjà les jets d'AGI
+   * (rollSkill du système).
+   * @param {*} skill Valeur de combat déjà préparée (combat.init ou combat.melee)
+   */
+  #applyArmorEncumbrance(skill) {
+    const malus = this.parent.malusFromArmor
+    if (!malus) return
+    skill.value += malus
+    skill.tooltipValue = skill.tooltipValue.concat(Utils.getTooltip("Encombrement", malus))
   }
 
   /**
