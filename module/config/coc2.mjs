@@ -283,6 +283,24 @@ export const MARTIAL_TRAININGS = {
 }
 
 /**
+ * Devise COC2 : le dollar, devise unique (le livre de règles COC2 est contemporain).
+ * Remplace les pièces or/argent/cuivre (gp/sp/cp) de COF2 héritées du système : injectée dans
+ * game.system.CONST.CURRENCY au hook init (cf. coc-base.mjs), elle est lue ensuite par le schéma
+ * `wealth` des acteurs (character/encounter), construit paresseusement par le système. Le data path
+ * de la richesse devient alors system.wealth.usd.value.
+ * Contrat système : chaque entrée = { id, label } ; `label` est une clé i18n localisée par le helper
+ * `getCurrencyLabel` du système — on la porte donc dans NOTRE namespace (COC2BASE.currency.usd).
+ * Surchargeable via CONFIG.COC2BASE.currencies avant le hook init de coc2-base (cf. cth-base, qui
+ * peut la remplacer, ou poser directement game.system.CONST.CURRENCY à son propre init, chargé après).
+ */
+export const COC2_CURRENCIES = {
+  usd: {
+    id: "usd",
+    label: "COC2BASE.currency.usd",
+  },
+}
+
+/**
  * Tranches d'âge : déterminent le budget de points de capacité, le nombre de voies et le rang
  * de voie maximum accessibles à la création.
  * capacityPoints alimente attributes.xp.max ; maxPaths et maxRank ne sont que signalés (compteur

@@ -1,5 +1,8 @@
 {
   "COC2BASE": {
+    "currency": {
+      "usd": "Dollars"
+    },
     "sheet": {
       "character": "Personnage COC2"
     },

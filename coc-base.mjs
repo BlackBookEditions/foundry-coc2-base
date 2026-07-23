@@ -10,6 +10,7 @@ import {
   HEALTH_STATE_MALUS,
   SECOND_SCALE,
   SECOND_SCALE_STATES,
+  COC2_CURRENCIES,
   PHYSICAL_ABILITIES,
   COC2_STATUS_CHANGES,
   REMOVED_STATUS_IDS,
@@ -53,6 +54,9 @@ CONFIG.COC2BASE = {
   removedStatusIds: REMOVED_STATUS_IDS,
   stateTestMalus: STATE_TEST_MALUS,
   ageBrackets: AGE_BRACKETS,
+  // Devise du monde COC2 : le dollar remplace or/argent/cuivre de COF2. Lue au hook init de coc2-base ;
+  // un module d'univers qui la modifie doit être chargé avant (ou poser game.system.CONST.CURRENCY à son init).
+  currencies: COC2_CURRENCIES,
   /**
    * Seconde échelle (« Échelle ») : compteur avec libellé de palier affiché sur la fiche, SANS statut de
    * token (rien dans CONFIG.statusEffects). Masquée par défaut : son affichage est commandé par le réglage
@@ -97,6 +101,11 @@ Hooks.once("init", () => {
 
   // Domaines et traits distinctifs : nouveaux sous-types de features proposés dans la fiche feature
   Object.assign(game.system.CONST.FEATURE_SUBTYPE, FEATURE_SUBTYPES_COC2)
+
+  // Devise du monde : le dollar remplace les pièces or/argent/cuivre (COF2) héritées du système. Le schéma
+  // wealth des acteurs, construit paresseusement (au plus tôt à setup/ready), lira cette valeur — donc après
+  // ce hook init. Le data path de la richesse devient system.wealth.usd.value (cf. COC2BASE.currency.usd dans le lang).
+  game.system.CONST.CURRENCY = CONFIG.COC2BASE.currencies
 
   // Attaque magique et points de magie : notions de COF2 absentes du livre de règles COC2
   hideMagicUI()
