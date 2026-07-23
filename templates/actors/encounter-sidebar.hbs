@@ -1,0 +1,278 @@
+{{!log "Chroniques Oubliées | Encounter sidebar COC2" this}}
+<div class="sheet-sidebar">
+  <div class="scrollable">
+    <!-- INIT -->
+    <div class="sidebar-section init-section">
+      <div class="sidebar-section-header">
+        <div class="sidebar-label init-label">
+          <h4>{{localize "CO.label.long.init"}}</h4>
+        </div>
+        {{#if viewLimited}}
+          <div class="init-value labelled-field">
+            <i class="fas fa-solid fa-swords fa-fw"></i>??
+          </div>
+        {{else}}
+          <div class="init-value labelled-field" data-tooltip="{{combat.init.tooltipValue}}">
+            <i class="fas fa-solid fa-swords fa-fw"></i>
+            {{combat.init.value}}
+          </div>
+        {{/if}}
+      </div>
+      {{#if unlocked}}
+        <div class="sidebar-section-content">
+          <div class="labelled-field" data-tooltip="{{localize 'CO.label.long.base'}}">
+            <input class="init-base" type="number" name="system.combat.init.base" value="{{combat.init.base}}" data-dtype="Number" placeholder="0" />
+          </div>
+        </div>
+        <div class="sidebar-section-content">
+          <div class="labelled-field" data-tooltip="{{localize 'CO.label.long.bonus'}}">
+            <input
+              class="init-bonus"
+              type="text"
+              name="system.combat.init.bonuses.sheet"
+              value="{{numberFormat combat.init.bonuses.sheet decimals=0 sign=true}}"
+              data-dtype="Number"
+              placeholder="0"
+            />
+          </div>
+        </div>
+      {{/if}}
+    </div>
+
+    <!-- DEF -->
+    <div class="sidebar-section armor-section">
+      <div class="sidebar-section-header">
+        <div class="sidebar-label armor-label">
+          <h4>{{localize "CO.label.long.def"}}</h4>
+        </div>
+        {{#if viewLimited}}
+          <div class="armor-base labelled-field">
+            <i class="fas fa-fw fa-shield-alt"></i>??
+          </div>
+        {{else}}
+          <div class="armor-base labelled-field" data-tooltip="{{combat.def.tooltipValue}}">
+            <i class="fas fa-fw fa-shield-alt"></i>
+            {{combat.def.value}}
+          </div>
+        {{/if}}
+      </div>
+      {{#if unlocked}}
+        <div class="sidebar-section-content">
+          <div class="labelled-field" data-tooltip="{{localize 'CO.label.long.base'}}">
+            <input
+              class="def-base"
+              type="number"
+              name="system.combat.def.base"
+              value="{{combat.def.base}}"
+              data-dtype="Number"
+              placeholder="0"
+              data-tooltip="{{combat.def.tooltipBase}}"
+            />
+          </div>
+        </div>
+        <div class="sidebar-section-content">
+          <div class="labelled-field" data-tooltip="{{localize 'CO.label.long.bonus'}}">
+            <input
+              class="def-bonus"
+              type="text"
+              name="system.combat.def.bonuses.sheet"
+              value="{{numberFormat combat.def.bonuses.sheet decimals=0 sign=true}}"
+              data-dtype="Number"
+              placeholder="0"
+            />
+          </div>
+        </div>
+      {{/if}}
+    </div>
+
+    <!-- DR -->
+    <div class="sidebar-section dr-section">
+      <div class="sidebar-section-header">
+        <div class="sidebar-label dr-label">
+          <h4>{{localize "CO.ui.dr"}}</h4>
+        </div>
+        {{#if viewLimited}}
+          <div class="dr-base labelled-field">
+            <i class="fas fa-fw fa-universal-access"></i>??
+          </div>
+        {{else}}
+          <div class="dr-base labelled-field" data-tooltip="{{combat.dr.tooltipValue}}">
+            <i class="fas fa-fw fa-universal-access"></i>
+            {{combat.dr.value}}
+          </div>
+        {{/if}}
+      </div>
+      {{#if unlocked}}
+        <div class="sidebar-section-content">
+          <div class="field">
+            <input
+              class="dr-base"
+              type="number"
+              name="system.combat.dr.base"
+              value="{{combat.dr.base}}"
+              data-dtype="Number"
+              placeholder="0"
+              readonly
+              data-tooltip="{{combat.dr.tooltipBase}}"
+            />
+            <span class="slash">/</span>
+            <input
+              class="dr-bonus"
+              type="text"
+              name="system.combat.dr.bonuses.sheet"
+              value="{{numberFormat combat.dr.bonuses.sheet decimals=0 sign=true}}"
+              data-dtype="Number"
+              placeholder="0"
+              data-tooltip="{{localize 'CO.label.long.bonus'}}"
+            />
+          </div>
+        </div>
+      {{/if}}
+    </div>
+
+    {{#if isCreature}}
+      {{#unless viewLimited}}
+        {{!-- Valeurs issues de la taille de la créature. Placées juste après la RD pour occuper la
+              deuxième ligne de la grille de la barre latérale, au même format que Init, DEF et RD. --}}
+        <!-- FURTIVITÉ -->
+        <div class="sidebar-section stealth-section">
+          <div class="sidebar-section-header">
+            <div class="sidebar-label stealth-label">
+              <h4>{{localize "COC2BASE.encounter.stealth"}}</h4>
+            </div>
+            <div class="stealth-value labelled-field">
+              <i class="fas fa-fw fa-user-ninja"></i>
+              {{numberFormat details.stealth decimals=0 sign=true}}
+            </div>
+          </div>
+          {{#if unlocked}}
+            <div class="sidebar-section-content">
+              <div class="labelled-field" data-tooltip="{{localize 'CO.label.long.base'}}">
+                <input type="text" name="system.details.stealth" value="{{numberFormat details.stealth decimals=0 sign=true}}" data-dtype="Number" placeholder="+0" />
+              </div>
+            </div>
+          {{/if}}
+        </div>
+
+        {{!-- DM : valeur de référence de la table des créatures, jamais modifiable --}}
+        {{#if profile.meleeDamage}}
+          <div class="sidebar-section damage-section">
+            <div class="sidebar-section-header">
+              <div class="sidebar-label damage-label">
+                <h4>{{localize "COC2BASE.encounter.meleeDamage"}}</h4>
+              </div>
+              <div class="damage-value labelled-field" data-tooltip="{{localize 'COC2BASE.encounter.meleeDamageTooltip'}}">
+                <i class="fas fa-fw fa-burst"></i>
+                {{profile.meleeDamage}}
+              </div>
+            </div>
+          </div>
+        {{/if}}
+      {{/unless}}
+    {{/if}}
+
+    {{!-- L'échelle de santé est rendue en ruban pleine largeur dans le header : la barre latérale ne
+          garde que sa longueur, que le MJ peut rallonger ou raccourcir. --}}
+    {{#if unlocked}}
+      <div class="sidebar-section health-section">
+        <div class="sidebar-section-header">
+          <div class="sidebar-label">
+            <h4>{{localize "COC2BASE.healthScale.label"}}</h4>
+          </div>
+        </div>
+        <div class="sidebar-section-content">
+          <div class="field">
+            <input
+              class="hp-base"
+              type="number"
+              name="system.attributes.hp.base"
+              value="{{attributes.hp.base}}"
+              data-dtype="Number"
+              data-tooltip="{{#if hpRangeLabel}}{{localize 'COC2BASE.encounter.healthScaleRange'}} {{hpRangeLabel}}{{else}}{{localize 'CO.label.long.base'}}{{/if}}"
+            />
+            <span class="slash">/</span>
+            <input
+              class="hp-bonus"
+              type="text"
+              name="system.attributes.hp.bonuses.sheet"
+              value="{{numberFormat attributes.hp.bonuses.sheet decimals=0 sign=true}}"
+              data-dtype="Number"
+              placeholder="0"
+              data-tooltip="{{localize 'CO.label.long.bonus'}}"
+            />
+          </div>
+        </div>
+      </div>
+    {{/if}}
+
+    {{!-- Pas de DM temporaires en COC2 : règle propre à COF2, déjà absente de la fiche de personnage --}}
+
+    <!-- MOUVEMENT -->
+    <div class="sidebar-section speed-section">
+      <div class="sidebar-section-header">
+        <div class="sidebar-label mvt-label">
+          <i class="fas fa-fw fa-shoe-prints"></i>
+          <h4>{{localize "CO.label.long.movement"}}</h4>
+        </div>
+        <div class="mvt-base labelled-field">
+          {{#if viewLimited}}
+            ??
+          {{else}}
+            {{attributes.movement.value}}&nbsp;{{attributes.movement.unit}}
+          {{/if}}
+        </div>
+      </div>
+      {{#if unlocked}}
+        <div class="sidebar-section-content">
+          <div class="mvt-base field">
+            <input
+              class="mvt-base"
+              type="number"
+              name="system.attributes.movement.base"
+              value="{{attributes.movement.base}}"
+              data-dtype="Number"
+              placeholder="10"
+              data-tooltip="{{localize 'CO.label.long.base'}}"
+            />
+            <input
+              class="movement-bonus"
+              type="text"
+              name="system.attributes.movement.bonuses.sheet"
+              value="{{numberFormat attributes.movement.bonuses.sheet decimals=0 sign=true}}"
+              data-dtype="Number"
+              data-tooltip="{{localize 'CO.label.long.bonus'}}"
+              placeholder="+0"
+            />
+            <select name="system.attributes.movement.unit" data-type="String">
+              {{selectOptions choiceMoveUnit selected=system.attributes.movement.unit localize=true}}
+            </select>
+          </div>
+        </div>
+      {{/if}}
+    </div>
+    {{#unless viewLimited}}
+      <!-- STATE MODIFIERS -->
+      <div class="sidebar-section speed-section">
+        <div class="sidebar-section-header">
+          <div class="sidebar-label">
+            <h4>{{localize "CO.label.long.states"}}</h4>
+          </div>
+        </div>
+        <div class="sidebar-section-content">
+          <ul class="state-modifier">
+            {{#each stateModifiers as |state|}}
+              <li class="state-name">
+                {{localize (concat "CO.label.long." state.target)}}
+              </li>
+            {{/each}}
+            {{#each statusEffects as |effect|}}
+              <li class="status-effect" data-tooltip="{{#if effect.description}}{{effect.name}} : {{effect.description}}{{/if}}" data-tooltip-direction="RIGHT">
+                <img src="{{effect.img}}" alt="{{effect.name}}" /> {{effect.name}}
+              </li>
+            {{/each}}
+          </ul>
+        </div>
+      </div>
+    {{/unless}}
+  </div>
+</div>

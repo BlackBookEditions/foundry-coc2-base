@@ -821,7 +821,18 @@
    ont la même largeur d'une ligne à l'autre, donc le bloc icône X/Y et le début du ruban s'alignent
    verticalement. Dimensionnées pour le plus long libellé attendu (« Conscience »). */
 .co.actor.coc2 {
-  /* Rangée supplémentaire pleine largeur dans le header, sous les caractéristiques */
+  /* Rangées supplémentaires pleine largeur dans le header, sous les caractéristiques.
+     La rangée quotas ne sert qu'aux rencontres, secondscale qu'aux personnages : la rangée
+     inutilisée reste vide et, en auto, n'occupe aucune hauteur. */
+  /* Fiche d'adversaire : ni NC ni catégorie (notions COF2). La colonne de droite du header, qui portait
+     le NC, disparaît — sans quoi la grille du système lui réserverait une gouttière vide. La rangée
+     secondscale ne sert qu'aux personnages et n'est donc pas reprise ici. */
+  /* Compteur de création des adversaires : caractéristiques et capacités face aux quotas de l'archétype */
+  /* Valeurs de créature issues de la taille : furtivité (modifiable) et DM (lecture seule).
+     Même gabarit que les sections Init, DEF et RD du système — largeur de deux colonnes, donc une
+     deuxième ligne sous elles. Chaque type de section de la sidebar co2 doit déclarer son fond ET la
+     couleur de texte assortie : sans cette règle, la section retombe sur le texte --co-surface posé
+     par common-sidebar.less, soit la couleur du fond des pastilles — clair sur clair, illisible. */
   /* Ruban de l'échelle de santé : libellé, bloc coeur, 20 échelons, état atteint */
   /* Ruban de la seconde échelle : même structure que .health-bar, couleur et emplacement propres */
   /* Sections BDM et CG de la barre latérale (fiche complète et Vue actions).
@@ -837,8 +848,32 @@
      correspondant dans le ruban ; le libellé suit le texte du header, posé sur --co-sheet-accent. */
 }
 .co.actor.coc2 .window-content .sheet-header {
+  grid-template-rows: auto auto auto auto auto;
+  grid-template-areas: "img   name      traits   level" "img abilities abilities abilities" "health health health health" "secondscale secondscale secondscale secondscale" "quotas quotas quotas quotas";
+}
+.co.actor.coc2.encounter .window-content .sheet-header {
+  grid-template-columns: 140px 1fr 180px;
   grid-template-rows: auto auto auto auto;
-  grid-template-areas: "img   name      traits   level" "img abilities abilities abilities" "health health health health" "secondscale secondscale secondscale secondscale";
+  grid-template-areas: "img   name      traits" "img abilities abilities" "health health health" "quotas quotas quotas";
+}
+.co.actor.coc2 .coc2-encounter-quotas {
+  grid-area: quotas;
+  margin: 0 4px 4px;
+}
+.co.actor.coc2 .sidebar-section.stealth-section {
+  background-color: var(--co-stat-resource);
+}
+.co.actor.coc2 .sidebar-section.stealth-section .field,
+.co.actor.coc2 .sidebar-section.stealth-section .labelled-field,
+.co.actor.coc2 .sidebar-section.stealth-section .labelled-field input {
+  color: var(--co-stat-resource);
+}
+.co.actor.coc2 .sidebar-section.damage-section {
+  background-color: var(--co-stat-damages);
+}
+.co.actor.coc2 .sidebar-section.damage-section .field,
+.co.actor.coc2 .sidebar-section.damage-section .labelled-field {
+  color: var(--co-stat-damages);
 }
 .co.actor.coc2 .health-bar {
   grid-area: health;

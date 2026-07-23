@@ -13,14 +13,60 @@
 @coc2-scale-summary-width: 5em;
 
 .co.actor.coc2 {
-  /* Rangée supplémentaire pleine largeur dans le header, sous les caractéristiques */
+  /* Rangées supplémentaires pleine largeur dans le header, sous les caractéristiques.
+     La rangée quotas ne sert qu'aux rencontres, secondscale qu'aux personnages : la rangée
+     inutilisée reste vide et, en auto, n'occupe aucune hauteur. */
   .window-content .sheet-header {
-    grid-template-rows: auto auto auto auto;
+    grid-template-rows: auto auto auto auto auto;
     grid-template-areas:
       "img   name      traits   level"
       "img abilities abilities abilities"
       "health health health health"
-      "secondscale secondscale secondscale secondscale";
+      "secondscale secondscale secondscale secondscale"
+      "quotas quotas quotas quotas";
+  }
+
+  /* Fiche d'adversaire : ni NC ni catégorie (notions COF2). La colonne de droite du header, qui portait
+     le NC, disparaît — sans quoi la grille du système lui réserverait une gouttière vide. La rangée
+     secondscale ne sert qu'aux personnages et n'est donc pas reprise ici. */
+  &.encounter .window-content .sheet-header {
+    grid-template-columns: 140px 1fr 180px;
+    grid-template-rows: auto auto auto auto;
+    grid-template-areas:
+      "img   name      traits"
+      "img abilities abilities"
+      "health health health"
+      "quotas quotas quotas";
+  }
+
+  /* Compteur de création des adversaires : caractéristiques et capacités face aux quotas de l'archétype */
+  .coc2-encounter-quotas {
+    grid-area: quotas;
+    margin: 0 4px 4px;
+  }
+
+  /* Valeurs de créature issues de la taille : furtivité (modifiable) et DM (lecture seule).
+     Même gabarit que les sections Init, DEF et RD du système — largeur de deux colonnes, donc une
+     deuxième ligne sous elles. Chaque type de section de la sidebar co2 doit déclarer son fond ET la
+     couleur de texte assortie : sans cette règle, la section retombe sur le texte --co-surface posé
+     par common-sidebar.less, soit la couleur du fond des pastilles — clair sur clair, illisible. */
+  .sidebar-section.stealth-section {
+    background-color: var(--co-stat-resource);
+
+    .field,
+    .labelled-field,
+    .labelled-field input {
+      color: var(--co-stat-resource);
+    }
+  }
+
+  .sidebar-section.damage-section {
+    background-color: var(--co-stat-damages);
+
+    .field,
+    .labelled-field {
+      color: var(--co-stat-damages);
+    }
   }
 
   /* Ruban de l'échelle de santé : libellé, bloc coeur, 20 échelons, état atteint */

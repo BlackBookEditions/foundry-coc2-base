@@ -4,6 +4,7 @@ import COC2CapacityData from "./module/models/capacity.mjs"
 import COC2EquipmentData from "./module/models/equipment.mjs"
 import COC2Actor from "./module/documents/actor.mjs"
 import COC2CharacterSheet from "./module/applications/character-sheet.mjs"
+import COC2EncounterSheet from "./module/applications/encounter-sheet.mjs"
 import COC2PartySheet from "./module/applications/party-sheet.mjs"
 import {
   HEALTH_SCALE,
@@ -19,6 +20,9 @@ import {
   STATE_TEST_MALUS,
   FEATURE_SUBTYPES_COC2,
   AGE_BRACKETS,
+  ENCOUNTER_ARCHETYPES,
+  CREATURE_SIZES,
+  COC2_SIZE_LABELS,
   MARTIAL_TRAININGS,
   buildStatusEffects,
   hideMagicUI,
@@ -57,6 +61,11 @@ CONFIG.COC2BASE = {
   removedStatusIds: REMOVED_STATUS_IDS,
   stateTestMalus: STATE_TEST_MALUS,
   ageBrackets: AGE_BRACKETS,
+  // Adversaires : archétypes humains (Figurant / Second rôle / Premier rôle) et table des créatures par
+  // TAI. Lus au rendu de la fiche et au pré-remplissage, donc modifiables à tout moment par un module
+  // d'univers — à l'exception des ids, qui pilotent le stockage (details.archetype et details.size).
+  encounterArchetypes: ENCOUNTER_ARCHETYPES,
+  creatureSizes: CREATURE_SIZES,
   // Base de la capacité de guérison : CG = CON + healingCapacityBase. Lue au calcul de la fiche,
   // un module d'univers peut donc la modifier à tout moment.
   healingCapacityBase: HEALING_CAPACITY_BASE,
@@ -92,6 +101,18 @@ Hooks.once("init", () => {
     default: false,
   })
 
+  // Ambiance « action décomplexée » : échelles de santé raccourcies pour les adversaires mineurs et
+  // allongée pour le Premier rôle. Le réglage est lu au moment du pré-remplissage : le basculer ne
+  // touche pas aux adversaires déjà créés, il ne change que les prochaines sélections d'archétype.
+  game.settings.register("coc2-base", "pulpHealthScales", {
+    name: "COC2BASE.settings.pulpHealthScales.name",
+    hint: "COC2BASE.settings.pulpHealthScales.hint",
+    scope: "world",
+    config: true,
+    type: Boolean,
+    default: false,
+  })
+
   // Remplacement des classes du système par les variantes COC2 : le hook init du module s'exécute après celui du système
   CONFIG.Actor.documentClass = COC2Actor
   CONFIG.Actor.dataModels.character = COC2CharacterData
@@ -104,6 +125,7 @@ Hooks.once("init", () => {
   CONFIG.Item.dataModels.equipment = COC2EquipmentData
 
   foundry.documents.collections.Actors.registerSheet("coc2-base", COC2CharacterSheet, { types: ["character"], makeDefault: true, label: "COC2BASE.sheet.character" })
+  foundry.documents.collections.Actors.registerSheet("coc2-base", COC2EncounterSheet, { types: ["encounter"], makeDefault: true, label: "COC2BASE.sheet.encounter" })
 
   // Liste des états alignée sur le livre de règles COC2 : localisée et triée ensuite par le hook i18nInit du système
   CONFIG.statusEffects = buildStatusEffects()
@@ -115,6 +137,11 @@ Hooks.once("init", () => {
   // wealth des acteurs, construit paresseusement (au plus tôt à setup/ready), lira cette valeur — donc après
   // ce hook init. Le data path de la richesse devient system.wealth.usd.value (cf. COC2BASE.currency.usd dans le lang).
   game.system.CONST.CURRENCY = CONFIG.COC2BASE.currencies
+
+  // Nomenclature COC2 des tailles : « Énorme » devient « Très grand » et « Colossale » « Gigantesque ».
+  // Seuls les libellés sont remplacés, les clés restant celles du système (elles valident le champ
+  // details.size et indexent SYSTEM.TOKEN_SIZE).
+  Object.assign(game.system.CONST.SIZES, COC2_SIZE_LABELS)
 
   // Attaque magique et points de magie : notions de COF2 absentes du livre de règles COC2
   hideMagicUI()
@@ -186,17 +213,29 @@ Hooks.on("renderCoFeatureSheet", (application, element, context, options) => {
 })
 
 /*
- * Encombrement des protections : champ injecté dans la fiche d'équipement (armure/bouclier uniquement),
- * stocké dans le champ système system.encumbrance ajouté par COC2EquipmentData. On injecte plutôt que de
- * surcharger la feuille CoEquipmentSheet du système, pour ne pas dupliquer son template.
+ * Protections COC2 (armure/bouclier) sur la fiche d'équipement co2 (CoEquipmentSheet non surchargée, on
+ * retouche le DOM plutôt que de dupliquer son template) :
+ *  - le champ `system.defense` porte désormais la RD (réduction de dégâts), pas la DEF : on le relabellise
+ *  - `system.magicalDefense` (défense magique, notion COF2/magie absente de COC2) est masqué
+ *  - injection du champ d'encombrement `system.encumbrance` (ajouté par COC2EquipmentData)
  */
 Hooks.on("renderCoEquipmentSheet", (application, element, context, options) => {
   const item = application.document
   if (!["armor", "shield"].includes(item.system.subtype)) return
 
   const defense = element.querySelector('[name="system.defense"]')
-  if (!defense || element.querySelector(".coc2-encumbrance")) return
+  if (!defense) return
+  const defenseGroup = defense.closest(".form-group") ?? defense
 
+  // Relabelliser Défense → RD (idempotent)
+  const defenseLabel = defenseGroup.querySelector?.("label")
+  if (defenseLabel) defenseLabel.textContent = game.i18n.localize("COC2BASE.equipment.rd")
+
+  // Masquer la défense magique (idempotent : null après première suppression)
+  element.querySelector('[name="system.magicalDefense"]')?.closest(".form-group")?.remove()
+
+  // Injecter l'encombrement (garde anti-doublon)
+  if (element.querySelector(".coc2-encumbrance")) return
   const value = item.system.encumbrance ?? 0
   const locked = context.locked ? "disabled" : ""
   const html = `<div class="form-group coc2-encumbrance">
@@ -204,8 +243,7 @@ Hooks.on("renderCoEquipmentSheet", (application, element, context, options) => {
     <input type="number" name="system.encumbrance" value="${value}" min="0" step="1" data-dtype="Number" ${locked} />
     <p class="hint">${game.i18n.localize("COC2BASE.equipment.encumbranceHint")}</p>
   </div>`
-  const group = defense.closest(".form-group") ?? defense
-  group.insertAdjacentHTML("afterend", html)
+  defenseGroup.insertAdjacentHTML("afterend", html)
 })
 
 /*

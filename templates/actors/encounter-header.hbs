@@ -1,0 +1,106 @@
+{{!log "Chroniques Oubliées | Encounter header COC2" this}}
+<header class="sheet-header">
+  <div class="image-container">
+    <img class="actor-img {{#if unlocked}}resetImage{{/if}}"src="{{actor.img}}" {{#if unlocked}}data-action="editImage" data-edit="img"{{/if}} data-tooltip="{{actor.name}}" />
+    <a class="hover-icon" data-action="shareImage" data-tooltip="{{localize 'CO.ui.shareImage'}}"><i class="fas fa-image fa-fw"></i></a>
+  </div>
+  {{#if unlocked}}
+    <input class="name" name="name" type="text" value="{{actor.name}}" placeholder="{{localize 'CO.label.long.name'}}" spellcheck="false" />
+  {{else}}
+    <span class="name">{{actor.name}}</span>
+  {{/if}}
+  {{!-- Ni NC ni catégorie d'adversaire (Vivante / Humanoïde / Végétale / Non-Vivante) : ce sont des
+        notions de COF2. En COC2 un adversaire est décrit par son archétype ou, à défaut, par sa taille.
+        Les champs restent au schéma du système, ils ne sont simplement plus proposés à la saisie. --}}
+  {{#unless viewLimited}}
+  <div class="traits">
+    {{#if unlocked}}
+      {{!-- Archétype : renseigné, l'adversaire suit les règles des humains ; vide, celles des créatures (TAI) --}}
+      <select class="trait archetype traits-list-item" name="system.details.archetype" data-type="String" data-tooltip="{{localize 'COC2BASE.encounter.archetype.label'}}">
+        {{selectOptions choiceArchetypes selected=system.details.archetype localize=true blank=(localize 'COC2BASE.encounter.archetype.none')}}
+      </select>
+
+      <select data-action="sizeChange" class="trait size traits-list-item" name="system.details.size" data-type="String">
+        {{selectOptions choiceSizes selected=system.details.size localize=true }}
+      </select>
+    {{else}}
+      {{#if archetypeLabel}}
+        <span class="trait archetype">{{archetypeLabel}}</span>
+      {{/if}}
+      {{!-- Libellé lu dans la map et non concaténé sur un préfixe en dur : coc2-base réétiquette les tailles --}}
+      <span class="trait size">{{localize (lookup choiceSizes system.details.size)}}</span>
+    {{/if}}
+  </div>
+  {{/unless}}
+  <ol class="abilities">
+    {{#each abilities as |ability id|}}
+      <li class="ability" data-ability="{{id}}">
+        <div class="ability-id draggable" data-roll-target="{{id}}" data-tooltip="{{localize (concat 'CO.abilities.long.' id)}}" data-tooltip-direction="UP">
+          {{localize (concat "CO.abilities.short." id)}}
+          {{#if ../unlocked}}
+            <input type="checkbox" name="system.abilities.{{id}}.superior" {{checked ability.superior}} data-tooltip="{{localize 'CO.ui.checkForSuperiorAbility'}}" >
+          {{else}}
+            {{#unless ../viewLimited}}
+              {{#if ability.superior}}<i class="fas fa-asterisk"></i>{{/if}}
+            {{/unless}}
+          {{/if}}
+        </div>
+        {{#if ../unlocked}}
+          <input class="ability-mod" type="text" name="system.abilities.{{id}}.base" value="{{numberFormat ability.base sign=true}}" data-dtype="Number" placeholder="+0">
+        {{else}}
+          {{#if ../viewLimited}}
+            <div class="ability-mod">??</div>
+          {{else}}
+            {{#if ../editable}}
+              <a class="ability-mod" data-action="roll" data-roll-type="skillcheck" data-roll-target="{{id}}" data-tooltip="{{ability.tooltipValue}}">
+                {{numberFormat ability.value decimals=0 sign=true}}
+              </a>
+            {{else}}
+              <div class="ability-mod">{{numberFormat ability.value decimals=0 sign=true}}</div>
+            {{/if}}
+          {{/if}}
+        {{/if}}
+      </li>
+    {{/each}}
+  </ol>
+  {{!-- Échelle de santé : ruban pleine largeur, identique à celui de la fiche de personnage --}}
+  <div class="health-bar">
+    <h4 class="health-label" data-tooltip="{{localize 'COC2BASE.healthScale.label'}}">{{localize "COC2BASE.healthScale.short"}}</h4>
+    <div class="health-summary">
+      <div class="health-points">
+        <i class="fas fa-fw fa-heart"></i>
+        {{#if viewLimited}}
+          ??
+        {{else}}
+          <span class="current" data-tooltip="{{localize 'COC2BASE.healthScale.damageTooltip'}}">{{healthDamage}}</span>
+          <span class="slash">/</span>
+          <span class="max" data-tooltip="{{attributes.hp.tooltip}}">{{attributes.hp.max}}</span>
+        {{/if}}
+      </div>
+      {{#unless viewLimited}}
+        {{#if healthStateLabel}}
+          <div class="health-state {{healthStateId}}">{{healthStateLabel}}</div>
+        {{/if}}
+      {{/unless}}
+    </div>
+    {{#unless viewLimited}}
+      <div class="health-scale">
+        {{#each healthScale}}
+          <a
+            class="health-step{{#if this.filled}} filled{{/if}}{{#if this.milestone}} milestone {{this.state}}{{/if}}"
+            data-action="clickHealthScale"
+            data-echelon="{{this.echelon}}"
+            data-tooltip="{{this.tooltip}}"
+            data-tooltip-direction="UP"
+          >{{this.echelon}}</a>
+        {{/each}}
+      </div>
+    {{/unless}}
+  </div>
+  {{#if unlocked}}
+    {{#if hasQuotas}}
+      {{!-- Compteur de création, informatif : rouge en cas de dépassement, jamais bloquant --}}
+      <div class="notification {{#if quotasValid}}info{{else}}error{{/if}} permanent coc2-encounter-quotas">{{quotasMessage}}{{quotasErrors}}</div>
+    {{/if}}
+  {{/if}}
+</header>

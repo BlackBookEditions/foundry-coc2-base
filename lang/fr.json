@@ -4,7 +4,39 @@
       "usd": "Dollars"
     },
     "sheet": {
-      "character": "Personnage COC2"
+      "character": "Personnage COC2",
+      "encounter": "Adversaire COC2"
+    },
+    "size": {
+      "tiny": "Minuscule",
+      "verySmall": "Très petit",
+      "small": "Petit",
+      "medium": "Moyen",
+      "large": "Grand",
+      "huge": "Très grand",
+      "colossal": "Gigantesque"
+    },
+    "encounter": {
+      "archetype": {
+        "label": "Importance de l'adversaire dans le récit. Renseignée, elle fixe les valeurs d'un adversaire humain ; laissée vide, l'adversaire suit la table des créatures, pilotée par sa taille.",
+        "none": "Créature (taille)",
+        "figurant": "Figurant",
+        "secondRole": "Second rôle",
+        "premierRole": "Premier rôle"
+      },
+      "noCritical": "Seul un Premier rôle peut faire une réussite critique",
+      "healthScaleRange": "Longueur recommandée :",
+      "stealth": "Furtivité",
+      "meleeDamage": "DM",
+      "meleeDamageTooltip": "Dommages au contact recommandés pour cette taille de créature. Un minimum de 1 DM est toujours infligé.",
+      "quotas": {
+        "abilities": "Caractéristiques : {points} / {max} points",
+        "perAbility": "max +{max} par caractéristique",
+        "capacities": "Capacités : {count} / {max}",
+        "tooManyAbilities": "trop de points de caractéristiques",
+        "abilityAboveCap": "une caractéristique dépasse +{max}",
+        "tooManyCapacities": "trop de capacités apprises"
+      }
     },
     "xp": {
       "tooltip": "Points de capacité disponibles / total (points de création de la tranche d'âge + 1 XP par séance)",
@@ -53,6 +85,10 @@
       "showSecondScale": {
         "name": "Afficher la seconde échelle",
         "hint": "Affiche, sous l'échelle de santé, une seconde échelle (« Échelle ») sur les fiches de personnage."
+      },
+      "pulpHealthScales": {
+        "name": "Échelles de santé Pulp",
+        "hint": "Ambiance « action décomplexée » : les adversaires mineurs ont une échelle raccourcie (Figurant 4, Second rôle 12) et le Premier rôle une échelle allongée (24). Le réglage ne s'applique qu'aux prochaines sélections d'archétype : les adversaires déjà créés ne sont pas modifiés."
       }
     },
     "status": {
@@ -88,6 +124,7 @@
       "traitError": " — déséquilibre : les avantages doivent égaler les désavantages (5 max)"
     },
     "equipment": {
+      "rd": "RD (réduction de dégâts)",
       "encumbrance": "Encombrement",
       "encumbranceHint": "Malus fixe appliqué à l'Initiative, à l'AGI et à l'attaque au contact (ex. −2 gilet souple, −4 gilet rigide ou plaques)."
     },

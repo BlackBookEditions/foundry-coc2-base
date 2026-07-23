@@ -1,6 +1,7 @@
 import CharacterData from "../../../../systems/co2/module/models/character.mjs"
 import { BaseValue } from "../../../../systems/co2/module/models/schemas/base-value.mjs"
 import Utils from "../../../../systems/co2/module/helpers/utils.mjs"
+import DefaultConfiguration from "../../../../systems/co2/module/config/configuration.mjs"
 import { HEALTH_SCALE, applyHealthScaleStatuses, SECOND_SCALE, getAgeBracket } from "../config/coc2.mjs"
 
 /**
@@ -228,16 +229,45 @@ export default class COC2CharacterData extends CharacterData {
   }
 
   /**
-   * Défense COC2 : 10 + AGI + PER, là où COF2 ne compte que 10 + AGI
-   * L'armure et le bouclier ajoutés par COF2 restent pris en compte tant que les protections
-   * COC2 (RD au lieu de DEF) ne sont pas implémentées
+   * Défense COC2 : 10 + AGI + PER, sans l'apport de l'armure/bouclier — qui donnent désormais de la RD
+   * (cf. _prepareDR), pas de la DEF. Réécriture complète de la méthode du système : les blocs armure/
+   * bouclier (character.mjs:584-595) ne sont pas neutralisables après super sans laisser de ligne de
+   * tooltip « Armure » — même parti pris que _prepareAttack/_prepareAbilities.
    * @param {*} skill
    * @param {*} abilityBonus Valeur de l'agilité
-   * @param {*} bonuses
+   * @param {*} bonuses Somme des bonus de la fiche et des active effects
+   * @override
    */
   _prepareDef(skill, abilityBonus, bonuses) {
-    super._prepareDef(skill, abilityBonus, bonuses)
-    this.#addSecondaryAbility(skill, game.system.CONST.COMBAT.def.id, "per", bonuses)
+    const defModifiers = this.computeTotalModifiersByTarget(this.combatModifiers, game.system.CONST.COMBAT.def.id)
+    const base = DefaultConfiguration.baseDefense()
+    const per = this.abilities.per.value
+
+    skill.base = base + abilityBonus + per
+    skill.tooltipBase = Utils.getTooltip("Base", base).concat(
+      Utils.getTooltip(Utils.getAbilityName(skill.ability), abilityBonus),
+      Utils.getTooltip(Utils.getAbilityName("per"), per),
+    )
+
+    skill.value = skill.base + bonuses + defModifiers.total
+    skill.tooltipValue = skill.tooltipBase.concat(defModifiers.tooltip, Utils.getTooltip("Bonus", bonuses))
+  }
+
+  /**
+   * RD (réduction de dégâts) COC2 : la protection cumulée des armures/boucliers équipés s'ajoute à la RD
+   * (base 0 + bonus de fiche + modifiers dr du système). Cette RD est soustraite des DM subis par le
+   * pipeline de dégâts du système (applyDamage / Hitpoints), y compris sur l'échelle de santé.
+   * @override
+   */
+  _prepareDR() {
+    super._prepareDR()
+
+    const rd = this.parent.protectionRD
+    if (!rd) return
+
+    this.combat.dr.base += rd
+    this.combat.dr.value += rd
+    this.combat.dr.tooltipValue = this.combat.dr.tooltipValue.concat(Utils.getTooltip("Protection", rd))
   }
 
   /**

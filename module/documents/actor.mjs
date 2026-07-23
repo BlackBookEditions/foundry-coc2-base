@@ -1,5 +1,5 @@
 import COActor from "../../../../systems/co2/module/documents/actor.mjs"
-import { getStateSkillBonuses, getAgeBracket } from "../config/coc2.mjs"
+import { getStateSkillBonuses, getAgeBracket, MINIMUM_DAMAGE } from "../config/coc2.mjs"
 
 /**
  * Document Actor COC2 : adapte le document COF2 aux règles de Chroniques Oubliées Contemporain
@@ -110,6 +110,32 @@ export default class COC2Actor extends COActor {
     const protections = [...this.equippedArmors, ...this.equippedShields]
     const total = protections.reduce((sum, item) => sum + (item.system.overloadMalus ?? 0), 0)
     return -total
+  }
+
+  /**
+   * RD (réduction de dégâts) COC2 : somme de la protection de toutes les protections équipées (armures ET
+   * boucliers), pour gérer le cumul casque + armure. En COC2 le champ `defense` de l'équipement porte la
+   * RD (il n'alimente plus la DEF) ; `magicalDefense` étant inutilisé, totalDefense = defense.
+   * Alimente combat.dr (cf. COC2CharacterData._prepareDR), soustrait des DM par le pipeline du système.
+   * @returns {number} La RD totale des protections équipées (≥ 0).
+   */
+  get protectionRD() {
+    const protections = [...this.equippedArmors, ...this.equippedShields]
+    return protections.reduce((sum, item) => sum + (item.system.totalDefense ?? 0), 0)
+  }
+
+  /**
+   * Minimum de dommages COC2 : une attaque qui touche inflige toujours au moins 1 DM, même si les malus
+   * de caractéristiques ramènent la formule à zéro ou dans le négatif. Le clamp porte sur les dommages
+   * de la formule, en amont de la réduction de dommages : la RD garde le droit de tout absorber.
+   * C'est le seul point de passage à intercepter, toutes les applications de dégâts convergeant ici, et
+   * la méthode du système sortant sans rien faire dès que le total est nul.
+   * @inheritDoc
+   */
+  async applyDamage({ damage, ...rest } = {}) {
+    // Une valeur non numérique est laissée telle quelle : c'est au système de la rejeter
+    const clamped = Number.isFinite(damage) && damage <= 0 ? MINIMUM_DAMAGE : damage
+    return super.applyDamage({ damage: clamped, ...rest })
   }
 
   /**
