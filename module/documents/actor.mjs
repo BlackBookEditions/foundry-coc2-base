@@ -250,15 +250,44 @@ export default class COC2Actor extends COActor {
   }
 
   /**
-   * Contrôle informatif des XP disponibles après apprentissage : en COC2 les rangs s'achètent avec les XP de séance
+   * Contrôle informatif des XP disponibles après apprentissage : en COC2 les rangs s'achètent avec les XP de séance.
+   * Mémorise en plus la PHASE d'acquisition de chaque capacité (création vs jeu) via le flag `coc2-base.learnedInPlay`,
+   * consommé par COC2CapacityData.getXpCost pour facturer 1 à la création et le rang visé en jeu.
    * @inheritDoc
    */
   async toggleCapacityLearned(capacityId, state) {
     await super.toggleCapacityLearned(capacityId, state)
 
-    if (state && this.type === "character") {
+    if (this.type !== "character") return
+
+    // La capacité et son éventuelle capacité liée sont basculées par super : on synchronise le flag de phase sur
+    // leur état `learned` réel (super peut refuser l'apprentissage — ordre séquentiel — sans changer `learned`).
+    const capacity = this.items.get(capacityId)
+    if (capacity) await this.#syncLearnedPhase(capacity)
+    if (capacity?.system.allowLinkedCapacity && capacity.system.linkedCapacity) {
+      const linked = await fromUuid(capacity.system.linkedCapacity)
+      if (linked && linked.actor === this) await this.#syncLearnedPhase(linked)
+    }
+
+    if (state) {
       const available = await this.system.getAvailableXP()
       if (available < 0) ui.notifications.warn(game.i18n.localize("COC2BASE.notif.warningNotEnoughXP"))
+    }
+  }
+
+  /**
+   * Aligne le flag `coc2-base.learnedInPlay` d'une capacité sur son état appris courant :
+   * posé (= phase de jeu ou non) à l'apprentissage, retiré au désapprentissage pour qu'un ré-apprentissage
+   * ultérieur réévalue la phase. N'écrit que si la valeur change, pour éviter un update/re-render inutile.
+   * @param {COItem} capacity La capacité dont synchroniser le flag
+   */
+  async #syncLearnedPhase(capacity) {
+    const current = capacity.getFlag("coc2-base", "learnedInPlay")
+    if (capacity.system.learned) {
+      const learnedInPlay = !this.system.isCreation
+      if (current !== learnedInPlay) await capacity.setFlag("coc2-base", "learnedInPlay", learnedInPlay)
+    } else if (current !== undefined) {
+      await capacity.unsetFlag("coc2-base", "learnedInPlay")
     }
   }
 }
