@@ -46,8 +46,15 @@
       <li class="ability" data-ability="{{id}}">
         <div class="ability-id draggable" data-roll-target="{{id}}" data-tooltip="{{localize (concat 'CO.abilities.long.' id)}}" data-tooltip-direction="UP">
           {{localize (concat "CO.abilities.short." id)}}
-          {{#unless ../viewLimited}} 
+          {{#unless ../viewLimited}}
             {{#if ability.superior}}<i class="fas fa-asterisk"></i>{{/if}}
+            {{!-- Encombrement des protections : marqueur discret, sans chiffre accolé à la valeur. Le malus
+                  porte sur les TESTS d'AGI, pas sur la caractéristique — le tooltip le dit explicitement. --}}
+            {{#if (eq id "agi")}}
+              {{#if ../encumbranceMalus}}
+                <i class="fas fa-weight-hanging coc2-encumbrance-mark" data-tooltip="{{../encumbranceLabel}}"></i>
+              {{/if}}
+            {{/if}}
           {{/unless}}
         </div>        
         {{#if ../viewLimited}}

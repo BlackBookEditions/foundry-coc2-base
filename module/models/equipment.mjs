@@ -9,6 +9,9 @@ import { computeAutoCriticalBonus } from "../config/coc2.mjs"
  * Ce malus est une donnée propre à chaque protection (ex. −2 gilet souple, −4 gilet rigide/plaques),
  * indépendante de la valeur de protection, d'où un champ dédié `encumbrance`.
  *
+ * Les protections ne s'empilent pas non plus librement : un gilet ne se cumule pas avec un autre gilet,
+ * alors qu'un casque s'ajoute à la protection déjà portée, d'où un champ dédié `cumulative`.
+ *
  * Une réussite critique n'y double pas non plus les dommages : elle ajoute le bonus critique (BC) de
  * l'arme, égal au maximum de son dé de dommages, d'où un champ dédié `criticalBonus`.
  */
@@ -16,13 +19,19 @@ export default class COC2EquipmentData extends EquipmentData {
   /**
    * Ajoute :
    *  - `encumbrance` : malus fixe d'encombrement de la protection (valeur positive, appliquée en négatif) ;
+   *  - `cumulative` : la protection s'ajoute à la protection déjà portée au lieu de la concurrencer ;
    *  - `criticalBonus` : bonus critique de l'arme. Nullable : laissé vide, il est déduit du dé de dommages.
+   *
+   * `cumulative` est un champ racine et non une entrée de `properties` : le schéma du système y déclare
+   * déjà `stackable`, qui désigne l'empilement des quantités en inventaire — tout autre notion — et
+   * surcharger `properties` par mergeObject en remplacerait le SchemaField entier.
    * @inheritDoc
    */
   static defineSchema() {
     const fields = foundry.data.fields
     return foundry.utils.mergeObject(super.defineSchema(), {
       encumbrance: new fields.NumberField({ required: true, nullable: false, integer: true, initial: 0, min: 0 }),
+      cumulative: new fields.BooleanField({ initial: false }),
       criticalBonus: new fields.NumberField({ required: false, nullable: true, integer: true, initial: null, min: 0 }),
     })
   }

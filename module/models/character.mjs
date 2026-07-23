@@ -156,7 +156,7 @@ export default class COC2CharacterData extends CharacterData {
    * Caractéristiques COC2 : réécriture complète de la méthode du système pour supprimer le plafonnement
    * de l'AGI par l'armure (COF2 : max = 8 − DEF de l'armure). En COC2, le port d'une protection n'impose
    * plus de plafond d'AGI mais un malus fixe d'encombrement (cf. #applyArmorEncumbrance), appliqué à Init,
-   * ATC et aux jets d'AGI. Le bloc de plafonnement n'étant pas isolable, on reprend la boucle du système
+   * ATC et aux tests d'AGI. Le bloc de plafonnement n'étant pas isolable, on reprend la boucle du système
    * sans lui — même parti pris que _prepareAttack.
    * @override
    */
@@ -175,6 +175,13 @@ export default class COC2CharacterData extends CharacterData {
       ability.value = ability.base + bonuses + ability.modifiers
       ability.tooltipValue = Utils.getTooltip(Utils.getAbilityName(key), ability.base).concat(abilityModifiers.tooltip, Utils.getTooltip("Bonus", bonuses))
     }
+
+    // Encombrement des protections : signalé sur l'AGI, mais volontairement absent de sa valeur. Le livre de
+    // règles le fait porter sur les TESTS d'AGI, pas sur la caractéristique : la minorer pénaliserait aussi la
+    // DEF (10 + AGI + PER) et l'ATD (= AGI), que le tableau des protections ne mentionne pas. Le malus est
+    // appliqué au moment du jet par rollSkill du système ; cette ligne ne fait que le rendre lisible sur la fiche.
+    const armorMalus = this.parent.malusFromArmor
+    if (armorMalus) this.abilities.agi.tooltipValue = this.abilities.agi.tooltipValue.concat(Utils.getTooltip("Encombrement (tests d'AGI)", armorMalus))
   }
 
   /**

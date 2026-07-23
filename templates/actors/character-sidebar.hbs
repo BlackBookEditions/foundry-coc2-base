@@ -173,7 +173,10 @@
           <i class="fas fa-fw fa-shield-alt"></i>??
         </div>
         {{else}}
-          <h4 data-tooltip="Malus d'encombrement : {{overloadMalus}}">{{localize "CO.label.long.def"}}</h4>
+          {{!-- Pas de tooltip d'encombrement ici (contrairement au template co2) : en COC2 la DEF est la seule
+                valeur de combat que le malus des protections n'affecte pas. Il porte sur l'Init., l'ATC et les
+                tests d'AGI, et s'affiche dans les tooltips de ces valeurs. --}}
+          <h4>{{localize "CO.label.long.def"}}</h4>
         </div>
         <div class="armor-base labelled-field" data-tooltip="{{combat.def.tooltipValue}}">
           <i class="fas fa-fw fa-shield-alt"></i>

@@ -78,24 +78,41 @@
   color: var(--co-text-light);
 }
 
-/* Contenu des onglets en mode lecture seule : le texte passe en sombre pour rester lisible.
-   Le mode est lisible en CSS via le sélecteur d'attribut de l'interrupteur d'édition, dont la
+/* Contenu des onglets en mode lecture seule.
+   Le fond du contenu est --co-window-content (translucide) : posé sur le cadre CLAIR de Foundry en
+   thème clair, il donne un gris moyen où le texte sombre reste lisible (comportement voulu) ; posé
+   sur le cadre SOMBRE en thème sombre, il devient sombre — le texte doit alors être clair, sinon
+   noir sur noir. On rend donc la couleur consciente du thème (motif .theme-light/.theme-dark de co2).
+   Le mode lecture est lisible en CSS via le sélecteur d'attribut de l'interrupteur d'édition, dont la
    propriété checked est réfléchie (systems/co2/module/elements/checkbox.mjs:102-108). L'absence
    d'interrupteur — utilisateur non propriétaire — est également un cas de lecture seule. */
 .co.item:not(:has(.mode-slider[checked])) .window-content .tab {
-  color: var(--co-text-dark);
-
-  h4,
-  label,
-  span,
-  p,
-  li,
-  legend {
-    color: var(--co-text-dark);
+  .theme-light & {
+    &,
+    h4,
+    label,
+    span,
+    p,
+    li,
+    legend {
+      color: var(--co-text-dark);
+    }
   }
 
-  // Les bandeaux de section sont des h4 posés sur un fond de la palette : leur texte reste clair.
-  // Écrit ici, et non à la racine, pour l'emporter sur la règle h4 ci-dessus.
+  .theme-dark & {
+    &,
+    h4,
+    label,
+    span,
+    p,
+    li,
+    legend {
+      color: var(--co-text-light);
+    }
+  }
+
+  // Les bandeaux de section sont des h4 posés sur un fond de la palette, sombre dans les deux modes :
+  // leur texte reste clair. Écrit ici, et non dans les branches ci-dessus, pour l'emporter sur elles.
   .form-header,
   .form-header * {
     color: var(--co-text-light);

@@ -392,6 +392,27 @@
   }
 }
 
+/* Protections : colonnes RD et Encombrement injectées dans les groupes Armures/Boucliers de l'inventaire
+   (cf. #renderProtectionDetails). Plus étroites que les colonnes du système, qui portent des libellés. */
+.co.actor.coc2 .item-detail.coc2-protection {
+  flex: 0 45px;
+
+  /* Protection écartée du calcul : une autre non cumulable, meilleure, est portée. Barrée plutôt que masquée,
+     pour que la valeur saisie reste lisible et que l'anomalie se voie. */
+  &.coc2-protection-ignored {
+    text-decoration: line-through;
+    opacity: 0.5;
+  }
+}
+
+/* Marqueur d'encombrement à côté de l'AGI : signale un malus sur les TESTS d'AGI, pas sur la valeur affichée.
+   Volontairement discret et sans chiffre, pour ne pas se lire comme un modificateur de la caractéristique. */
+.co.actor.coc2 .abilities .coc2-encumbrance-mark {
+  margin-left: 3px;
+  font-size: 0.7em;
+  opacity: 0.75;
+}
+
 /* Groupe de joueurs COC2 : libellé d'état (santé) / de palier (seconde échelle) affiché en discret après la valeur */
 .co.party-sheet.coc2 .party-table {
   .health-state-label,

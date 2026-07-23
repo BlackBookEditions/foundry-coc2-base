@@ -28,7 +28,7 @@
       "healthScaleRange": "Longueur recommandée :",
       "stealth": "Furtivité",
       "meleeDamage": "DM",
-      "meleeDamageTooltip": "Dommages au contact recommandés pour cette taille de créature. Un minimum de 1 DM est toujours infligé.",
+      "meleeDamageTooltip": "Dommages au contact recommandés pour cette taille de créature.",
       "quotas": {
         "abilities": "Caractéristiques : {points} / {max} points",
         "perAbility": "max +{max} par caractéristique",
@@ -55,7 +55,7 @@
     "recovery": {
       "cg": "CG",
       "cgLong": "Capacité de guérison",
-      "cgTooltip": "Égale à CON + 3. Nombre d'échelons de l'échelle de santé récupérés par semaine de repos, le personnage étant stabilisé.",
+      "cgTooltip": "Égale à CON + 3. Nombre d'échelons de l'échelle de santé récupérés par semaine de repos..",
       "restTooltip": "Repos d'une semaine : décoche CG échelons de l'échelle de santé",
       "restDone": "Repos d'une semaine : {healed} échelon(s) de santé récupéré(s).",
       "restNoInjury": "Le personnage n'a aucune blessure à soigner."
@@ -126,8 +126,22 @@
     },
     "equipment": {
       "rd": "RD (réduction de dégâts)",
+      "rdShort": "RD",
       "encumbrance": "Encombrement",
-      "encumbranceHint": "Malus fixe appliqué à l'Initiative, à l'AGI et à l'attaque au contact (ex. −2 gilet souple, −4 gilet rigide ou plaques).",
+      "encumbranceShort": "Enc.",
+      "encumbranceHint": "Malus fixe appliqué à l'Initiative, aux tests d'AGI et à l'attaque au contact.",
+      "encumbranceUnset": "Encombrement non renseigné : cette protection n'impose aucun malus. Complétez le champ sur la fiche de l'objet (ex. 2 pour un gilet souple).",
+      "encumbranceAgiTooltip": "Encombrement des protections : {malus} aux tests d'AGI. La valeur d'AGI, la DEF et l'ATD ne sont pas modifiées.",
+      "encumbranceRollName": "Encombrement des protections",
+      "encumbrancePathName": "Protections",
+      "encumbranceRollHint": "{malus} déjà appliqué dans le champ Malus",
+      "cumulative": "Cumulable",
+      "cumulativeShort": "Cumul.",
+      "cumulativeHint": "La protection s'ajoute à celle déjà portée (casque, gilet pare-éclats). Décochée, elle concurrence les autres protections non cumulables : seule la meilleure est retenue, et elle seule impose son encombrement.",
+      "cumulativeYes": "Cumulable : s'ajoute à la protection retenue",
+      "cumulativeNo": "Non cumulable : concurrence les autres protections non cumulables",
+      "protectionIgnored": "Protection non retenue : une autre protection non cumulable, mieux protectrice, est portée. Elle n'apporte pas de RD et n'impose pas son encombrement.",
+      "protectionIgnoredWarning": "Protections non cumulables : seule « {retained} » est prise en compte. Écartée(s) : {ignored}.",
       "bc": "BC (bonus critique)",
       "bcHint": "Dommages fixes ajoutés au jet sur une réussite critique. Laissé vide : {auto}, le maximum du dé de dommages.",
       "bcFlavor": "BC"

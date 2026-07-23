@@ -78,11 +78,30 @@ export default class COC2Actor extends COActor {
    * ActiveEffect : ceux qui portent « à tous les tests », « à toutes les actions » ou « aux actions
    * basées sur la vue ». Les caractéristiques ne sont volontairement pas modifiées pour ne pas
    * pénaliser deux fois la DEF et les attaques qui en dérivent.
+   * Y ajoute, sur les tests d'AGI, une ligne nommant la source du malus d'encombrement déjà pré-rempli.
    * @inheritDoc
    */
   getSkillBonuses(ability) {
     const bonuses = super.getSkillBonuses(ability)
     bonuses.push(...getStateSkillBonuses(this, ability))
+
+    // Encombrement des protections : rollSkill du système pré-remplit déjà le champ « Malus » de la fenêtre
+    // pour les tests d'AGI, sans dire d'où vient le chiffre. On ajoute donc une ligne purement informative,
+    // de valeur 0 : les lignes de bonus sont cochables et s'ajoutent au total, une valeur réelle compterait
+    // le malus une seconde fois. Le pré-remplissage du système valant pour tout acteur, on ne filtre pas sur le type.
+    const armorMalus = this.malusFromArmor
+    if (ability === "agi" && armorMalus) {
+      bonuses.push({
+        sourceType: "coc2Encumbrance",
+        name: game.i18n.localize("COC2BASE.equipment.encumbranceRollName"),
+        description: game.i18n.localize("COC2BASE.equipment.encumbranceRollName"),
+        pathName: game.i18n.localize("COC2BASE.equipment.encumbrancePathName"),
+        hasPathName: true,
+        value: 0,
+        additionalInfos: game.i18n.format("COC2BASE.equipment.encumbranceRollHint", { malus: armorMalus }),
+      })
+    }
+
     return bonuses
   }
 
@@ -115,29 +134,105 @@ export default class COC2Actor extends COActor {
   }
 
   /**
-   * Malus d'encombrement COC2 : somme des malus de toutes les protections équipées (armures ET boucliers),
-   * renvoyée en négatif. Remplace le calcul COF2 (première armure équipée uniquement) pour prendre en compte
-   * le port simultané de plusieurs protections. Source unique du malus fixe : jets d'AGI (rollSkill du système),
-   * Initiative et attaque au contact (appliqués par COC2CharacterData).
+   * Protections équipées, armures et boucliers confondus.
+   * @returns {COItem[]}
+   */
+  get equippedProtections() {
+    return [...this.equippedArmors, ...this.equippedShields]
+  }
+
+  /**
+   * Protections COC2 effectivement prises en compte : la meilleure des protections non cumulables, plus
+   * toutes les protections cumulables. Un gilet ne se cumule pas avec un autre gilet, un casque s'ajoute
+   * à celui qui est retenu (cf. le champ `cumulative` de COC2EquipmentData).
+   *
+   * Armures et boucliers forment un seul ensemble : porter un gilet et un bouclier tous deux non
+   * cumulables n'en retient qu'un. À RD égale, on retient la protection la moins encombrante, pour ne pas
+   * pénaliser le personnage sur un départage arbitraire.
+   *
+   * Source unique de la RD et du malus d'encombrement : une protection écartée ici ne protège pas et ne
+   * gêne pas non plus.
+   * @returns {COItem[]}
+   */
+  get retainedProtections() {
+    const cumulative = []
+    let best = null
+    for (const item of this.equippedProtections) {
+      if (item.system.cumulative) {
+        cumulative.push(item)
+        continue
+      }
+      if (!best) {
+        best = item
+        continue
+      }
+      const rd = item.system.totalDefense ?? 0
+      const bestRd = best.system.totalDefense ?? 0
+      if (rd > bestRd || (rd === bestRd && (item.system.overloadMalus ?? 0) < (best.system.overloadMalus ?? 0))) best = item
+    }
+    return best ? [best, ...cumulative] : cumulative
+  }
+
+  /**
+   * Protections équipées écartées du calcul : les protections non cumulables qu'une autre, meilleure, supplante.
+   * Consommée par la fiche (marquage de l'inventaire) et par l'avertissement à l'équipement.
+   * @returns {COItem[]}
+   */
+  get ignoredProtections() {
+    const retained = new Set(this.retainedProtections.map((item) => item.id))
+    return this.equippedProtections.filter((item) => !retained.has(item.id))
+  }
+
+  /**
+   * Malus d'encombrement COC2 : somme des malus des protections retenues, renvoyée en négatif. Remplace le
+   * calcul COF2 (première armure équipée uniquement) pour prendre en compte le port simultané de plusieurs
+   * protections (casque + gilet, gilet + bouclier). Source unique du malus fixe : tests d'AGI (rollSkill du
+   * système), Initiative et attaque au contact (appliqués par COC2CharacterData).
+   * La caractéristique AGI, la DEF et l'ATD ne sont pas minorées : le livre de règles ne vise que les tests.
    * @returns {number} Le malus d'encombrement total (≤ 0).
    * @override
    */
   get malusFromArmor() {
-    const protections = [...this.equippedArmors, ...this.equippedShields]
-    const total = protections.reduce((sum, item) => sum + (item.system.overloadMalus ?? 0), 0)
+    const total = this.retainedProtections.reduce((sum, item) => sum + (item.system.overloadMalus ?? 0), 0)
     return -total
   }
 
   /**
-   * RD (réduction de dégâts) COC2 : somme de la protection de toutes les protections équipées (armures ET
-   * boucliers), pour gérer le cumul casque + armure. En COC2 le champ `defense` de l'équipement porte la
-   * RD (il n'alimente plus la DEF) ; `magicalDefense` étant inutilisé, totalDefense = defense.
+   * RD (réduction de dégâts) COC2 : somme de la protection des protections retenues, pour gérer le cumul
+   * casque + armure. En COC2 le champ `defense` de l'équipement porte la RD (il n'alimente plus la DEF) ;
+   * `magicalDefense` étant inutilisé, totalDefense = defense.
    * Alimente combat.dr (cf. COC2CharacterData._prepareDR), soustrait des DM par le pipeline du système.
-   * @returns {number} La RD totale des protections équipées (≥ 0).
+   * @returns {number} La RD totale des protections retenues (≥ 0).
    */
   get protectionRD() {
-    const protections = [...this.equippedArmors, ...this.equippedShields]
-    return protections.reduce((sum, item) => sum + (item.system.totalDefense ?? 0), 0)
+    return this.retainedProtections.reduce((sum, item) => sum + (item.system.totalDefense ?? 0), 0)
+  }
+
+  /**
+   * Avertit le joueur quand la protection qu'il vient d'équiper entre en concurrence avec une autre : seule
+   * la meilleure des protections non cumulables compte, les autres ne protègent ni ne gênent.
+   *
+   * L'avertissement est posé ici et non dans la préparation des données, qui est rejouée à chaque calcul de
+   * fiche et noierait l'interface de notifications. Le marquage de l'inventaire prend le relais une fois la
+   * notification disparue.
+   * @inheritDoc
+   */
+  async toggleEquipmentEquipped(itemId, bypassChecks) {
+    await super.toggleEquipmentEquipped(itemId, bypassChecks)
+
+    const item = this.items.get(itemId)
+    if (!item?.system.equipped) return
+    if (!item.system.isArmor && !item.system.isShield) return
+
+    const ignored = this.ignoredProtections
+    if (ignored.length === 0) return
+
+    ui.notifications.warn(
+      game.i18n.format("COC2BASE.equipment.protectionIgnoredWarning", {
+        retained: this.retainedProtections.find((protection) => !protection.system.cumulative)?.name ?? "",
+        ignored: ignored.map((protection) => protection.name).join(", "),
+      }),
+    )
   }
 
   /**

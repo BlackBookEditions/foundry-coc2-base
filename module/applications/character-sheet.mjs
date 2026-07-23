@@ -73,6 +73,13 @@ export default class COC2CharacterSheet extends COCharacterSheet {
     context.initFormula = `10 + ${shortAbility("int")} + ${shortAbility("per")}`
     context.defFormula = `10 + ${shortAbility("agi")} + ${shortAbility("per")}`
 
+    // Encombrement des protections : marqueur posé à côté de l'AGI dans l'en-tête. La valeur affichée de la
+    // caractéristique reste celle du personnage — le malus ne porte que sur les tests, d'où un libellé explicite.
+    context.encumbranceMalus = this.document.malusFromArmor
+    context.encumbranceLabel = context.encumbranceMalus
+      ? game.i18n.format("COC2BASE.equipment.encumbranceAgiTooltip", { malus: context.encumbranceMalus })
+      : ""
+
     // Traits distinctifs : compteur des points d'avantages et de désavantages, injecté dans l'onglet Biographie par _onRender
     const traitPoints = (subtype) =>
       features.filter((f) => f.system.subtype === subtype).reduce((acc, f) => acc + (f.getFlag("coc2-base", "points") ?? 1), 0)
@@ -106,6 +113,70 @@ export default class COC2CharacterSheet extends COCharacterSheet {
     this.#renderTraitBalance(context)
     await this.#renderAvantagesDesavantages(context)
     this.#renderAgeLimits(context)
+    this.#renderProtectionDetails()
+  }
+
+  /**
+   * Inventaire : colonnes RD, Encombrement et Cumulable sur les groupes Armures et Boucliers, et retrait des
+   * coches de maîtrise. Injection DOM plutôt qu'un override du template inventaire (propriété du système co2),
+   * afin de ne pas le dupliquer — même motif que le compteur des traits distinctifs.
+   *
+   * Les valeurs sont saisies à la main sur la fiche d'objet (aucun compendium n'est fourni) : un encombrement
+   * laissé à 0 est le cas typique du champ oublié, d'où l'avertissement porté par la cellule.
+   *
+   * Les protections écartées du calcul — les non cumulables qu'une meilleure supplante — sont barrées et
+   * portent une infobulle : la notification émise à l'équipement est fugace, la fiche garde la trace.
+   */
+  #renderProtectionDetails() {
+    const part = this.element?.querySelector('[data-application-part="inventory"]')
+    if (!part) return
+
+    // Idempotence : on retire toute injection précédente (re-render partiel de l'onglet)
+    part.querySelectorAll(".coc2-protection").forEach((node) => node.remove())
+
+    // Maîtrise des armes, armures et boucliers : notion absente de COC2 (isTrainedWith* renvoie toujours true),
+    // la coche du template co2 est systématiquement verte et n'apprend donc rien.
+    part.querySelectorAll("li.item .item-name h4 > i.fa-circle-check, li.item .item-name h4 > i.fa-circle-xmark").forEach((node) => node.remove())
+
+    const cell = (content, tooltip, ignored) =>
+      `<div class="item-detail coc2-protection${ignored ? " coc2-protection-ignored" : ""}"${tooltip ? ` data-tooltip="${tooltip}"` : ""}>${content}</div>`
+
+    const ignoredIds = new Set(this.document.ignoredProtections.map((item) => item.id))
+
+    for (const category of ["armor", "shield"]) {
+      // Ancre par le libellé repliable : l'attribut data-category du template co2 ressort vide (variable hors portée)
+      const container = part.querySelector(`a[data-toggle-type="${category}"]`)?.closest("ol.items-container")
+      if (!container) continue
+
+      const header = container.querySelector("li.items-container-header > h4.item-name")
+      if (!header) continue
+      header.insertAdjacentHTML(
+        "afterend",
+        cell(game.i18n.localize("COC2BASE.equipment.rdShort"), game.i18n.localize("COC2BASE.equipment.rd")) +
+          cell(game.i18n.localize("COC2BASE.equipment.encumbranceShort"), game.i18n.localize("COC2BASE.equipment.encumbranceHint")) +
+          cell(game.i18n.localize("COC2BASE.equipment.cumulativeShort"), game.i18n.localize("COC2BASE.equipment.cumulativeHint")),
+      )
+
+      for (const row of container.querySelectorAll("li.item[data-item-id]")) {
+        const item = this.document.items.get(row.dataset.itemId)
+        const anchor = row.querySelector(".item-name")
+        if (!item || !anchor) continue
+
+        const encumbrance = item.system.encumbrance ?? 0
+        const ignored = ignoredIds.has(item.id)
+        const ignoredTooltip = ignored ? game.i18n.localize("COC2BASE.equipment.protectionIgnored") : null
+        const cumulative = item.system.cumulative
+        anchor.insertAdjacentHTML(
+          "afterend",
+          cell(item.system.totalDefense ?? 0, ignoredTooltip, ignored) +
+            (encumbrance ? cell(`−${encumbrance}`, ignoredTooltip, ignored) : cell("—", game.i18n.localize("COC2BASE.equipment.encumbranceUnset"))) +
+            cell(
+              cumulative ? '<i class="fa-solid fa-check"></i>' : "—",
+              game.i18n.localize(cumulative ? "COC2BASE.equipment.cumulativeYes" : "COC2BASE.equipment.cumulativeNo"),
+            ),
+        )
+      }
+    }
   }
 
   /**

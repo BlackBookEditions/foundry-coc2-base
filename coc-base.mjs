@@ -247,7 +247,8 @@ Hooks.on("renderCoFeatureSheet", (application, element, context, options) => {
  * retouche le DOM plutôt que de dupliquer son template) :
  *  - le champ `system.defense` porte désormais la RD (réduction de dégâts), pas la DEF : on le relabellise
  *  - `system.magicalDefense` (défense magique, notion COF2/magie absente de COC2) est masqué
- *  - injection du champ d'encombrement `system.encumbrance` (ajouté par COC2EquipmentData)
+ *  - injection du champ d'encombrement `system.encumbrance` et de la case Cumulable `system.cumulative`
+ *    (ajoutés par COC2EquipmentData)
  */
 Hooks.on("renderCoEquipmentSheet", (application, element, context, options) => {
   const item = application.document
@@ -264,14 +265,19 @@ Hooks.on("renderCoEquipmentSheet", (application, element, context, options) => {
   // Masquer la défense magique (idempotent : null après première suppression)
   element.querySelector('[name="system.magicalDefense"]')?.closest(".form-group")?.remove()
 
-  // Injecter l'encombrement (garde anti-doublon)
+  // Injecter l'encombrement et la case Cumulable, d'un bloc (garde anti-doublon commune).
+  // Le texte explicatif est porté en infobulle par le libellé plutôt qu'en `p.hint` sous le champ :
+  // la fiche d'équipement est dense, deux paragraphes d'aide y déséquilibrent la mise en page.
   if (element.querySelector(".coc2-encumbrance")) return
   const value = item.system.encumbrance ?? 0
   const locked = context.locked ? "disabled" : ""
   const html = `<div class="form-group coc2-encumbrance">
-    <label>${game.i18n.localize("COC2BASE.equipment.encumbrance")}</label>
+    <label data-tooltip="${game.i18n.localize("COC2BASE.equipment.encumbranceHint")}">${game.i18n.localize("COC2BASE.equipment.encumbrance")}</label>
     <input type="number" name="system.encumbrance" value="${value}" min="0" step="1" data-dtype="Number" ${locked} />
-    <p class="hint">${game.i18n.localize("COC2BASE.equipment.encumbranceHint")}</p>
+  </div>
+  <div class="form-group coc2-cumulative">
+    <label data-tooltip="${game.i18n.localize("COC2BASE.equipment.cumulativeHint")}">${game.i18n.localize("COC2BASE.equipment.cumulative")}</label>
+    <input type="checkbox" name="system.cumulative" ${item.system.cumulative ? "checked" : ""} ${locked} />
   </div>`
   defenseGroup.insertAdjacentHTML("afterend", html)
 })
