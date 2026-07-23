@@ -1,0 +1,26 @@
+{{!-- BDM et CG de la Vue actions (mini-fiche) : badges repris de character-sidebar.hbs, injectés dans la
+      barre latérale par le hook renderCOMiniCharacterSheet (coc-base.mjs). Pas de data-action : la
+      mini-fiche du système n'enregistre pas nos actions, le clic sur le repos est câblé par le hook. --}}
+<div class="sidebar-section bdm-section">
+  <div class="sidebar-section-header">
+    <div class="bdm-value labelled-field" data-tooltip="{{attributes.bdm.tooltipValue}}">
+      <i class="fas fa-fw fa-hand-fist"></i>
+      {{#if viewLimited}}??{{else}}{{numberFormat attributes.bdm.value decimals=0 sign=true}}{{/if}}
+    </div>
+  </div>
+</div>
+<div class="sidebar-section cg-section">
+  <div class="sidebar-section-header">
+    <div class="cg-value labelled-field" data-tooltip="{{attributes.cg.tooltipValue}}">
+      <i class="fas fa-fw fa-heart-pulse"></i>
+      {{#if viewLimited}}
+        ??
+      {{else}}
+        {{attributes.cg.value}}
+        {{#if editable}}
+          <a class="cg-rest" data-tooltip="{{localize 'COC2BASE.recovery.restTooltip'}}"><i class="fas fa-fw fa-bed"></i></a>
+        {{/if}}
+      {{/if}}
+    </div>
+  </div>
+</div>

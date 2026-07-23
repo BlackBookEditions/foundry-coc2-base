@@ -1,4 +1,5 @@
 import CharacterData from "../../../../systems/co2/module/models/character.mjs"
+import { BaseValue } from "../../../../systems/co2/module/models/schemas/base-value.mjs"
 import Utils from "../../../../systems/co2/module/helpers/utils.mjs"
 import { HEALTH_SCALE, applyHealthScaleStatuses, SECOND_SCALE, getAgeBracket } from "../config/coc2.mjs"
 
@@ -36,6 +37,18 @@ export default class COC2CharacterData extends CharacterData {
     secondScale.parent = attributes
     attributes.fields.secondScale = secondScale
 
+    // BDM (bonus de dommages au contact) et CG (capacité de guérison) : valeurs dérivées propres à COC2.
+    // Même type que les valeurs de combat du système (base + bonus de fiche + bonus d'active effects).
+    const bdm = new fields.EmbeddedDataField(BaseValue, { nullable: false, initial: { base: 0, ability: "for", bonuses: { sheet: 0, effects: 0 } } })
+    bdm.name = "bdm"
+    bdm.parent = attributes
+    attributes.fields.bdm = bdm
+
+    const cg = new fields.EmbeddedDataField(BaseValue, { nullable: false, initial: { base: 0, ability: "con", bonuses: { sheet: 0, effects: 0 } } })
+    cg.name = "cg"
+    cg.parent = attributes
+    attributes.fields.cg = cg
+
     return schema
   }
 
@@ -60,6 +73,43 @@ export default class COC2CharacterData extends CharacterData {
     // Seconde échelle : taille fixe issue de la config. TODO : bonus/modifiers d'échelle étendue, comme _prepareHPMax.
     this.attributes.secondScale.max = SECOND_SCALE.max
     if (this.attributes.secondScale.value > this.attributes.secondScale.max) this.attributes.secondScale.value = this.attributes.secondScale.max
+
+    // Calculés après super, qui a déjà finalisé les caractéristiques dont ils dérivent
+    this._prepareBdm()
+    this._prepareCg()
+  }
+
+  /**
+   * Bonus de dommages au contact (BDM) : égal à la Force, ajouté aux DM de base de l'arme sur une
+   * attaque au contact ou à mains nues. Exposé dans les données de jet sous @bdm (cf. COC2Actor.getRollData) :
+   * c'est la formule de dommages de l'arme qui le porte, par exemple « 1d6 + @bdm ».
+   *
+   * Les modificateurs damMelee ne sont volontairement PAS comptés ici : le système les ajoute déjà à la
+   * formule de dommages au moment du jet (rollAttack, gestion de modifierTarget). Les intégrer au BDM
+   * les ferait compter deux fois.
+   */
+  _prepareBdm() {
+    const bdm = this.attributes.bdm
+    const bonuses = Object.values(bdm.bonuses).reduce((prev, curr) => prev + curr)
+
+    bdm.base = this.abilities.for.value
+    bdm.value = bdm.base + bonuses
+    bdm.tooltipValue = Utils.getTooltip(Utils.getAbilityName("for"), bdm.base).concat(Utils.getTooltip("Bonus", bonuses))
+  }
+
+  /**
+   * Capacité de guérison (CG) : CON + 3. Nombre d'échelons de l'échelle de santé récupérés par semaine
+   * par un personnage stabilisé qui se repose (cf. applyWeeklyRest).
+   * La base est lue depuis CONFIG pour rester surchargeable par un module d'univers.
+   */
+  _prepareCg() {
+    const cg = this.attributes.cg
+    const bonuses = Object.values(cg.bonuses).reduce((prev, curr) => prev + curr)
+    const base = CONFIG.COC2BASE.healingCapacityBase
+
+    cg.base = base + this.abilities.con.value
+    cg.value = cg.base + bonuses
+    cg.tooltipValue = Utils.getTooltip("Base", base).concat(Utils.getTooltip(Utils.getAbilityName("con"), this.abilities.con.value), Utils.getTooltip("Bonus", bonuses))
   }
 
   /** @inheritDoc */

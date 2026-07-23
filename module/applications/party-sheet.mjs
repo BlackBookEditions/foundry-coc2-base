@@ -38,6 +38,11 @@ export default class COC2PartySheet extends COPartySheet {
         max,
         stateLabel: stateId ? game.i18n.localize(healthStates[stateId].name) : "",
       }
+
+      // BDM et CG : valeurs COC2 absentes du contexte du système, lues sur l'acteur
+      const attributes = member.actor?.system?.attributes
+      member.bdm = attributes?.bdm?.value ?? 0
+      member.cg = attributes?.cg?.value ?? 0
     }
 
     // Seconde échelle : compteur + libellé du palier atteint, affichés uniquement si le réglage est actif ou

@@ -6,6 +6,21 @@ import { getStateSkillBonuses, getAgeBracket } from "../config/coc2.mjs"
  */
 export default class COC2Actor extends COActor {
   /**
+   * Expose le BDM et la CG dans les données de jet, pour que les formules puissent les utiliser :
+   * les DM d'une arme de contact s'écrivent « 1d6 + @bdm ».
+   * Repli à 0 pour les créatures, qui n'ont ni BDM ni CG : une variable absente n'est pas remplacée
+   * par Roll.replaceFormulaData, le terme resterait dans la formule et casserait le jet si une arme
+   * de personnage leur était confiée.
+   * @inheritDoc
+   */
+  getRollData() {
+    const rollData = super.getRollData()
+    rollData.bdm = this.type === "character" ? this.system.attributes.bdm.value : 0
+    rollData.cg = this.type === "character" ? this.system.attributes.cg.value : 0
+    return rollData
+  }
+
+  /**
    * Progression COC2 : pas de niveau minimal pour apprendre une capacité,
    * seule la progression séquentielle dans la voie s'applique.
    * Le rang maximum de la tranche d'âge est signalé mais n'interdit pas l'achat.

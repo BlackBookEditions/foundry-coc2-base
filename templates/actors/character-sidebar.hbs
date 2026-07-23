@@ -1,6 +1,57 @@
 {{!log "Chroniques Oubliées | Character sidebar" this}}
 <div class="sheet-sidebar">
   <div class="scrollable">
+    <!-- INIT -->
+    <div class="sidebar-section init-section">
+      <div class="sidebar-section-header">
+        <div class="sidebar-label init-label">
+          <h4>{{localize "CO.label.long.init"}}</h4>
+          <!--                <a class="roll-icon roll-init"><i class="fas fa-dice-d20"></i><i class="fas fa-fw fa-plus"></i><div>{{!combat.init.value}}</div></a>-->
+          <!--                <a class="roll-icon roll-init"><i class="fas fa-dice-d20"></i><i class="fas fa-fw fa-plus"></i><div>{{!combat.init.value}}</div></a>-->
+        </div>
+        {{#if viewLimited}}
+          <div class="init-value labelled-field">
+            <i class="fas fa-solid fa-swords fa-fw"></i>??
+          </div>
+        {{else}}
+          <div class="init-value labelled-field" data-tooltip="{{combat.init.tooltipValue}}">
+            <i class="fas fa-solid fa-swords fa-fw"></i>
+            {{combat.init.value}}
+          </div>
+        {{/if}}
+      </div>
+      {{#if unlocked}}
+        <div class="sidebar-section-content">
+          <div class="field">
+            <span class="combat-formula" data-tooltip="{{localize 'COC2BASE.combat.formulaTooltip'}}">{{initFormula}}</span>
+          </div>
+        </div>
+        <div class="sidebar-section-content">
+          <div class="field">
+            <input
+              class="init-base"
+              type="number"
+              name="system.combat.init.base"
+              value="{{combat.init.base}}"
+              data-dtype="Number"
+              placeholder="0"
+              readonly
+              data-tooltip="{{localize 'CO.label.long.base'}}"
+            />
+            <span class="slash">/</span>
+            <input
+              class="init-bonus"
+              type="text"
+              name="system.combat.init.bonuses.sheet"
+              value="{{numberFormat combat.init.bonuses.sheet decimals=0 sign=true}}"
+              data-dtype="Number"
+              placeholder="0"
+              data-tooltip="{{localize 'CO.label.long.bonus'}}"
+            />
+          </div>
+        </div>
+      {{/if}}
+    </div>
     <!-- MELEE -->
     <div class="sidebar-section melee-section">
       <div class="sidebar-section-header">
@@ -111,57 +162,6 @@
       {{/if}}
     </div>
     {{!-- Pas d'attaque magique en COC2 : le livre de règles ne définit que l'ATC (FOR) et l'ATD (AGI) --}}
-    <!-- INIT -->
-    <div class="sidebar-section init-section">
-      <div class="sidebar-section-header">
-        <div class="sidebar-label init-label">
-          <h4>{{localize "CO.label.long.init"}}</h4>
-          <!--                <a class="roll-icon roll-init"><i class="fas fa-dice-d20"></i><i class="fas fa-fw fa-plus"></i><div>{{!combat.init.value}}</div></a>-->
-          <!--                <a class="roll-icon roll-init"><i class="fas fa-dice-d20"></i><i class="fas fa-fw fa-plus"></i><div>{{!combat.init.value}}</div></a>-->
-        </div>
-        {{#if viewLimited}}
-          <div class="init-value labelled-field">
-            <i class="fas fa-solid fa-swords fa-fw"></i>??
-          </div>
-        {{else}}
-          <div class="init-value labelled-field" data-tooltip="{{combat.init.tooltipValue}}">
-            <i class="fas fa-solid fa-swords fa-fw"></i>
-            {{combat.init.value}}
-          </div>
-        {{/if}}
-      </div>
-      {{#if unlocked}}
-        <div class="sidebar-section-content">
-          <div class="field">
-            <span class="combat-formula" data-tooltip="{{localize 'COC2BASE.combat.formulaTooltip'}}">{{initFormula}}</span>
-          </div>
-        </div>
-        <div class="sidebar-section-content">
-          <div class="field">
-            <input
-              class="init-base"
-              type="number"
-              name="system.combat.init.base"
-              value="{{combat.init.base}}"
-              data-dtype="Number"
-              placeholder="0"
-              readonly
-              data-tooltip="{{localize 'CO.label.long.base'}}"
-            />
-            <span class="slash">/</span>
-            <input
-              class="init-bonus"
-              type="text"
-              name="system.combat.init.bonuses.sheet"
-              value="{{numberFormat combat.init.bonuses.sheet decimals=0 sign=true}}"
-              data-dtype="Number"
-              placeholder="0"
-              data-tooltip="{{localize 'CO.label.long.bonus'}}"
-            />
-          </div>
-        </div>
-      {{/if}}
-    </div>
     <!-- DEF -->
     <div class="sidebar-section armor-section">
       <div class="sidebar-section-header">
@@ -205,6 +205,99 @@
               type="text"
               name="system.combat.def.bonuses.sheet"
               value="{{numberFormat combat.def.bonuses.sheet decimals=0 sign=true}}"
+              data-dtype="Number"
+              placeholder="0"
+              data-tooltip="{{localize 'CO.label.long.bonus'}}"
+            />
+          </div>
+        </div>
+      {{/if}}
+    </div>
+    {{!-- BDM : bonus de dommages au contact, égal à la Force. Valeur affichée et exposée en @bdm :
+          c'est la formule de dommages de l'arme qui la porte (ex. « 1d6 + @bdm »). --}}
+    <div class="sidebar-section bdm-section">
+      <div class="sidebar-section-header">
+        <div class="sidebar-label bdm-label">
+          <h4 data-tooltip="{{localize 'COC2BASE.combat.bdmLong'}}">{{localize "COC2BASE.combat.bdm"}}</h4>
+        </div>
+        {{#if viewLimited}}
+          <div class="bdm-value labelled-field">
+            <i class="fas fa-fw fa-hand-fist"></i>??
+          </div>
+        {{else}}
+          <div class="bdm-value labelled-field" data-tooltip="{{attributes.bdm.tooltipValue}}">
+            <i class="fas fa-fw fa-hand-fist"></i>
+            {{numberFormat attributes.bdm.value decimals=0 sign=true}}
+          </div>
+        {{/if}}
+      </div>
+      {{#if unlocked}}
+        <div class="sidebar-section-content">
+          <div class="field">
+            <input
+              class="bdm-base"
+              type="number"
+              name="system.attributes.bdm.base"
+              value="{{attributes.bdm.base}}"
+              data-dtype="Number"
+              placeholder="0"
+              readonly
+              data-tooltip="{{localize 'COC2BASE.combat.bdmTooltip'}}"
+            />
+            <span class="slash">/</span>
+            <input
+              class="bdm-bonus"
+              type="text"
+              name="system.attributes.bdm.bonuses.sheet"
+              value="{{numberFormat attributes.bdm.bonuses.sheet decimals=0 sign=true}}"
+              data-dtype="Number"
+              placeholder="0"
+              data-tooltip="{{localize 'CO.label.long.bonus'}}"
+            />
+          </div>
+        </div>
+      {{/if}}
+    </div>
+    {{!-- CG : capacité de guérison, CON + 3. Échelons de l'échelle de santé récupérés par semaine de
+          repos, personnage stabilisé. Le bouton décoche CG échelons d'un clic. --}}
+    <div class="sidebar-section cg-section">
+      <div class="sidebar-section-header">
+        <div class="sidebar-label cg-label">
+          <h4 data-tooltip="{{localize 'COC2BASE.recovery.cgLong'}}">{{localize "COC2BASE.recovery.cg"}}</h4>
+        </div>
+        {{#if viewLimited}}
+          <div class="cg-value labelled-field">
+            <i class="fas fa-fw fa-heart-pulse"></i>??
+          </div>
+        {{else}}
+          <div class="cg-value labelled-field" data-tooltip="{{attributes.cg.tooltipValue}}">
+            <i class="fas fa-fw fa-heart-pulse"></i>
+            {{attributes.cg.value}}
+            {{#if editable}}
+              <a class="cg-rest" data-action="restWeek" data-tooltip="{{localize 'COC2BASE.recovery.restTooltip'}}"><i class="fas fa-fw fa-bed"></i></a>
+            {{/if}}
+          </div>
+        {{/if}}
+      </div>
+      {{#if unlocked}}
+        <div class="sidebar-section-content">
+          <div class="field">
+            <input
+              class="cg-base"
+              type="number"
+              name="system.attributes.cg.base"
+              value="{{attributes.cg.base}}"
+              data-dtype="Number"
+              placeholder="0"
+              readonly
+              data-tooltip="{{localize 'COC2BASE.recovery.cgTooltip'}}"
+            />
+            <span class="slash">/</span>
+            <input
+              class="cg-bonus"
+              type="text"
+              name="system.attributes.cg.bonuses.sheet"
+              value="{{numberFormat attributes.cg.bonuses.sheet decimals=0 sign=true}}"
               data-dtype="Number"
               placeholder="0"
               data-tooltip="{{localize 'CO.label.long.bonus'}}"

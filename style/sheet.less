@@ -251,6 +251,36 @@
     }
   }
 
+  /* Sections BDM et CG de la barre latérale (fiche complète et Vue actions).
+     Le système ne colore que ses propres sections : il pose sur toutes un badge de fond --co-surface ET
+     un texte --co-surface, puis rattrape la couleur du texte section par section (melee, init, armor…).
+     Sans cette règle, la valeur et l'icône de nos deux sections restent invisibles, écrites sur un fond
+     de la même couleur. Le BDM prend la couleur des dommages, la CG celle de la santé. */
+  .sidebar-section.bdm-section {
+    background-color: var(--co-stat-damages);
+
+    .field,
+    .labelled-field {
+      color: var(--co-stat-damages);
+    }
+  }
+
+  .sidebar-section.cg-section {
+    background-color: var(--co-stat-health);
+
+    .field,
+    .labelled-field {
+      color: var(--co-stat-health);
+    }
+  }
+
+  /* Bouton de repos hebdomadaire, à côté de la capacité de guérison dans la barre latérale */
+  .cg-rest {
+    margin-left: 4px;
+    cursor: pointer;
+    color: inherit;
+  }
+
   .age-bracket {
     display: flex;
     align-items: center;

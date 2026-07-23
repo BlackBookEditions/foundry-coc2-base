@@ -10,15 +10,18 @@ Première version du module : adaptation du système `co2` aux règles de Chroni
 - Gestion des tranches d'âge : points de capacité, nombre maximum de voies et rang maximum de voies
 - Masquage de tout ce qui est lié à l'ATM et aux PM
 - Richesse exprimée en `$` par défaut
+- Affichage du BDM (bonus de dommages au contact) et de la CG (capacité de guérison), avec bonus de fiche
+- Bouton de repos hebdomadaire : décoche CG échelons de l'échelle de santé
 
 ## Règles
 
 - Adaptation de l'initiative et de la défense
+- Ajout du BDM (= FOR), utilisable dans les formules de dommages sous `@bdm`, et de la CG (= CON + 3)
 - Gestion des statuts d'état
 - Récupération et DM temporaires : règles propres à Chroniques Oubliées Fantasy, désactivées par le module
 
 ## Interface
 
 - Thème visuel COC2
-- Adaptation COC2 de la mini-fiche
-- Adaptation COC2 de l'application « Groupe de joueurs »
+- Adaptation COC2 de la mini-fiche, BDM et CG compris (avec bouton de repos)
+- Adaptation COC2 de l'application « Groupe de joueurs », colonnes BDM et CG comprises

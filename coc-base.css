@@ -824,6 +824,12 @@
   /* Rangée supplémentaire pleine largeur dans le header, sous les caractéristiques */
   /* Ruban de l'échelle de santé : libellé, bloc coeur, 20 échelons, état atteint */
   /* Ruban de la seconde échelle : même structure que .health-bar, couleur et emplacement propres */
+  /* Sections BDM et CG de la barre latérale (fiche complète et Vue actions).
+     Le système ne colore que ses propres sections : il pose sur toutes un badge de fond --co-surface ET
+     un texte --co-surface, puis rattrape la couleur du texte section par section (melee, init, armor…).
+     Sans cette règle, la valeur et l'icône de nos deux sections restent invisibles, écrites sur un fond
+     de la même couleur. Le BDM prend la couleur des dommages, la CG celle de la santé. */
+  /* Bouton de repos hebdomadaire, à côté de la capacité de guérison dans la barre latérale */
   /* Compteur des traits distinctifs, injecté en tête de l'onglet Biographie (réutilise le style .notification du système) */
   /* Compteur des plafonds de création, injecté dans l'onglet Voies sous les notifications d'XP du système */
   /* Formule figée d'Initiative et de Défense, à la place du select de caractéristique de COF2 */
@@ -1029,6 +1035,25 @@
 .co.actor.coc2 .level.xp .add-session {
   margin-left: 4px;
   cursor: pointer;
+}
+.co.actor.coc2 .sidebar-section.bdm-section {
+  background-color: var(--co-stat-damages);
+}
+.co.actor.coc2 .sidebar-section.bdm-section .field,
+.co.actor.coc2 .sidebar-section.bdm-section .labelled-field {
+  color: var(--co-stat-damages);
+}
+.co.actor.coc2 .sidebar-section.cg-section {
+  background-color: var(--co-stat-health);
+}
+.co.actor.coc2 .sidebar-section.cg-section .field,
+.co.actor.coc2 .sidebar-section.cg-section .labelled-field {
+  color: var(--co-stat-health);
+}
+.co.actor.coc2 .cg-rest {
+  margin-left: 4px;
+  cursor: pointer;
+  color: inherit;
 }
 .co.actor.coc2 .age-bracket {
   display: flex;

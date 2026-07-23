@@ -11,6 +11,7 @@ import {
   HEALTH_STATE_MALUS,
   SECOND_SCALE,
   SECOND_SCALE_STATES,
+  HEALING_CAPACITY_BASE,
   COC2_CURRENCIES,
   PHYSICAL_ABILITIES,
   COC2_STATUS_CHANGES,
@@ -25,6 +26,7 @@ import {
   getSecondScaleContext,
   updateHealthScale,
   updateSecondScale,
+  applyWeeklyRest,
 } from "./module/config/coc2.mjs"
 
 /**
@@ -55,6 +57,9 @@ CONFIG.COC2BASE = {
   removedStatusIds: REMOVED_STATUS_IDS,
   stateTestMalus: STATE_TEST_MALUS,
   ageBrackets: AGE_BRACKETS,
+  // Base de la capacité de guérison : CG = CON + healingCapacityBase. Lue au calcul de la fiche,
+  // un module d'univers peut donc la modifier à tout moment.
+  healingCapacityBase: HEALING_CAPACITY_BASE,
   // Devise du monde COC2 : le dollar remplace or/argent/cuivre de COF2. Lue au hook init de coc2-base ;
   // un module d'univers qui la modifie doit être chargé avant (ou poser game.system.CONST.CURRENCY à son init).
   currencies: COC2_CURRENCIES,
@@ -213,8 +218,26 @@ Hooks.on("renderCOMiniCharacterSheet", async (application, element, context, opt
   const actor = application.document
 
   // Barre latérale : retirer PV (vigueur → remplacée par l'échelle de santé) et MP (pas de magie en coc2)
-  element.querySelector(".mini-sidebar .hp-section")?.remove()
-  element.querySelector('.mini-sidebar input[name="system.resources.mana.value"]')?.closest(".sidebar-section")?.remove()
+  const sidebar = element.querySelector(".mini-sidebar")
+  sidebar?.querySelector(".hp-section")?.remove()
+  sidebar?.querySelector('input[name="system.resources.mana.value"]')?.closest(".sidebar-section")?.remove()
+
+  // BDM et CG : badges propres à COC2, insérés avant la RD pour suivre l'ordre COC2 de la fiche complète
+  // (DEF, BDM, CG, puis RD)
+  if (sidebar) {
+    // Idempotence : sur un rendu partiel, on retire l'injection précédente
+    sidebar.querySelectorAll(".bdm-section, .cg-section").forEach((node) => node.remove())
+
+    const valuesHtml = await foundry.applications.handlebars.renderTemplate("modules/coc2-base/templates/actors/mini-values.hbs", {
+      attributes: actor.system.attributes,
+      viewLimited: context.viewLimited,
+      editable: context.editable,
+    })
+    const dr = sidebar.querySelector(".dr-section")
+    if (dr) dr.insertAdjacentHTML("beforebegin", valuesHtml)
+    else sidebar.insertAdjacentHTML("beforeend", valuesHtml)
+    sidebar.querySelector(".cg-rest")?.addEventListener("click", () => applyWeeklyRest(actor))
+  }
 
   // En-tête : ne garder que les caractéristiques ; retirer portrait, nom, niveau et peuple/profils (COF2)
   const header = element.querySelector(".sheet-header")

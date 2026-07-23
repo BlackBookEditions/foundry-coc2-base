@@ -15,7 +15,18 @@
       "warningRankAboveAgeBracket": "Attention : rang {rank} au-delà du rang maximum de {maxRank} accessible à la création pour la tranche d'âge « {bracket} »."
     },
     "combat": {
-      "formulaTooltip": "Formule de calcul fixée par les règles de Chroniques Oubliées Contemporain"
+      "formulaTooltip": "Formule de calcul fixée par les règles de Chroniques Oubliées Contemporain",
+      "bdm": "BDM",
+      "bdmLong": "Bonus de dommages au contact",
+      "bdmTooltip": "Égal à la Force. S'ajoute aux DM de base de l'arme sur une attaque au contact ou à mains nues : écrire « + @bdm » dans la formule de dommages de l'arme."
+    },
+    "recovery": {
+      "cg": "CG",
+      "cgLong": "Capacité de guérison",
+      "cgTooltip": "Égale à CON + 3. Nombre d'échelons de l'échelle de santé récupérés par semaine de repos, le personnage étant stabilisé.",
+      "restTooltip": "Repos d'une semaine : décoche CG échelons de l'échelle de santé",
+      "restDone": "Repos d'une semaine : {healed} échelon(s) de santé récupéré(s).",
+      "restNoInjury": "Le personnage n'a aucune blessure à soigner."
     },
     "healthScale": {
       "label": "Échelle de santé",

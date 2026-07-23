@@ -14,6 +14,14 @@ export const HEALTH_SCALE = {
 }
 
 /**
+ * Base de la capacité de guérison (CG) : CG = CON + 3.
+ * La CG est le rythme naturel de récupération d'un personnage qui se repose et qui est stabilisé,
+ * exprimé en points de dommages (échelons de l'échelle de santé) récupérés par semaine.
+ * Exposée dans CONFIG.COC2BASE.healingCapacityBase et lue au calcul : surchargeable à tout moment.
+ */
+export const HEALING_CAPACITY_BASE = 3
+
+/**
  * Seconde échelle COC2 (« Échelle » dans coc2-base, « Échelle de conscience » dans un module d'univers).
  * Compteur de 20 échelons avec 4 paliers à seuils (échelons 5/10/15/20). Les paliers servent
  * UNIQUEMENT à afficher un libellé de niveau sur la fiche : ce ne sont PAS des statuts, rien n'est
@@ -545,6 +553,21 @@ export async function updateHealthScale(actor, echelon) {
   const damage = max - actor.system.attributes.hp.value
   const newDamage = echelon === damage ? echelon - 1 : echelon
   await actor.update({ "system.attributes.hp.value": max - newDamage })
+}
+
+/**
+ * Repos d'une semaine : décoche CG échelons de l'échelle de santé (soit hp.value + CG, plafonné au max).
+ * Les états préjudiciables devenus caducs sont retirés par _preUpdate du data model (applyHealthScaleStatuses).
+ * La règle suppose un personnage stabilisé et au repos : c'est au MJ d'en juger, le bouton n'impose rien.
+ * @param {Actor} actor
+ */
+export async function applyWeeklyRest(actor) {
+  const { value, max } = actor.system.attributes.hp
+  if (value >= max) return ui.notifications.info(game.i18n.localize("COC2BASE.recovery.restNoInjury"))
+
+  const newValue = Math.min(max, value + actor.system.attributes.cg.value)
+  await actor.update({ "system.attributes.hp.value": newValue })
+  ui.notifications.info(game.i18n.format("COC2BASE.recovery.restDone", { healed: newValue - value }))
 }
 
 /**

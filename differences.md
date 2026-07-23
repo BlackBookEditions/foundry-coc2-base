@@ -43,6 +43,15 @@ Le coût d'un rang diffère également de COF2, où les rangs 3 et plus valaient
 > « La manière dont certaines caractéristiques secondaires sont calculées : certains modes de calculs ont été modifiés par souci d’équilibrage entre les caractéristiques principales. » [2]
 > « Initiative (Init.) : cette valeur est égale à 10 + INT + PER. [...] Défense (DEF) : cette valeur est égale à 10 + AGI + PER. » [11]
 
+### 4 bis. Le BDM et la CG
+**Résumé :** COC2 nomme et isole deux valeurs dérivées que COF2 ne connaît pas. Le **BDM** (bonus de dommages au contact) est égal à la Force et s'ajoute aux DM de base de l'arme sur une attaque au contact ou à mains nues. La **CG** (capacité de guérison) est égale à CON + 3 et exprime le rythme naturel de récupération, en échelons de l'échelle de santé regagnés par semaine de repos.
+
+> **Extrait COC2 :**
+> « BDM (Bonus de dommages au contact) : il s'agit de la valeur qui vient s'ajouter aux dommages (DM) de base de l'arme lorsque le personnage réussit une attaque au contact ou à mains nues. Ce bonus est égal à la Force (FOR) du personnage. »
+> « CG (Capacité de guérison) : c'est la valeur qui indique le rythme naturel auquel le personnage récupère de ses blessures (points de dommages ou échelons de l'échelle de santé) lorsqu'il se repose et qu'il est stabilisé. Elle est généralement égale à Constitution (CON) + 3 et s'exprime en points récupérés par semaine. »
+
+**Mise en œuvre dans le module :** les deux valeurs sont calculées et affichées dans la barre latérale de la fiche, avec un bonus de fiche éditable, ainsi que dans la Vue actions et dans le tableau du groupe de joueurs. Le BDM est exposé dans les données de jet sous `@bdm` : c'est la formule de dommages de l'arme qui le porte (« 1d6 + @bdm »), afin de ne pas le compter deux fois avec les modificateurs `damMelee` que le système ajoute déjà au jet de dommages. La CG est accompagnée d'un bouton de repos qui décoche CG échelons de l'échelle de santé.
+
 ## 5. Les Échelles d'évolution narrative
 **Résumé :** Pour gérer des mécaniques narratives propres à certains univers (comme la santé mentale, la corruption ou l'héroïsme), COC2 introduit des Échelles d'évolution personnalisables qui accompagnent l'Échelle de santé [12, 13].
 

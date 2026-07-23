@@ -11,11 +11,13 @@
       <th class="col-ability clickable" data-action="rollAbilityAll" data-ability="cha">{{localize "CO.abilities.short.cha"}}</th>
       <th class="col-ability clickable" data-action="rollAbilityAll" data-ability="int">{{localize "CO.abilities.short.int"}}</th>
       <th class="col-ability clickable" data-action="rollAbilityAll" data-ability="vol">{{localize "CO.abilities.short.vol"}}</th>
+      <th class="col-combat">{{localize "CO.combat.short.init"}}</th>
       <th class="col-combat">{{localize "CO.combat.short.melee"}}</th>
       <th class="col-combat">{{localize "CO.combat.short.ranged"}}</th>
-      <th class="col-combat">{{localize "CO.combat.short.init"}}</th>
       <th class="col-combat">{{localize "CO.combat.short.def"}}</th>
+      <th class="col-combat" data-tooltip="{{localize 'COC2BASE.combat.bdmLong'}}">{{localize "COC2BASE.combat.bdm"}}</th>
       <th class="col-resource">{{localize "COC2BASE.healthScale.short"}}</th>
+      <th class="col-resource" data-tooltip="{{localize 'COC2BASE.recovery.cgLong'}}">{{localize "COC2BASE.recovery.cg"}}</th>
       {{#if rules.luckPoints}}<th class="col-resource">{{localize "CO.resources.short.fortune"}}</th>{{/if}}
       {{#if rules.recoveryPoints}}<th class="col-resource">{{localize "CO.resources.short.recovery"}}</th>{{/if}}
       {{#if showSecondScale}}<th class="col-resource">{{secondScaleShort}}</th>{{/if}}
@@ -41,11 +43,13 @@
       <td class="col-ability clickable" data-action="rollAbility" data-ability="cha" data-user-id="{{this.userId}}">{{this.abilities.cha.value}}</td>
       <td class="col-ability clickable" data-action="rollAbility" data-ability="int" data-user-id="{{this.userId}}">{{this.abilities.int.value}}</td>
       <td class="col-ability clickable" data-action="rollAbility" data-ability="vol" data-user-id="{{this.userId}}">{{this.abilities.vol.value}}</td>
+      <td class="col-combat">{{this.combat.init.value}}</td>
       <td class="col-combat">{{this.combat.melee.value}}</td>
       <td class="col-combat">{{this.combat.ranged.value}}</td>
-      <td class="col-combat">{{this.combat.init.value}}</td>
       <td class="col-combat">{{this.combat.def.value}}</td>
+      <td class="col-combat">{{numberFormat this.bdm decimals=0 sign=true}}</td>
       <td class="col-resource">{{this.health.value}} / {{this.health.max}}{{#if this.health.stateLabel}} <span class="health-state-label">({{this.health.stateLabel}})</span>{{/if}}</td>
+      <td class="col-resource">{{this.cg}}</td>
       {{#if @root.rules.luckPoints}}<td class="col-resource">{{this.fortune.value}} / {{this.fortune.max}}</td>{{/if}}
       {{#if @root.rules.recoveryPoints}}<td class="col-resource">{{this.recovery.value}} / {{this.recovery.max}}</td>{{/if}}
       {{#if @root.showSecondScale}}<td class="col-resource">{{this.secondScale.value}} / {{this.secondScale.max}}{{#if this.secondScale.stateLabel}} <span class="second-scale-state">({{this.secondScale.stateLabel}})</span>{{/if}}</td>{{/if}}

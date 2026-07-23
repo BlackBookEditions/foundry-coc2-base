@@ -4,6 +4,7 @@ import {
   getSecondScaleContext,
   updateHealthScale,
   updateSecondScale,
+  applyWeeklyRest,
   FEATURE_SUBTYPES_COC2,
   getAgeBracket,
   TRAIT_POINTS_MAX,
@@ -19,6 +20,7 @@ export default class COC2CharacterSheet extends COCharacterSheet {
       clickHealthScale: COC2CharacterSheet.#onClickHealthScale,
       clickSecondScale: COC2CharacterSheet.#onClickSecondScale,
       addSession: COC2CharacterSheet.#onAddSession,
+      restWeek: COC2CharacterSheet.#onRestWeek,
     },
   }
 
@@ -189,5 +191,14 @@ export default class COC2CharacterSheet extends COCharacterSheet {
    */
   static async #onAddSession(event, target) {
     await this.document.update({ "system.attributes.xp.earned": this.document.system.attributes.xp.earned + 1 })
+  }
+
+  /**
+   * Repos d'une semaine : le personnage récupère CG échelons de l'échelle de santé
+   * @param {PointerEvent} event
+   * @param {HTMLElement} target
+   */
+  static async #onRestWeek(event, target) {
+    await applyWeeklyRest(this.document)
   }
 }
