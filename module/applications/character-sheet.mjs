@@ -86,6 +86,16 @@ export default class COC2CharacterSheet extends COCharacterSheet {
     context.traitWithinCap = context.avantagePoints <= TRAIT_POINTS_MAX && context.desavantagePoints <= TRAIT_POINTS_MAX
     context.traitValid = context.traitBalanced && context.traitWithinCap
 
+    // Bloc « Profil & Traits » de l'onglet Biographie : profils + traits génériques + domaines
+    // (on exclut avantages/désavantages, désormais dans leur propre bloc, et people qui n'existe plus en COC2)
+    const mainBlockSubtypes = ["trait", FEATURE_SUBTYPES_COC2.domainePro.id, FEATURE_SUBTYPES_COC2.domaineExtraPro.id]
+    context.features = features.filter((f) => mainBlockSubtypes.includes(f.system.subtype))
+
+    // Nouveau bloc « Avantages & Désavantages » : injecté dans l'onglet Biographie par _onRender
+    context.avantagesDesavantages = features.filter((f) =>
+      [FEATURE_SUBTYPES_COC2.avantage.id, FEATURE_SUBTYPES_COC2.desavantage.id].includes(f.system.subtype),
+    )
+
     return context
   }
 
@@ -94,6 +104,7 @@ export default class COC2CharacterSheet extends COCharacterSheet {
     await super._onRender(context, options)
 
     this.#renderTraitBalance(context)
+    await this.#renderAvantagesDesavantages(context)
     this.#renderAgeLimits(context)
   }
 
@@ -124,6 +135,36 @@ export default class COC2CharacterSheet extends COCharacterSheet {
     const status = context.traitValid ? "info" : "error"
     const html = `<div class="notification ${status} permanent coc2-trait-balance">${message}${suffix}</div>`
     target.insertAdjacentHTML("beforebegin", html)
+  }
+
+  /**
+   * Bloc « Avantages & Désavantages » : injecté juste après le bloc « Profil & Traits » de l'onglet
+   * Biographie. Injection DOM plutôt qu'un override du template biographie (propriété du système co2), afin
+   * de ne pas le dupliquer — même motif que le compteur des traits distinctifs.
+   * @param {object} context Contexte de rendu
+   */
+  async #renderAvantagesDesavantages(context) {
+    const biographyPart = this.element?.querySelector('[data-application-part="biography"]')
+    if (!biographyPart) return
+
+    // Idempotence : on retire toute injection précédente (re-render partiel de l'onglet)
+    biographyPart.querySelector(".coc2-avantages")?.remove()
+
+    // Vue limitée : le bloc principal est masqué par le template co2 ({{#unless viewLimited}}), on aligne le comportement
+    if (context.viewLimited) return
+
+    // Aucun avantage/désavantage : pas de bloc
+    if (!context.avantagesDesavantages?.length) return
+
+    // Ancre : le premier .features.section-container est le bloc « Profil & Traits » d'origine (co2)
+    const anchor = biographyPart.querySelector(".features.section-container")
+    if (!anchor) return
+
+    const html = await foundry.applications.handlebars.renderTemplate("modules/coc2-base/templates/actors/character-avantages.hbs", {
+      items: context.avantagesDesavantages,
+      unlocked: context.unlocked,
+    })
+    anchor.insertAdjacentHTML("afterend", html)
   }
 
   /**

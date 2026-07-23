@@ -33,6 +33,25 @@
   }
 }
 
+// Sélecteurs posés sur le bandeau, visibles en mode édition (tranche d'âge de la fiche de personnage).
+// Même raison que le nom d'objet ci-dessous : un contrôle de formulaire n'hérite pas de la couleur de
+// son parent. En mode clair Foundry lui donne un fond rgb(0 0 0 / 10%) et un texte --color-dark-2
+// (public/less2/themes/light.less), soit du noir sur notre bandeau charbon. On le traite comme la
+// pastille de type d'objet plus bas : surface claire, texte sombre, dans les deux modes.
+.co.actor .sheet-header select,
+.co.item .sheet-header select {
+  --input-background-color: var(--co-surface);
+  --input-text-color: var(--co-text-dark);
+  --input-border-color: fade(@ink, 25%);
+
+  // La liste déroulante est peinte par le navigateur : en mode sombre Foundry laisse le fond des
+  // options transparent, et elles hériteraient du texte sombre ci-dessus sur un fond sombre.
+  option {
+    background: var(--co-surface);
+    color: var(--co-text-dark);
+  }
+}
+
 // Nom de l'objet : c'est un input à fond transparent posé sur le bandeau, et un input n'hérite pas
 // de la couleur de son parent — il faut donc le viser explicitement.
 .co.item .sheet-header .name input[type="text"] {

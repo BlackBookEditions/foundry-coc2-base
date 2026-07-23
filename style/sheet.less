@@ -297,6 +297,14 @@
     }
   }
 
+  /* Le X/Y des XP hérite du gabarit « niveau » de co2 (3rem, 65px de haut) : on le ramène à la taille du
+     bloc PV (X/Y de la barre de santé) pour un affichage cohérent. Chaîne d'ancêtres explicite pour
+     dépasser la spécificité de la règle du système co2 (.co.application.sheet.actor …sheet-header .level span). */
+  &.application.sheet .window-content .sheet-header .level.xp span {
+    font-size: var(--font-size-standard);
+    height: auto;
+  }
+
   /* Sections BDM et CG de la barre latérale (fiche complète et Vue actions).
      Le système ne colore que ses propres sections : il pose sur toutes un badge de fond --co-surface ET
      un texte --co-surface, puis rattrape la couleur du texte section par section (melee, init, armor…).

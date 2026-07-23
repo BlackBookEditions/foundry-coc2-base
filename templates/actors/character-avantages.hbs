@@ -1,0 +1,25 @@
+{{!-- COC2 : bloc « Avantages & Désavantages », injecté après « Profil & Traits » (onglet Biographie) --}}
+<div class="features section-container coc2-avantages">
+    <div class="section-header">
+        <h4>{{localize "COC2BASE.feature.traitsTitle"}}</h4>
+    </div>
+    <div class="section-body-no-flex">
+        <ol class="features-container items-container">
+            <ol class="item-list">
+                {{#each items as |item id|}}
+                    <li class="item flexrow" data-item-uuid="{{item.uuid}}" data-item-id="{{item._id}}" data-item-type="{{item.type}}">
+                        <div class="item-name flexrow">
+                            <a class="item-img" data-action="editItem" style="background-image: url('{{item.img}}')"></a>
+                            <h4 data-tooltip="{{item.enrichedTooltip}}" data-tooltip-direction="UP">{{item.name}}</h4>
+                        </div>
+                        <div class="item-controls-2">
+                        {{#if ../unlocked}}
+                            <a class="item-control" data-action="deleteItem" data-tooltip={{localize "CO.ui.remove"}}><i class="fas fa-trash"></i></a>
+                        {{/if}}
+                        </div>
+                    </li>
+                {{/each}}
+            </ol>
+        </ol>
+    </div>
+</div>

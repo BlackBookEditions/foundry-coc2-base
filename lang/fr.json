@@ -120,6 +120,7 @@
         "desavantage": "Désavantage"
       },
       "points": "Coût en points",
+      "traitsTitle": "Avantages & Désavantages",
       "traitBalance": "Traits distinctifs : {av}/{max} avantages − {dav}/{max} désavantages",
       "traitError": " — déséquilibre : les avantages doivent égaler les désavantages (5 max)"
     },
