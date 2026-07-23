@@ -2,7 +2,10 @@ import COC2CharacterData from "./module/models/character.mjs"
 import COC2EncounterData from "./module/models/encounter.mjs"
 import COC2CapacityData from "./module/models/capacity.mjs"
 import COC2EquipmentData from "./module/models/equipment.mjs"
+import COC2AttackData from "./module/models/attack.mjs"
+import COC2ActionMessageData from "./module/models/action-message.mjs"
 import COC2Actor from "./module/documents/actor.mjs"
+import { CORoll } from "../../systems/co2/module/documents/roll.mjs"
 import COC2CharacterSheet from "./module/applications/character-sheet.mjs"
 import COC2EncounterSheet from "./module/applications/encounter-sheet.mjs"
 import COC2PartySheet from "./module/applications/party-sheet.mjs"
@@ -23,6 +26,8 @@ import {
   REMOVED_PATH_SUBTYPE_IDS,
   removeSubtypeOptions,
   AGE_BRACKETS,
+  computeAutoCriticalBonus,
+  getCriticalBonus,
   ENCOUNTER_ARCHETYPES,
   CREATURE_SIZES,
   COC2_SIZE_LABELS,
@@ -128,8 +133,15 @@ Hooks.once("init", () => {
   // Coût uniforme d'un rang de voie : 1 point de capacité, quel que soit le rang
   CONFIG.Item.dataModels.capacity = COC2CapacityData
 
-  // Encombrement des protections : malus fixe (Init/AGI/ATC) en lieu et place du plafond d'AGI de COF2
+  // Encombrement des protections (malus fixe Init/AGI/ATC en lieu et place du plafond d'AGI de COF2)
+  // et bonus critique des armes
   CONFIG.Item.dataModels.equipment = COC2EquipmentData
+
+  // Bonus critique des attaques naturelles des créatures
+  CONFIG.Item.dataModels.attack = COC2AttackData
+
+  // Carte de dommages : le critique n'y double plus les DM, il y ajoute le bonus critique
+  CONFIG.ChatMessage.dataModels.action = COC2ActionMessageData
 
   foundry.documents.collections.Actors.registerSheet("coc2-base", COC2CharacterSheet, { types: ["character"], makeDefault: true, label: "COC2BASE.sheet.character" })
   foundry.documents.collections.Actors.registerSheet("coc2-base", COC2EncounterSheet, { types: ["encounter"], makeDefault: true, label: "COC2BASE.sheet.encounter" })
@@ -262,6 +274,91 @@ Hooks.on("renderCoEquipmentSheet", (application, element, context, options) => {
     <p class="hint">${game.i18n.localize("COC2BASE.equipment.encumbranceHint")}</p>
   </div>`
   defenseGroup.insertAdjacentHTML("afterend", html)
+})
+
+/**
+ * Construit le groupe de formulaire du bonus critique, commun à la fiche d'arme et à la fiche d'attaque.
+ * Le champ est nullable : laissé vide, il affiche en indication la valeur déduite du dé de dommages, qui
+ * est celle réellement utilisée en jeu.
+ * @param {number|null} value La valeur saisie sur l'item
+ * @param {string} damageFormula La formule de dommages de référence, pour l'indication de valeur automatique
+ * @param {boolean} locked Vrai si la fiche est verrouillée
+ * @returns {string} Le fragment HTML à injecter
+ */
+function criticalBonusFormGroup(value, damageFormula, locked) {
+  const auto = computeAutoCriticalBonus(damageFormula)
+  const hint = game.i18n.format("COC2BASE.equipment.bcHint", { auto })
+  return `<div class="form-group coc2-critical-bonus">
+    <label>${game.i18n.localize("COC2BASE.equipment.bc")}</label>
+    <input type="number" name="system.criticalBonus" value="${value ?? ""}" placeholder="${auto}" min="0" step="1" data-dtype="Number" ${locked ? "disabled" : ""} />
+    <p class="hint">${hint}</p>
+  </div>`
+}
+
+/*
+ * Bonus critique des armes : en COC2 une réussite critique n'ajoute plus le double des DM mais le BC de
+ * l'arme. Injection du champ `system.criticalBonus` (ajouté par COC2EquipmentData) sous le type de
+ * dommages de la fiche d'équipement co2.
+ */
+Hooks.on("renderCoEquipmentSheet", (application, element, context, options) => {
+  const item = application.document
+  if (item.system.subtype !== "weapon") return
+
+  // Garde anti-doublon : la fiche peut être rendue partiellement
+  if (element.querySelector(".coc2-critical-bonus")) return
+
+  const damageType = element.querySelector('[name="system.damagetype"]')
+  if (!damageType) return
+  const anchor = damageType.closest(".form-group") ?? damageType
+  anchor.insertAdjacentHTML("afterend", criticalBonusFormGroup(item.system.criticalBonus, item.system.damage, context.locked))
+})
+
+/*
+ * Bonus critique des attaques : les fiches techniques des créatures précisent leur propre BC pour leurs
+ * attaques naturelles (ex. griffes 1d8+7, BC +8), valeur qui ne se déduit pas toujours du dé de dommages.
+ */
+Hooks.on("renderCoAttackSheet", (application, element, context, options) => {
+  const item = application.document
+  if (element.querySelector(".coc2-critical-bonus")) return
+
+  const properties = element.querySelector("fieldset.properties")
+  if (!properties) return
+  properties.insertAdjacentHTML("beforeend", criticalBonusFormGroup(item.system.criticalBonus, item.system.displayValues.damage, context.locked))
+})
+
+/*
+ * Réussite critique COC2 : au lieu de doubler les dommages (COF2), on ajoute le bonus critique (BC) de
+ * l'arme ou de l'attaque, égal par défaut au maximum de son dé de dommages.
+ *
+ * Le hook est appelé juste après l'évaluation des jets et avant que le système ne sérialise le jet de
+ * dommages dans le message d'attaque (`linkedRoll`) : le BC se propage donc à tous les chemins d'affichage
+ * (jet combiné, jet différé, jet opposé, recréation après un point de chance).
+ *
+ * Le jet n'est pas relancé : on reconstruit un jet équivalent à partir de ses termes déjà évalués, auxquels
+ * on ajoute un terme fixe. Le total de la carte de chat, et donc tout le pipeline d'application des dégâts
+ * (RD, minimum de dommages), suit sans autre intervention. Le multiplicateur ×2 que le système
+ * présélectionne sur un critique est neutralisé par COC2ActionMessageData.
+ */
+Hooks.on("co.postRollAttack", (item, options, rolls) => {
+  if (options.type !== "attack" || !rolls || rolls.length < 2) return
+
+  const result = CORoll.analyseRollResult(rolls[0], options.hasAttackSuccessThreshold, options.attackSuccessThreshold)
+  if (!result.isCritical) return
+
+  // options.damageFormula est figé avant l'ajout des modificateurs de dommages et des options tactiques :
+  // c'est la formule de base de l'arme, dés intacts, dont le BC ne doit dépendre que des dés (LdR).
+  const bc = getCriticalBonus(item, options.damageFormula)
+  if (bc <= 0) return
+
+  const damageRoll = rolls[1]
+  const { NumericTerm, OperatorTerm } = foundry.dice.terms
+  const plus = new OperatorTerm({ operator: "+" })
+  const bonus = new NumericTerm({ number: bc, options: { flavor: game.i18n.localize("COC2BASE.equipment.bcFlavor") } })
+  bonus.evaluate()
+
+  const newRoll = damageRoll.constructor.fromTerms([...damageRoll.terms, plus, bonus], { ...damageRoll.options })
+  newRoll.options.formulaDamage = newRoll.formula
+  rolls[1] = newRoll
 })
 
 /*

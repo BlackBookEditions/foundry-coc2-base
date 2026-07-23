@@ -17,7 +17,23 @@ export default class COC2Actor extends COActor {
     const rollData = super.getRollData()
     rollData.bdm = this.type === "character" ? this.system.attributes.bdm.value : 0
     rollData.cg = this.type === "character" ? this.system.attributes.cg.value : 0
+    rollData.bc = this.referenceCriticalBonus
     return rollData
+  }
+
+  /**
+   * Bonus critique de référence de l'acteur, exposé aux formules sous `@bc` sur le modèle de `@arme.dmg` :
+   * celui de la première arme équipée pour un personnage, celui de la première attaque pour une créature.
+   *
+   * Sert aux capacités qui manipulent le BC en dehors d'une réussite critique — ainsi l'Attaque déloyale,
+   * qui ajoute le BC de la créature à ses dommages quand elle attaque par surprise : sa formule s'écrit
+   * `@arme.dmg + @bc`. Sur une véritable réussite critique, le BC ajouté automatiquement au jet vient s'y
+   * ajouter une seconde fois, comme le prévoit la capacité.
+   * @returns {number} Le bonus critique de référence, 0 si l'acteur n'a ni arme équipée ni attaque
+   */
+  get referenceCriticalBonus() {
+    const source = this.type === "character" ? this.equippedWeapons[0] : this.items.find((item) => item.type === "attack")
+    return source?.system?.criticalBonusValue ?? 0
   }
 
   /**

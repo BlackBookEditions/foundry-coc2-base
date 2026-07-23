@@ -127,7 +127,10 @@
     "equipment": {
       "rd": "RD (réduction de dégâts)",
       "encumbrance": "Encombrement",
-      "encumbranceHint": "Malus fixe appliqué à l'Initiative, à l'AGI et à l'attaque au contact (ex. −2 gilet souple, −4 gilet rigide ou plaques)."
+      "encumbranceHint": "Malus fixe appliqué à l'Initiative, à l'AGI et à l'attaque au contact (ex. −2 gilet souple, −4 gilet rigide ou plaques).",
+      "bc": "BC (bonus critique)",
+      "bcHint": "Dommages fixes ajoutés au jet sur une réussite critique. Laissé vide : {auto}, le maximum du dé de dommages.",
+      "bcFlavor": "BC"
     },
     "age": {
       "label": "Tranche d'âge",

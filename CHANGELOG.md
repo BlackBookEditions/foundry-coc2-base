@@ -19,6 +19,9 @@ Première version du module : adaptation du système `co2` aux règles de Chroni
 - Ajout du BDM (= FOR), utilisable dans les formules de dommages sous `@bdm`, et de la CG (= CON + 3)
 - Gestion des statuts d'état
 - Récupération et DM temporaires : règles propres à Chroniques Oubliées Fantasy, désactivées par le module
+- Réussite critique : ajout du bonus critique (BC) de l'arme aux dommages, en lieu et place du doublement des DM de Chroniques Oubliées Fantasy
+  - Champ BC sur les armes et sur les attaques des créatures, laissé vide pour un calcul automatique (maximum du dé de dommages)
+  - BC de référence de l'acteur utilisable dans les formules sous `@bc`, pour les capacités qui l'ajoutent hors critique (ex. Attaque déloyale)
 
 ## Interface
 
