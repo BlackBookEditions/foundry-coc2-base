@@ -42,7 +42,7 @@
 .co.item .sheet-header select {
   --input-background-color: var(--co-surface);
   --input-text-color: var(--co-text-dark);
-  --input-border-color: fade(@ink, 25%);
+  --input-border-color: fade(#14110d, 25%); // encre parchemin translucide (ex-@ink de l'ancienne rampe de gris)
 
   // La liste déroulante est peinte par le navigateur : en mode sombre Foundry laisse le fond des
   // options transparent, et elles hériteraient du texte sombre ci-dessus sur un fond sombre.
@@ -116,5 +116,39 @@
   .form-header,
   .form-header * {
     color: var(--co-text-light);
+  }
+}
+
+/* CONTENU DE LA FICHE D'ACTEUR SUR PARCHEMIN — texte SOMBRE dans les deux thèmes.
+   Depuis l'adoption de la palette parchemin, style/sheet.less pose la texture background.webp sur
+   .window-content de l'acteur, donc le contenu est CLAIR dans les deux thèmes Foundry. co2 fait pourtant
+   varier la couleur du texte selon .theme-light / .theme-dark : en thème sombre il passerait le texte en
+   clair → illisible sur le parchemin. On force donc le texte SOMBRE sur le contenu d'onglet de l'acteur,
+   dans les deux thèmes, puis on rend leur texte clair aux barres sombres (posées sur un fond de palette).
+   (Règle reprise de cth-base/theme/sheet.less ; les bandeaux d'en-tête sont déjà traités plus haut.) */
+.theme-light .co.actor.coc2 .window-content .tab,
+.theme-dark .co.actor.coc2 .window-content .tab {
+  &,
+  h4,
+  label,
+  span,
+  p,
+  li,
+  legend {
+    color: var(--co-text-dark);
+  }
+
+  // Barres sombres du contenu (fond de palette) → on ré-impose le texte clair. Écrit APRÈS la règle
+  // générique ci-dessus pour l'emporter. Concerne les en-têtes de section (.section-header), les têtes
+  // de conteneurs d'inventaire / de voies (.items-container-header) et les blocs pliables (.form-header).
+  .section-container .section-header,
+  .section-container .section-header *,
+  .form-header,
+  .form-header * {
+    color: var(--co-text-light);
+  }
+  .items-container-header,
+  .items-container-header * {
+    color: var(--co-surface);
   }
 }

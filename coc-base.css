@@ -55,70 +55,71 @@
   src: url("./fonts/minion-pro-regular.otf");
 }
 /*
- * THÈME MONOCHROME COC2
+ * PALETTE PARCHEMIN COC2 — reprise des couleurs de cth (« Parchemin fidèle »)
  *
- * Surcharge de la palette du système (systems/co2/styles/palette.less) : le contemporain se passe de
- * l'or, du bleu, du rouge et du vert de la Fantasy. On redéclare les mêmes sélecteurs de thème ; la
- * feuille du module étant chargée après celle du système, ces valeurs l'emportent.
+ * Surcharge de la palette du système (systems/co2/styles/palette.less). coc2 adopte désormais le même
+ * habillage de couleurs que le module cth-base : encre chaude sur les bandeaux, surfaces parchemin,
+ * codage couleur thématique des sections et des types d'objets. On redéclare les mêmes sélecteurs de
+ * thème ; la feuille du module étant chargée après celle du système, ces valeurs l'emportent.
  *
- * UN SEUL JEU DE VALEURS pour les deux modes : COC2 a le même habillage en clair et en sombre.
- * Les suffixes -dark / -light de co2 ne désignent pas une luminosité mais le mode auquel la valeur
- * s'applique : chaque paire reçoit donc ici la même couleur. Les surfaces étant sombres dans les deux
- * modes, style/contrast.less impose le texte clair là où co2 ne le fait qu'en mode sombre.
+ * UN SEUL JEU DE VALEURS pour les deux modes (comme cth) : l'habillage parchemin est identique en thème
+ * Foundry clair et sombre. Le texte du contenu (posé sur parchemin clair) est forcé sombre dans les deux
+ * thèmes par style/contrast.less ; la texture parchemin est posée sur .window-content par style/sheet.less.
+ *
+ * ÉCHELLES INCHANGÉES : les rubans Santé/Conscience gardent le design coc2 actuel (chevrons, rouge
+ * @coc2-damage / bleu @coc2-secondscale, jalons) — cf. style/sheet.less. Seul l'habillage de couleurs
+ * change ici ; on ne reprend PAS les hexagones ni le rouge/violet des échelles de cth.
  *
  * NE SONT PAS SURCHARGÉES les variables --co-result-* : succès, échec, critique et fumble portent une
  * information de lecture, elles restent colorées.
- *
- * --co-surface reste un gris CLAIR : co2 s'en sert à la fois comme fond (.ability-mod) et comme
- * couleur de texte dans sa règle h4/label/span du mode sombre. L'assombrir rendrait ce texte illisible.
  */
 .theme-light,
 .theme-dark {
-  --co-sheet-accent: #2b2b2b;
-  --co-sheet-accent-alt: #4f4f4f;
-  --co-surface: #ececec;
-  --co-encounter-accent: rgba(28, 28, 28, 0.6);
-  --co-window-content: rgba(61, 61, 61, 0.42);
-  --co-text-light: #f5f5f5;
-  --co-text-dark: #1c1c1c;
-  --co-green: #5c5c5c;
-  --co-grey: #b3b3b3;
-  --co-stat-attack: #2b2b2b;
-  --co-stat-initiative: #4f4f4f;
-  --co-stat-defense: #3d3d3d;
-  --co-stat-health: #5c5c5c;
-  --co-stat-damages: #6b6b6b;
-  --co-stat-resource: #7a7a7a;
-  --co-chat-skill: #4f4f4f;
-  --co-chat-attack: #2b2b2b;
-  --co-chat-damages: #1c1c1c;
-  --co-chat-heal: #6b6b6b;
-  --co-chat-rest: #7a7a7a;
-  --co-chat-save: #5c5c5c;
-  --co-chat-item: #8a8a8a;
-  --co-chat-shadow: #b3b3b3;
-  --co-dialog-attack-bg: rgba(43, 43, 43, 0.55);
-  --co-dialog-skill-bg: rgba(79, 79, 79, 0.42);
-  --co-dialog-attack-accent: #1c1c1c;
-  --co-dialog-attack-surface: #2b2b2b;
-  --co-dialog-skill-accent: #2b2b2b;
-  --co-dialog-skill-highlight: #6b6b6b;
-  --co-dialog-muted: #b3b3b3;
-  --co-dialog-overlay: #ffffff57;
-  --co-item-capacity-dark: #4f4f4f;
-  --co-item-capacity-light: #4f4f4f;
-  --co-item-equipment-dark: #4f4f4f;
-  --co-item-equipment-light: #4f4f4f;
-  --co-item-container-dark: #4f4f4f;
-  --co-item-container-light: #4f4f4f;
-  --co-item-feature-dark: #4f4f4f;
-  --co-item-feature-light: #4f4f4f;
-  --co-item-path-dark: #4f4f4f;
-  --co-item-path-light: #4f4f4f;
-  --co-item-profile-dark: #4f4f4f;
-  --co-item-profile-light: #4f4f4f;
-  --co-item-attack-dark: #4f4f4f;
-  --co-item-attack-light: #4f4f4f;
+  --co-sheet-accent: #14110d;
+  --co-sheet-accent-alt: #241d14;
+  --co-surface: #efe7d3;
+  --co-encounter-accent: #2b1414cc;
+  --co-window-content: rgba(233, 224, 204, 0.35);
+  --co-text-light: #f4ecd8;
+  --co-text-dark: #1c1710;
+  --co-green: #5c6b3a;
+  --co-grey: #b9ad93;
+  --co-stat-attack: #4a1414;
+  --co-stat-initiative: #241d14;
+  --co-stat-defense: #1c2a33;
+  --co-stat-health: #3a1414;
+  --co-stat-damages: #2e2436;
+  --co-stat-resource: #23302a;
+  --co-chat-skill: #23303b;
+  --co-chat-attack: #3a1a12;
+  --co-chat-damages: #4a1414;
+  --co-chat-heal: #233a26;
+  --co-chat-rest: #33381f;
+  --co-chat-save: #2e2436;
+  --co-chat-item: #3a2f1c;
+  --co-chat-shadow: #b9ad93;
+  --co-dialog-attack-bg: rgba(58, 20, 20, 0.5);
+  --co-dialog-skill-bg: rgba(36, 40, 55, 0.45);
+  --co-dialog-attack-accent: #2b0d0d;
+  --co-dialog-attack-surface: #3a1414;
+  --co-dialog-skill-accent: #241d14;
+  --co-dialog-skill-highlight: #6b5a3a;
+  --co-dialog-muted: #b9ad93;
+  --co-dialog-overlay: #f4ecd857;
+  --co-item-capacity-dark: #3a1520;
+  --co-item-capacity-light: #7a2e46;
+  --co-item-equipment-dark: #4a3418;
+  --co-item-equipment-light: #8a6a2c;
+  --co-item-container-dark: #4a3418;
+  --co-item-container-light: #8a6a2c;
+  --co-item-feature-dark: #1a3540;
+  --co-item-feature-light: #366b7a;
+  --co-item-path-dark: #2e1f3a;
+  --co-item-path-light: #5a3a7a;
+  --co-item-profile-dark: #1c2340;
+  --co-item-profile-light: #3a4a7a;
+  --co-item-attack-dark: #3a0d0d;
+  --co-item-attack-light: #7a2424;
 }
 :root {
   --font-size-standard: 16px;
@@ -1161,6 +1162,32 @@
   color: var(--color-text-subtle);
   font-size: var(--font-size-11);
 }
+/* FOND PARCHEMIN (les deux thèmes).
+   coc2 adopte la palette parchemin de cth : on pose la texture background.webp (= --background-image-standard,
+   défini dans style/global.less) sur toute la fiche, à l'identique en thème Foundry clair et sombre. Le
+   bandeau reste un bloc encre (#14110d, --co-sheet-accent) ; la texture transparaît dans le contenu et
+   derrière les cases claires. Le texte du contenu est forcé sombre par style/contrast.less. */
+.co.actor.coc2 .window-content {
+  background-image: var(--background-image-standard);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+}
+/* JALONS DES ÉCHELLES sur l'en-tête encre (les deux thèmes).
+   Le bandeau est un bloc encre sombre (#14110d) dans les DEUX thèmes : le liseré NOIR des jalons
+   5/10/15/20 (défini dans .health-bar / .second-scale-bar plus haut) serait avalé par le fond. On conserve
+   la FORME chevron (clip-path hérité, inchangé) mais on inverse le jalon : corps SOMBRE cerclé d'un liseré
+   CLAIR, repère net des paliers parmi les chevrons vides crème. Non scopé par thème (l'en-tête est sombre
+   dans les deux) ; écrit après la définition des rubans → l'emporte à spécificité égale par l'ordre. */
+.co.actor.coc2 .health-bar .health-step.milestone,
+.co.actor.coc2 .second-scale-bar .scale-step.milestone {
+  background-color: var(--co-text-light);
+  color: var(--co-text-light);
+}
+.co.actor.coc2 .health-bar .health-step.milestone:not(.filled)::before,
+.co.actor.coc2 .second-scale-bar .scale-step.milestone:not(.filled)::before {
+  background-color: var(--co-sheet-accent-alt);
+}
 /*
  * CONTRASTE DU TEXTE SUR LES SURFACES SOMBRES
  *
@@ -1200,7 +1227,7 @@
 .co.item .sheet-header select {
   --input-background-color: var(--co-surface);
   --input-text-color: var(--co-text-dark);
-  --input-border-color: rgba(28, 28, 28, 0.25);
+  --input-border-color: rgba(20, 17, 13, 0.25);
 }
 .co.actor .sheet-header select option,
 .co.item .sheet-header select option {
@@ -1249,4 +1276,43 @@
 .co.item:not(:has(.mode-slider[checked])) .window-content .tab .form-header,
 .co.item:not(:has(.mode-slider[checked])) .window-content .tab .form-header * {
   color: var(--co-text-light);
+}
+/* CONTENU DE LA FICHE D'ACTEUR SUR PARCHEMIN — texte SOMBRE dans les deux thèmes.
+   Depuis l'adoption de la palette parchemin, style/sheet.less pose la texture background.webp sur
+   .window-content de l'acteur, donc le contenu est CLAIR dans les deux thèmes Foundry. co2 fait pourtant
+   varier la couleur du texte selon .theme-light / .theme-dark : en thème sombre il passerait le texte en
+   clair → illisible sur le parchemin. On force donc le texte SOMBRE sur le contenu d'onglet de l'acteur,
+   dans les deux thèmes, puis on rend leur texte clair aux barres sombres (posées sur un fond de palette).
+   (Règle reprise de cth-base/theme/sheet.less ; les bandeaux d'en-tête sont déjà traités plus haut.) */
+.theme-light .co.actor.coc2 .window-content .tab,
+.theme-dark .co.actor.coc2 .window-content .tab,
+.theme-light .co.actor.coc2 .window-content .tab h4,
+.theme-dark .co.actor.coc2 .window-content .tab h4,
+.theme-light .co.actor.coc2 .window-content .tab label,
+.theme-dark .co.actor.coc2 .window-content .tab label,
+.theme-light .co.actor.coc2 .window-content .tab span,
+.theme-dark .co.actor.coc2 .window-content .tab span,
+.theme-light .co.actor.coc2 .window-content .tab p,
+.theme-dark .co.actor.coc2 .window-content .tab p,
+.theme-light .co.actor.coc2 .window-content .tab li,
+.theme-dark .co.actor.coc2 .window-content .tab li,
+.theme-light .co.actor.coc2 .window-content .tab legend,
+.theme-dark .co.actor.coc2 .window-content .tab legend {
+  color: var(--co-text-dark);
+}
+.theme-light .co.actor.coc2 .window-content .tab .section-container .section-header,
+.theme-dark .co.actor.coc2 .window-content .tab .section-container .section-header,
+.theme-light .co.actor.coc2 .window-content .tab .section-container .section-header *,
+.theme-dark .co.actor.coc2 .window-content .tab .section-container .section-header *,
+.theme-light .co.actor.coc2 .window-content .tab .form-header,
+.theme-dark .co.actor.coc2 .window-content .tab .form-header,
+.theme-light .co.actor.coc2 .window-content .tab .form-header *,
+.theme-dark .co.actor.coc2 .window-content .tab .form-header * {
+  color: var(--co-text-light);
+}
+.theme-light .co.actor.coc2 .window-content .tab .items-container-header,
+.theme-dark .co.actor.coc2 .window-content .tab .items-container-header,
+.theme-light .co.actor.coc2 .window-content .tab .items-container-header *,
+.theme-dark .co.actor.coc2 .window-content .tab .items-container-header * {
+  color: var(--co-surface);
 }

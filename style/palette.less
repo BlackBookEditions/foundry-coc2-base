@@ -1,91 +1,79 @@
 /*
- * THÈME MONOCHROME COC2
+ * PALETTE PARCHEMIN COC2 — reprise des couleurs de cth (« Parchemin fidèle »)
  *
- * Surcharge de la palette du système (systems/co2/styles/palette.less) : le contemporain se passe de
- * l'or, du bleu, du rouge et du vert de la Fantasy. On redéclare les mêmes sélecteurs de thème ; la
- * feuille du module étant chargée après celle du système, ces valeurs l'emportent.
+ * Surcharge de la palette du système (systems/co2/styles/palette.less). coc2 adopte désormais le même
+ * habillage de couleurs que le module cth-base : encre chaude sur les bandeaux, surfaces parchemin,
+ * codage couleur thématique des sections et des types d'objets. On redéclare les mêmes sélecteurs de
+ * thème ; la feuille du module étant chargée après celle du système, ces valeurs l'emportent.
  *
- * UN SEUL JEU DE VALEURS pour les deux modes : COC2 a le même habillage en clair et en sombre.
- * Les suffixes -dark / -light de co2 ne désignent pas une luminosité mais le mode auquel la valeur
- * s'applique : chaque paire reçoit donc ici la même couleur. Les surfaces étant sombres dans les deux
- * modes, style/contrast.less impose le texte clair là où co2 ne le fait qu'en mode sombre.
+ * UN SEUL JEU DE VALEURS pour les deux modes (comme cth) : l'habillage parchemin est identique en thème
+ * Foundry clair et sombre. Le texte du contenu (posé sur parchemin clair) est forcé sombre dans les deux
+ * thèmes par style/contrast.less ; la texture parchemin est posée sur .window-content par style/sheet.less.
+ *
+ * ÉCHELLES INCHANGÉES : les rubans Santé/Conscience gardent le design coc2 actuel (chevrons, rouge
+ * @coc2-damage / bleu @coc2-secondscale, jalons) — cf. style/sheet.less. Seul l'habillage de couleurs
+ * change ici ; on ne reprend PAS les hexagones ni le rouge/violet des échelles de cth.
  *
  * NE SONT PAS SURCHARGÉES les variables --co-result-* : succès, échec, critique et fumble portent une
  * information de lecture, elles restent colorées.
- *
- * --co-surface reste un gris CLAIR : co2 s'en sert à la fois comme fond (.ability-mod) et comme
- * couleur de texte dans sa règle h4/label/span du mode sombre. L'assombrir rendrait ce texte illisible.
  */
-
-// Échelle de gris, du plus sombre au plus clair
-@ink: #1c1c1c;
-@charcoal: #2b2b2b;
-@slate: #3d3d3d;
-@steel: #4f4f4f;
-@stone: #5c5c5c;
-@ash: #6b6b6b;
-@smoke: #7a7a7a;
-@fog: #8a8a8a;
-@mist: #b3b3b3;
-@paper: #ececec;
-
-// Couleur unique de toutes les fiches d'objets, quel que soit le type
-@item: @steel;
 
 .theme-light,
 .theme-dark {
   // Chrome et feuilles
-  --co-sheet-accent: @charcoal;
-  --co-sheet-accent-alt: @steel;
-  --co-surface: @paper;
-  --co-encounter-accent: fade(@ink, 60%);
-  --co-window-content: fade(@slate, 42%);
-  --co-text-light: #f5f5f5;
-  --co-text-dark: @ink;
-  --co-green: @stone;
-  --co-grey: @mist;
+  --co-sheet-accent: #14110d; // bandeaux : nom, libellés d'échelle, cases carac. — noir encre chaud
+  --co-sheet-accent-alt: #241d14; // barre de caractéristiques, onglets, en-têtes de section, corps des jalons
+  --co-surface: #efe7d3; // cases valeurs / champs / échelons vides — parchemin clair
+  --co-encounter-accent: #2b1414cc;
+  --co-window-content: rgba(233, 224, 204, 0.35); // fond de contenu → teinte parchemin translucide
+  --co-text-light: #f4ecd8; // texte crème sur bandeaux
+  --co-text-dark: #1c1710; // texte encre sur parchemin
+  --co-green: #5c6b3a;
+  --co-grey: #b9ad93;
 
-  // Valeurs de combat de la sidebar
-  --co-stat-attack: @charcoal;
-  --co-stat-initiative: @steel;
-  --co-stat-defense: @slate;
-  --co-stat-health: @stone;
-  --co-stat-damages: @ash;
-  --co-stat-resource: @smoke;
+  // Sections de la barre latérale — quasi-noires, léger codage couleur conservé pour la lisibilité
+  --co-stat-attack: #4a1414;
+  --co-stat-initiative: #241d14;
+  --co-stat-defense: #1c2a33;
+  --co-stat-health: #3a1414;
+  --co-stat-damages: #2e2436;
+  --co-stat-resource: #23302a;
 
-  // Cartes de chat : co2 y pose du texte blanc sur ces fonds, ils restent donc sombres
-  --co-chat-skill: @steel;
-  --co-chat-attack: @charcoal;
-  --co-chat-damages: @ink;
-  --co-chat-heal: @ash;
-  --co-chat-rest: @smoke;
-  --co-chat-save: @stone;
-  --co-chat-item: @fog;
-  --co-chat-shadow: @mist;
+  // Cartes de chat : co2 y pose du texte clair, les fonds restent sombres (sépia)
+  --co-chat-skill: #23303b;
+  --co-chat-attack: #3a1a12;
+  --co-chat-damages: #4a1414;
+  --co-chat-heal: #233a26;
+  --co-chat-rest: #33381f;
+  --co-chat-save: #2e2436;
+  --co-chat-item: #3a2f1c;
+  --co-chat-shadow: #b9ad93;
 
   // Fenêtres de jet
-  --co-dialog-attack-bg: fade(@charcoal, 55%);
-  --co-dialog-skill-bg: fade(@steel, 42%);
-  --co-dialog-attack-accent: @ink;
-  --co-dialog-attack-surface: @charcoal;
-  --co-dialog-skill-accent: @charcoal;
-  --co-dialog-skill-highlight: @ash;
-  --co-dialog-muted: @mist;
-  --co-dialog-overlay: #ffffff57;
+  --co-dialog-attack-bg: rgba(58, 20, 20, 0.5);
+  --co-dialog-skill-bg: rgba(36, 40, 55, 0.45);
+  --co-dialog-attack-accent: #2b0d0d;
+  --co-dialog-attack-surface: #3a1414;
+  --co-dialog-skill-accent: #241d14;
+  --co-dialog-skill-highlight: #6b5a3a;
+  --co-dialog-muted: #b9ad93;
+  --co-dialog-overlay: #f4ecd857;
 
-  // Types d'objets : une seule couleur pour tous, celle du trait, et la même dans les deux modes
-  --co-item-capacity-dark: @item;
-  --co-item-capacity-light: @item;
-  --co-item-equipment-dark: @item;
-  --co-item-equipment-light: @item;
-  --co-item-container-dark: @item;
-  --co-item-container-light: @item;
-  --co-item-feature-dark: @item;
-  --co-item-feature-light: @item;
-  --co-item-path-dark: @item;
-  --co-item-path-light: @item;
-  --co-item-profile-dark: @item;
-  --co-item-profile-light: @item;
-  --co-item-attack-dark: @item;
-  --co-item-attack-light: @item;
+  // Types d'objets : paires sépia / bordeaux thématiques (dégradé dark → light des bandeaux)
+  --co-item-capacity-dark: #3a1520;
+  --co-item-capacity-light: #7a2e46;
+  --co-item-equipment-dark: #4a3418;
+  --co-item-equipment-light: #8a6a2c;
+  --co-item-container-dark: #4a3418;
+  --co-item-container-light: #8a6a2c;
+  --co-item-feature-dark: #1a3540;
+  --co-item-feature-light: #366b7a;
+  --co-item-path-dark: #2e1f3a;
+  --co-item-path-light: #5a3a7a;
+  --co-item-profile-dark: #1c2340;
+  --co-item-profile-light: #3a4a7a;
+  --co-item-attack-dark: #3a0d0d;
+  --co-item-attack-light: #7a2424;
+
+  // --co-result-* : volontairement non surchargées (couleurs porteuses d'information)
 }

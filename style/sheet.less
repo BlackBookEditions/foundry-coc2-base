@@ -421,3 +421,35 @@
     font-size: var(--font-size-11);
   }
 }
+
+/* FOND PARCHEMIN (les deux thèmes).
+   coc2 adopte la palette parchemin de cth : on pose la texture background.webp (= --background-image-standard,
+   défini dans style/global.less) sur toute la fiche, à l'identique en thème Foundry clair et sombre. Le
+   bandeau reste un bloc encre (#14110d, --co-sheet-accent) ; la texture transparaît dans le contenu et
+   derrière les cases claires. Le texte du contenu est forcé sombre par style/contrast.less. */
+.co.actor.coc2 .window-content {
+  background-image: var(--background-image-standard);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+}
+
+/* JALONS DES ÉCHELLES sur l'en-tête encre (les deux thèmes).
+   Le bandeau est un bloc encre sombre (#14110d) dans les DEUX thèmes : le liseré NOIR des jalons
+   5/10/15/20 (défini dans .health-bar / .second-scale-bar plus haut) serait avalé par le fond. On conserve
+   la FORME chevron (clip-path hérité, inchangé) mais on inverse le jalon : corps SOMBRE cerclé d'un liseré
+   CLAIR, repère net des paliers parmi les chevrons vides crème. Non scopé par thème (l'en-tête est sombre
+   dans les deux) ; écrit après la définition des rubans → l'emporte à spécificité égale par l'ordre. */
+.co.actor.coc2 {
+  .health-bar .health-step.milestone,
+  .second-scale-bar .scale-step.milestone {
+    background-color: var(--co-text-light); // liseré clair (le noir serait invisible sur l'en-tête encre)
+    color: var(--co-text-light); // chiffre clair, lisible sur le corps sombre
+
+    // Corps sombre du jalon NON atteint : marqueur de palier. Le jalon atteint garde le rouge/bleu de
+    // sa règle .filled::before, seuls son liseré et son chiffre passant au clair ci-dessus.
+    &:not(.filled)::before {
+      background-color: var(--co-sheet-accent-alt);
+    }
+  }
+}
