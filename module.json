@@ -37,6 +37,12 @@
     }
   ],
   "socket": false,
+  "media": [
+    {
+      "type": "setup",
+      "url": "modules/coc2-base/assets/logo_coc.webp"
+    }
+  ],
   "manifest": "#{MANIFEST}#",
   "download": "#{DOWNLOAD}#"
 }
