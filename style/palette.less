@@ -77,3 +77,50 @@
 
   // --co-result-* : volontairement non surchargées (couleurs porteuses d'information)
 }
+
+/*
+ * Cartes de chat en THÈME SOMBRE — exception au principe « un seul jeu de valeurs ».
+ *
+ * Contrairement aux fiches (parchemin clair dans les deux modes), le FOND des messages de chat suit le
+ * thème Foundry (règle de co2 .theme-* #interface … .chat-message) : clair en thème clair — les accents
+ * encre ci-dessus y restent lisibles — mais quasi-noir en thème sombre, où ces mêmes accents (#23303b…),
+ * utilisés comme couleur de TITRE/bordure des cartes, deviennent illisibles (encre sur noir).
+ *
+ * On repasse donc, uniquement en thème sombre, sur des accents sépia CLAIRS. Un seul jeu de valeurs,
+ * appliqué à deux portées (cf. plus bas).
+ */
+.accents-chat-sombres() {
+  --co-chat-skill: #7ea7c4; // bleu ardoise clair
+  --co-chat-attack: #cf8f5e; // terracotta clair
+  --co-chat-damages: #d98a8a; // rouille claire
+  --co-chat-heal: #8fb583; // sauge claire
+  --co-chat-rest: #b9bd8a; // olive clair
+  --co-chat-save: #b29ac9; // mauve clair
+  --co-chat-item: #cbb489; // tan parchemin
+  // --co-chat-shadow inchangé (#b9ad93, déjà clair)
+}
+
+// Portée 1 — au niveau du thème. `.theme-dark` (0,1,0) est déclaré après le bloc combiné
+// .theme-light,.theme-dark (0,1,0) : il l'emporte par l'ordre pour le mode sombre, sans toucher le clair.
+.theme-dark {
+  .accents-chat-sombres();
+}
+
+/*
+ * Portée 2 — directement sur le JOURNAL DE CHAT. La portée 1 ne suffit pas : co2 pose sur le .chat-log
+ * `--co-chat-*: inherit` (styles/palette.less, spécificité 2,1,0) pour le réaligner sur le thème
+ * d'interface. Le chat-log prend donc la valeur de son PARENT — et si un conteneur intermédiaire
+ * (#sidebar, #chat…) porte la classe theme-light, ce parent a reçu l'encre sombre du bloc combiné :
+ * l'héritage ramène le quasi-noir et la portée 1 est court-circuitée (rouge des dommages et bleu des
+ * jets de compétence illisibles sur le fond sombre des messages).
+ *
+ * On pose donc les valeurs SUR le chat-log lui-même, à 2,2,0 pour passer devant le `inherit` de co2.
+ * La condition reste `.theme-dark` en ancêtre, c'est-à-dire le thème d'INTERFACE : le même prédicat que
+ * la règle qui noircit le fond des messages (co2 styles/applications/chat/common.less). Le troisième
+ * sélecteur couvre le chat détaché, hors #interface, où la règle de co2 ne s'applique pas.
+ */
+.theme-dark #interface #sidebar .chat-log,
+.theme-dark #interface #ui-right-column-1 .chat-log,
+.theme-dark .chat-popout .chat-log {
+  .accents-chat-sombres();
+}
