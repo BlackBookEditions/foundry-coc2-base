@@ -134,8 +134,7 @@ export default class COC2CharacterSheet extends COCharacterSheet {
     // Idempotence : on retire toute injection précédente (re-render partiel de l'onglet)
     part.querySelectorAll(".coc2-protection").forEach((node) => node.remove())
 
-    // Maîtrise des armes, armures et boucliers : notion absente de COC2 (isTrainedWith* renvoie toujours true),
-    // la coche du template co2 est systématiquement verte et n'apprend donc rien.
+    // Maîtrise des armes, armures et boucliers : notion absente de COC2. Pas d'affichage
     part.querySelectorAll("li.item .item-name h4 > i.fa-circle-check, li.item .item-name h4 > i.fa-circle-xmark").forEach((node) => node.remove())
 
     const cell = (content, tooltip, ignored) =>
@@ -209,9 +208,8 @@ export default class COC2CharacterSheet extends COCharacterSheet {
   }
 
   /**
-   * Bloc « Avantages & Désavantages » : injecté juste après le bloc « Profil & Traits » de l'onglet
-   * Biographie. Injection DOM plutôt qu'un override du template biographie (propriété du système co2), afin
-   * de ne pas le dupliquer — même motif que le compteur des traits distinctifs.
+   * Bloc « Avantages & Désavantages » : injecté juste après le bloc « Profil & Traits » de l'onglet Biographie. 
+   * Injection DOM plutôt qu'un override du template biographie (propriété du système co2), afin de ne pas le dupliquer — même motif que le compteur des traits distinctifs.
    * @param {object} context Contexte de rendu
    */
   async #renderAvantagesDesavantages(context) {
@@ -239,9 +237,8 @@ export default class COC2CharacterSheet extends COCharacterSheet {
   }
 
   /**
-   * Compteur des plafonds de création (voies et rang de voie) issus de la tranche d'âge : injecté dans
-   * l'onglet Voies, sous les notifications d'XP du système. Même motif d'injection DOM que le compteur
-   * des traits distinctifs, pour ne pas dupliquer le template paths.hbs du système.
+   * Compteur des plafonds de création (voies et rang de voie) issus de la tranche d'âge : injecté dans l'onglet Voies, sous les notifications d'XP du système. 
+   * Même motif d'injection DOM que le compteur des traits distinctifs, pour ne pas dupliquer le template paths.hbs du système.
    * @param {object} context Contexte de rendu
    */
   #renderAgeLimits(context) {

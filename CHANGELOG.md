@@ -1,3 +1,16 @@
+# 0.8.0
+
+## Interface
+
+- Identité visuelle propre au module : adoption de la palette « parchemin » — texture de fond sur toute la fiche, bandeau d'en-tête encre et texte sombre dans les deux thèmes Foundry, clair comme sombre
+- Cartes de chat lisibles en thème sombre : les accents de la palette parchemin sont des encres quasi-noires, qui servaient de couleur de titre, de bordure et de bouton sur le fond sombre du journal de chat (bouton « Appliquer les dommages », cartes de jet de compétence). Un jeu d'accents sépia clairs leur est substitué dans ce seul thème
+- Logo du module affiché dans la fenêtre d'installation de Foundry
+
+## Technique
+
+- Imports du point d'entrée alignés sur le mécanisme du système `co2` : un barrel `_module.mjs` par dossier, consommé par des imports de namespace
+- Le module expose son API sous `game.modules.get("coc2-base").api` (`models`, `documents`, `applications`, `config`), sur le modèle de `game.system.api`
+
 # 0.7.0
 
 Première version du module : adaptation du système `co2` aux règles de Chroniques Oubliées Contemporain 2e édition.

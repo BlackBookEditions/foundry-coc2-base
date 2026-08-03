@@ -1,45 +1,11 @@
-import COC2CharacterData from "./module/models/character.mjs"
-import COC2EncounterData from "./module/models/encounter.mjs"
-import COC2CapacityData from "./module/models/capacity.mjs"
-import COC2EquipmentData from "./module/models/equipment.mjs"
-import COC2AttackData from "./module/models/attack.mjs"
-import COC2ActionMessageData from "./module/models/action-message.mjs"
-import COC2Actor from "./module/documents/actor.mjs"
-import { CORoll } from "../../systems/co2/module/documents/roll.mjs"
-import COC2CharacterSheet from "./module/applications/character-sheet.mjs"
-import COC2EncounterSheet from "./module/applications/encounter-sheet.mjs"
-import COC2PartySheet from "./module/applications/party-sheet.mjs"
-import {
-  HEALTH_SCALE,
-  HEALTH_STATES,
-  HEALTH_STATE_MALUS,
-  SECOND_SCALE,
-  SECOND_SCALE_STATES,
-  HEALING_CAPACITY_BASE,
-  COC2_CURRENCIES,
-  PHYSICAL_ABILITIES,
-  COC2_STATUS_CHANGES,
-  REMOVED_STATUS_IDS,
-  STATE_TEST_MALUS,
-  FEATURE_SUBTYPES_COC2,
-  REMOVED_FEATURE_SUBTYPE_IDS,
-  REMOVED_PATH_SUBTYPE_IDS,
-  removeSubtypeOptions,
-  AGE_BRACKETS,
-  computeAutoCriticalBonus,
-  getCriticalBonus,
-  ENCOUNTER_ARCHETYPES,
-  CREATURE_SIZES,
-  COC2_SIZE_LABELS,
-  MARTIAL_TRAININGS,
-  buildStatusEffects,
-  hideMagicUI,
-  getHealthScaleContext,
-  getSecondScaleContext,
-  updateHealthScale,
-  updateSecondScale,
-  applyWeeklyRest,
-} from "./module/config/coc2.mjs"
+// Configuration
+import * as config from "./module/config/coc2.mjs"
+
+// Import modules
+import * as models from "./module/models/_module.mjs"
+import * as documents from "./module/documents/_module.mjs"
+import * as applications from "./module/applications/_module.mjs"
+import { CORoll } from "../../systems/co2/module/documents/_module.mjs"
 
 /**
  * Configuration publique du module. Exposée dès le chargement du script, et non dans le hook init,
@@ -61,29 +27,29 @@ import {
  * })
  */
 CONFIG.COC2BASE = {
-  healthScale: HEALTH_SCALE,
-  healthStates: HEALTH_STATES,
-  healthStateMalus: HEALTH_STATE_MALUS,
-  physicalAbilities: PHYSICAL_ABILITIES,
-  statusChanges: COC2_STATUS_CHANGES,
-  removedStatusIds: REMOVED_STATUS_IDS,
-  stateTestMalus: STATE_TEST_MALUS,
+  healthScale: config.HEALTH_SCALE,
+  healthStates: config.HEALTH_STATES,
+  healthStateMalus: config.HEALTH_STATE_MALUS,
+  physicalAbilities: config.PHYSICAL_ABILITIES,
+  statusChanges: config.COC2_STATUS_CHANGES,
+  removedStatusIds: config.REMOVED_STATUS_IDS,
+  stateTestMalus: config.STATE_TEST_MALUS,
   // Sous-types masqués dans la liste déroulante des fiches de trait et de voie. Lues au rendu, donc
   // modifiables à tout moment par un module d'univers (ajout ou retrait d'un id).
-  removedFeatureSubtypeIds: REMOVED_FEATURE_SUBTYPE_IDS,
-  removedPathSubtypeIds: REMOVED_PATH_SUBTYPE_IDS,
-  ageBrackets: AGE_BRACKETS,
+  removedFeatureSubtypeIds: config.REMOVED_FEATURE_SUBTYPE_IDS,
+  removedPathSubtypeIds: config.REMOVED_PATH_SUBTYPE_IDS,
+  ageBrackets: config.AGE_BRACKETS,
   // Adversaires : archétypes humains (Figurant / Second rôle / Premier rôle) et table des créatures par
   // TAI. Lus au rendu de la fiche et au pré-remplissage, donc modifiables à tout moment par un module
   // d'univers — à l'exception des ids, qui pilotent le stockage (details.archetype et details.size).
-  encounterArchetypes: ENCOUNTER_ARCHETYPES,
-  creatureSizes: CREATURE_SIZES,
+  encounterArchetypes: config.ENCOUNTER_ARCHETYPES,
+  creatureSizes: config.CREATURE_SIZES,
   // Base de la capacité de guérison : CG = CON + healingCapacityBase. Lue au calcul de la fiche,
   // un module d'univers peut donc la modifier à tout moment.
-  healingCapacityBase: HEALING_CAPACITY_BASE,
+  healingCapacityBase: config.HEALING_CAPACITY_BASE,
   // Devise du monde COC2 : le dollar remplace or/argent/cuivre de COF2. Lue au hook init de coc2-base ;
   // un module d'univers qui la modifie doit être chargé avant (ou poser game.system.CONST.CURRENCY à son init).
-  currencies: COC2_CURRENCIES,
+  currencies: config.COC2_CURRENCIES,
   /**
    * Seconde échelle (« Échelle ») : compteur avec libellé de palier affiché sur la fiche, SANS statut de
    * token (rien dans CONFIG.statusEffects). Masquée par défaut : son affichage est commandé par le réglage
@@ -91,9 +57,9 @@ CONFIG.COC2BASE = {
    * (label/labelShort) et renomme ses paliers (states.<id>.name/description) depuis son hook init.
    */
   secondScale: {
-    scale: SECOND_SCALE,
-    states: SECOND_SCALE_STATES,
-    max: SECOND_SCALE.max,
+    scale: config.SECOND_SCALE,
+    states: config.SECOND_SCALE_STATES,
+    max: config.SECOND_SCALE.max,
     forced: false,
     label: "COC2BASE.secondScale.label",
     labelShort: "COC2BASE.secondScale.short",
@@ -102,6 +68,14 @@ CONFIG.COC2BASE = {
 
 Hooks.once("init", () => {
   console.info("COC2 Base | Initialisation du module...")
+
+  // Expose the module API
+  game.modules.get("coc2-base").api = {
+    models,
+    documents,
+    applications,
+    config,
+  }
 
   // Réglage commandant l'affichage de la seconde échelle sur les fiches (premier réglage du module)
   game.settings.register("coc2-base", "showSecondScale", {
@@ -126,31 +100,31 @@ Hooks.once("init", () => {
   })
 
   // Remplacement des classes du système par les variantes COC2 : le hook init du module s'exécute après celui du système
-  CONFIG.Actor.documentClass = COC2Actor
-  CONFIG.Actor.dataModels.character = COC2CharacterData
-  CONFIG.Actor.dataModels.encounter = COC2EncounterData
+  CONFIG.Actor.documentClass = documents.COC2Actor
+  CONFIG.Actor.dataModels.character = models.COC2CharacterData
+  CONFIG.Actor.dataModels.encounter = models.COC2EncounterData
 
   // Coût uniforme d'un rang de voie : 1 point de capacité, quel que soit le rang
-  CONFIG.Item.dataModels.capacity = COC2CapacityData
+  CONFIG.Item.dataModels.capacity = models.COC2CapacityData
 
   // Encombrement des protections (malus fixe Init/AGI/ATC en lieu et place du plafond d'AGI de COF2)
   // et bonus critique des armes
-  CONFIG.Item.dataModels.equipment = COC2EquipmentData
+  CONFIG.Item.dataModels.equipment = models.COC2EquipmentData
 
   // Bonus critique des attaques naturelles des créatures
-  CONFIG.Item.dataModels.attack = COC2AttackData
+  CONFIG.Item.dataModels.attack = models.COC2AttackData
 
   // Carte de dommages : le critique n'y double plus les DM, il y ajoute le bonus critique
-  CONFIG.ChatMessage.dataModels.action = COC2ActionMessageData
+  CONFIG.ChatMessage.dataModels.action = models.COC2ActionMessageData
 
-  foundry.documents.collections.Actors.registerSheet("coc2-base", COC2CharacterSheet, { types: ["character"], makeDefault: true, label: "COC2BASE.sheet.character" })
-  foundry.documents.collections.Actors.registerSheet("coc2-base", COC2EncounterSheet, { types: ["encounter"], makeDefault: true, label: "COC2BASE.sheet.encounter" })
+  foundry.documents.collections.Actors.registerSheet("coc2-base", applications.COC2CharacterSheet, { types: ["character"], makeDefault: true, label: "COC2BASE.sheet.character" })
+  foundry.documents.collections.Actors.registerSheet("coc2-base", applications.COC2EncounterSheet, { types: ["encounter"], makeDefault: true, label: "COC2BASE.sheet.encounter" })
 
   // Liste des états alignée sur le livre de règles COC2 : localisée et triée ensuite par le hook i18nInit du système
-  CONFIG.statusEffects = buildStatusEffects()
+  CONFIG.statusEffects = config.buildStatusEffects()
 
   // Domaines et traits distinctifs : nouveaux sous-types de features proposés dans la fiche feature
-  Object.assign(game.system.CONST.FEATURE_SUBTYPE, FEATURE_SUBTYPES_COC2)
+  Object.assign(game.system.CONST.FEATURE_SUBTYPE, config.FEATURE_SUBTYPES_COC2)
 
   // Devise du monde : le dollar remplace les pièces or/argent/cuivre (COF2) héritées du système. Le schéma
   // wealth des acteurs, construit paresseusement (au plus tôt à setup/ready), lira cette valeur — donc après
@@ -160,20 +134,20 @@ Hooks.once("init", () => {
   // Nomenclature COC2 des tailles : « Énorme » devient « Très grand » et « Colossale » « Gigantesque ».
   // Seuls les libellés sont remplacés, les clés restant celles du système (elles valident le champ
   // details.size et indexent SYSTEM.TOKEN_SIZE).
-  Object.assign(game.system.CONST.SIZES, COC2_SIZE_LABELS)
+  Object.assign(game.system.CONST.SIZES, config.COC2_SIZE_LABELS)
 
   // Attaque magique et points de magie : notions de COF2 absentes du livre de règles COC2
-  hideMagicUI()
+  config.hideMagicUI()
 
   // Entraînements martiaux contemporains (même pattern que cof2-base)
   if (game.system.CONST.martialTrainingsWeapons.length === 0) {
-    game.system.CONST.martialTrainingsWeapons.push(...MARTIAL_TRAININGS.weapons)
+    game.system.CONST.martialTrainingsWeapons.push(...config.MARTIAL_TRAININGS.weapons)
   }
   if (game.system.CONST.martialTrainingsArmors.length === 0) {
-    game.system.CONST.martialTrainingsArmors.push(...MARTIAL_TRAININGS.armors)
+    game.system.CONST.martialTrainingsArmors.push(...config.MARTIAL_TRAININGS.armors)
   }
   if (game.system.CONST.martialTrainingsShields.length === 0) {
-    game.system.CONST.martialTrainingsShields.push(...MARTIAL_TRAININGS.shields)
+    game.system.CONST.martialTrainingsShields.push(...config.MARTIAL_TRAININGS.shields)
   }
 
   console.info("COC2 Base | Fin de l'initialisation du module")
@@ -190,7 +164,7 @@ Hooks.once("ready", () => {
   // une simple réaffectation. On remplace donc la propriété par un accesseur qui n'accepte QUE la sous-classe
   // COC2 et ignore l'instance COF2 du système, quel que soit l'ordre d'exécution des deux ready.
   const existing = game.system.partySheet
-  let instance = existing instanceof COC2PartySheet ? existing : null
+  let instance = existing instanceof applications.COC2PartySheet ? existing : null
 
   // Si le système a déjà posé (et, pour le MJ, rendu) sa version COF2 avant ce hook, on la ferme.
   const replacedRendered = existing && !instance && existing.rendered
@@ -200,11 +174,11 @@ Hooks.once("ready", () => {
     configurable: true,
     enumerable: true,
     get() {
-      return (instance ??= new COC2PartySheet())
+      return (instance ??= new applications.COC2PartySheet())
     },
     set(value) {
       // On ignore l'affectation de la classe système (COPartySheet) ; seule la sous-classe COC2 est acceptée.
-      if (value instanceof COC2PartySheet) instance = value
+      if (value instanceof applications.COC2PartySheet) instance = value
     },
   })
 
@@ -216,11 +190,11 @@ Hooks.once("ready", () => {
  * Sous-types sans équivalent COC2 (peuple) : options retirées des listes déroulantes des fiches de trait et de voie
  */
 Hooks.on("renderCoFeatureSheet", (application, element, context, options) => {
-  removeSubtypeOptions(element, application.document, CONFIG.COC2BASE.removedFeatureSubtypeIds)
+  config.removeSubtypeOptions(element, application.document, CONFIG.COC2BASE.removedFeatureSubtypeIds)
 })
 
 Hooks.on("renderCoPathSheet", (application, element, context, options) => {
-  removeSubtypeOptions(element, application.document, CONFIG.COC2BASE.removedPathSubtypeIds)
+  config.removeSubtypeOptions(element, application.document, CONFIG.COC2BASE.removedPathSubtypeIds)
 })
 
 /*
@@ -228,7 +202,7 @@ Hooks.on("renderCoPathSheet", (application, element, context, options) => {
  */
 Hooks.on("renderCoFeatureSheet", (application, element, context, options) => {
   const item = application.document
-  if (![FEATURE_SUBTYPES_COC2.avantage.id, FEATURE_SUBTYPES_COC2.desavantage.id].includes(item.system.subtype)) return
+  if (![config.FEATURE_SUBTYPES_COC2.avantage.id, config.FEATURE_SUBTYPES_COC2.desavantage.id].includes(item.system.subtype)) return
 
   const select = element.querySelector('select[name="system.subtype"]')
   if (!select || element.querySelector(".coc2-points")) return
@@ -313,7 +287,7 @@ Hooks.on("renderCoEquipmentSheet", (application, element, context, options) => {
  * @returns {string} Le fragment HTML à injecter
  */
 function criticalBonusFormGroup(value, damageFormula, locked) {
-  const auto = computeAutoCriticalBonus(damageFormula)
+  const auto = config.computeAutoCriticalBonus(damageFormula)
   const tooltip = game.i18n.format("COC2BASE.equipment.bcTooltip", { auto })
   return `<div class="form-group coc2-critical-bonus">
     <label data-tooltip="${tooltip}">${game.i18n.localize("COC2BASE.equipment.bcShort")}</label>
@@ -373,7 +347,7 @@ Hooks.on("co.postRollAttack", (item, options, rolls) => {
 
   // options.damageFormula est figé avant l'ajout des modificateurs de dommages et des options tactiques :
   // c'est la formule de base de l'arme, dés intacts, dont le BC ne doit dépendre que des dés (LdR).
-  const bc = getCriticalBonus(item, options.damageFormula)
+  const bc = config.getCriticalBonus(item, options.damageFormula)
   if (bc <= 0) return
 
   const damageRoll = rolls[1]
@@ -415,7 +389,7 @@ Hooks.on("renderCOMiniCharacterSheet", async (application, element, context, opt
     const dr = sidebar.querySelector(".dr-section")
     if (dr) dr.insertAdjacentHTML("beforebegin", valuesHtml)
     else sidebar.insertAdjacentHTML("beforeend", valuesHtml)
-    sidebar.querySelector(".cg-rest")?.addEventListener("click", () => applyWeeklyRest(actor))
+    sidebar.querySelector(".cg-rest")?.addEventListener("click", () => config.applyWeeklyRest(actor))
   }
 
   // En-tête : ne garder que les caractéristiques ; retirer portrait, nom, niveau et peuple/profils (COF2)
@@ -436,8 +410,8 @@ Hooks.on("renderCOMiniCharacterSheet", async (application, element, context, opt
   header.querySelectorAll(".health-bar, .second-scale-bar").forEach((node) => node.remove())
 
   const scaleContext = {
-    ...getHealthScaleContext(actor),
-    ...getSecondScaleContext(actor),
+    ...config.getHealthScaleContext(actor),
+    ...config.getSecondScaleContext(actor),
     attributes: actor.system.attributes,
     viewLimited: context.viewLimited,
   }
@@ -446,8 +420,8 @@ Hooks.on("renderCOMiniCharacterSheet", async (application, element, context, opt
 
   // Interactivité : la mini-fiche co2 n'enregistre pas ces actions, on câble les clics à la main.
   // element est recréé à chaque rendu : pas d'accumulation d'écouteurs.
-  element.querySelectorAll(".health-step").forEach((step) => step.addEventListener("click", () => updateHealthScale(actor, Number(step.dataset.echelon))))
-  element.querySelectorAll(".scale-step").forEach((step) => step.addEventListener("click", () => updateSecondScale(actor, Number(step.dataset.echelon))))
+  element.querySelectorAll(".health-step").forEach((step) => step.addEventListener("click", () => config.updateHealthScale(actor, Number(step.dataset.echelon))))
+  element.querySelectorAll(".scale-step").forEach((step) => step.addEventListener("click", () => config.updateSecondScale(actor, Number(step.dataset.echelon))))
 })
 
 /*

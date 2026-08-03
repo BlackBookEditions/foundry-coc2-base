@@ -50,11 +50,10 @@ export default class COC2EncounterSheet extends COEncounterSheet {
   }
 
   /**
-   * Compteurs de création : points de caractéristiques dépensés et capacités apprises, comparés aux
-   * quotas du profil. Purement informatifs — rien n'est bloqué, le MJ reste maître des exceptions.
-   * Le décompte des caractéristiques raisonne en points totaux et non en nombre de caractéristiques
-   * bonifiées : le Premier rôle peut cumuler deux +2 en un +4, et les créatures ont un plafond par
-   * caractéristique, vérifié à part.
+   * Compteurs de création : points de caractéristiques dépensés et capacités apprises, comparés aux quotas du profil. 
+   * Purement informatifs — rien n'est bloqué, le MJ reste maître des exceptions.
+   * Le décompte des caractéristiques raisonne en points totaux et non en nombre de caractéristiques bonifiées : 
+   * le Premier rôle peut cumuler deux +2 en un +4, et les créatures ont un plafond par caractéristique, vérifié à part.
    * @param {object|null} profile Profil de référence (cf. getEncounterProfile)
    * @returns {object} Fragment de contexte de rendu
    */
@@ -70,8 +69,7 @@ export default class COC2EncounterSheet extends COEncounterSheet {
     const abilityAboveCap = profile.maxPerAbility !== null && highestAbility > profile.maxPerAbility
     const tooManyCapacities = profile.capacityPoints !== null && capacityCount > profile.capacityPoints
 
-    // Message assemblé ici plutôt qu'en Handlebars : le libellé des capacités est optionnel (les
-    // créatures n'ont pas de budget) et les erreurs se cumulent, comme pour le compteur de traits des PJ
+    // Message assemblé ici plutôt qu'en Handlebars : le libellé des capacités est optionnel (les créatures n'ont pas de budget) et les erreurs se cumulent, comme pour le compteur de traits des PJ
     const parts = [game.i18n.format("COC2BASE.encounter.quotas.abilities", { points: abilityPoints, max: profile.abilityPoints })]
     if (profile.maxPerAbility !== null) parts.push(game.i18n.format("COC2BASE.encounter.quotas.perAbility", { max: profile.maxPerAbility }))
     if (profile.capacityPoints !== null) {
