@@ -15,7 +15,15 @@
       <span>??</span>
     {{else}}
       <span data-tooltip="{{localize 'COC2BASE.xp.tooltip'}}">{{xpLeft}}/{{xpMax}}</span>
-      {{#if unlocked}}
+      {{#if canEditXpEarned}}
+        {{!-- Le total (xpMax) est une valeur dérivée : seuls les XP de séance sont éditables. Les remettre
+              à 0 replace le personnage en phase de création, donc toutes ses capacités au tarif création. --}}
+        <div class="xp-earned-line">
+          <label class="xp-earned-label" data-tooltip="{{localize 'COC2BASE.xp.earnedTooltip'}}">{{localize "COC2BASE.xp.earnedLabel"}}</label>
+          <input class="xp-earned" type="number" name="system.attributes.xp.earned" value="{{attributes.xp.earned}}" min="0" step="1" data-tooltip="{{localize 'COC2BASE.xp.earnedTooltip'}}" />
+          <a class="add-session" data-action="addSession" data-tooltip="{{localize 'COC2BASE.xp.addSession'}}"><i class="fas fa-plus-circle"></i></a>
+        </div>
+      {{else if unlocked}}
         <a class="add-session" data-action="addSession" data-tooltip="{{localize 'COC2BASE.xp.addSession'}}"><i class="fas fa-plus-circle"></i></a>
       {{/if}}
     {{/if}}

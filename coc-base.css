@@ -883,6 +883,13 @@
   /* Le X/Y des XP hérite du gabarit « niveau » de co2 (3rem, 65px de haut) : on le ramène à la taille du
      bloc PV (X/Y de la barre de santé) pour un affichage cohérent. Chaîne d'ancêtres explicite pour
      dépasser la spécificité de la règle du système co2 (.co.application.sheet.actor …sheet-header .level span). */
+  /* Champ d'édition des XP gagnés (MJ, mode Édition) : ramené à la largeur d'un compteur, le gabarit
+     « niveau » de co2 imposant sinon 68px de large. Son libellé échappe de même au 1.2rem des libellés
+     de la zone « niveau ». */
+  /* Repère des capacités achetées en phase de création, dans la case du rang de l'onglet Voies.
+     La case ne fait que 25px de large (flex: 0 25px, texte centré, chiffre en 22px) : une icône dans le
+     flux décalerait le chiffre vers la gauche et casserait l'alignement vertical de la colonne des rangs
+     d'une ligne à l'autre. Elle est donc sortie du flux, en pastille dans l'angle de la case. */
   /* Sections BDM et CG de la barre latérale (fiche complète et Vue actions).
      Le système ne colore que ses propres sections : il pose sur toutes un badge de fond --co-surface ET
      un texte --co-surface, puis rattrape la couleur du texte section par section (melee, init, armor…).
@@ -1115,13 +1122,50 @@
   white-space: nowrap;
   color: var(--co-text-light);
 }
+.co.actor.coc2 .level.xp {
+  /* Le libellé, le X/Y et la ligne d'édition se succèdent en trois lignes (le libellé est un bloc) :
+       on les centre au niveau du conteneur pour qu'ils s'alignent entre eux. */
+  text-align: center;
+  /* Ligne « gagnés [n] + », sous le X/Y : visible pour le MJ en mode Édition */
+}
 .co.actor.coc2 .level.xp .add-session {
   margin-left: 4px;
   cursor: pointer;
 }
-.co.actor.coc2.application.sheet .window-content .sheet-header .level.xp span {
+.co.actor.coc2 .level.xp .xp-earned-line {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+}
+.co.actor.coc2 .level.xp .xp-earned-line .add-session {
+  margin-left: 0;
+}
+.co.actor.coc2.application.sheet .window-content .sheet-header .level.xp span,
+.co.actor.coc2.application.sheet .window-content .sheet-header .level.xp input.xp-earned {
   font-size: var(--font-size-standard);
   height: auto;
+}
+.co.actor.coc2.application.sheet .window-content .sheet-header .level.xp input.xp-earned {
+  width: 3.5em;
+  padding: 0;
+  text-align: center;
+}
+.co.actor.coc2.application.sheet .window-content .sheet-header .level.xp .xp-earned-label {
+  font-size: var(--font-size-standard);
+  font-variant: small-caps;
+}
+.co.actor.coc2 .item-detail.rank {
+  position: relative;
+}
+.co.actor.coc2 .coc2-creation-mark {
+  position: absolute;
+  top: 1px;
+  right: 1px;
+  font-size: 12px;
+  line-height: 1;
+  color: var(--co-green);
+  opacity: 0.85;
 }
 .co.actor.coc2 .sidebar-section.bdm-section {
   background-color: var(--co-stat-damages);
@@ -1277,6 +1321,13 @@
 .co.item .sheet-header select option {
   background: var(--co-surface);
   color: var(--co-text-dark);
+}
+.co.actor .sheet-header input.xp-earned {
+  --input-background-color: var(--co-surface);
+  --input-text-color: var(--co-text-dark);
+  --input-border-color: rgba(20, 17, 13, 0.25);
+  color: var(--co-text-dark);
+  background: var(--co-surface);
 }
 .co.item .sheet-header .name input[type="text"] {
   color: var(--co-text-light);

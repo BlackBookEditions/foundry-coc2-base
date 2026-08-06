@@ -40,7 +40,10 @@
     },
     "xp": {
       "tooltip": "Points de capacité disponibles / total (points de création de la tranche d'âge + 1 XP par séance)",
-      "addSession": "Fin de séance : +1 XP"
+      "addSession": "Fin de séance : +1 XP",
+      "earnedLabel": "gagnés",
+      "earnedTooltip": "MJ : XP gagnés en séances. À 0, le personnage est en phase de création et toutes ses capacités coûtent 1 point.",
+      "learnedAtCreation": "Apprise à la création (coût 1 point)"
     },
     "notif": {
       "warningNotEnoughXP": "Attention : les points de capacité dépensés dépassent les points disponibles.",

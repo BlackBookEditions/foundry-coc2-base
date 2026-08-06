@@ -52,6 +52,19 @@
   }
 }
 
+// XP gagnés, éditables par le MJ, posés sur le bandeau à côté du sélecteur de tranche d'âge : même
+// traitement que ce dernier. Sans cela, l'input retombe sur le gabarit Foundry — texte sombre en mode
+// clair, fond sombre en mode sombre — donc du noir sur notre bandeau encre dans les deux thèmes.
+// La règle générique .co.actor .sheet-header span/label ci-dessus ne l'atteint pas : un contrôle de
+// formulaire n'hérite pas de la couleur de son parent.
+.co.actor .sheet-header input.xp-earned {
+  --input-background-color: var(--co-surface);
+  --input-text-color: var(--co-text-dark);
+  --input-border-color: fade(#14110d, 25%); // encre parchemin translucide, comme le sélecteur
+  color: var(--co-text-dark);
+  background: var(--co-surface);
+}
+
 // Nom de l'objet : c'est un input à fond transparent posé sur le bandeau, et un input n'hérite pas
 // de la couleur de son parent — il faut donc le viser explicitement.
 .co.item .sheet-header .name input[type="text"] {

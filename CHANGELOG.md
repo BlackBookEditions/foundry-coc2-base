@@ -1,3 +1,14 @@
+# 0.8.1
+
+## Interface
+
+- XP gagnés en séances éditables directement dans l'en-tête de la fiche de personnage, pour le MJ seul et en mode Édition, en complément du bouton « Fin de séance : +1 XP ». Le total de points de capacité affiché (points de la tranche d'âge + XP gagnés) en découle
+- Les capacités apprises pendant la phase de création portent un discret repère dans la case de leur rang, dans l'onglet Voies, visible en mode Édition
+
+## Règles
+
+- Coût des capacités : tant que le personnage n'a gagné aucun XP de séance, il est en phase de création et tout rang coûte 1 point. Une fois que les XPs gagnés sont différents de 0, seuls les rangs achetés à partir de ce moment coûtent leur numéro (rang 3 → 3 XP) ; ceux achetés à la création restent à 1 point. Remettre les XP gagnés à 0 retarife donc l'intégralité du personnage au barème de création, ce qui permet de corriger un historique d'achats sans désapprendre puis réapprendre les capacités
+
 # 0.8.0
 
 ## Interface
@@ -5,6 +16,10 @@
 - Identité visuelle propre au module : adoption de la palette « parchemin » — texture de fond sur toute la fiche, bandeau d'en-tête encre et texte sombre dans les deux thèmes Foundry, clair comme sombre
 - Cartes de chat lisibles en thème sombre : les accents de la palette parchemin sont des encres quasi-noires, qui servaient de couleur de titre, de bordure et de bouton sur le fond sombre du journal de chat (bouton « Appliquer les dommages », cartes de jet de compétence). Un jeu d'accents sépia clairs leur est substitué dans ce seul thème
 - Logo du module affiché dans la fenêtre d'installation de Foundry
+
+## Corrections
+
+- Clés de traduction affichées brutes (`COC2BASE.healthScale.short`, `COC2BASE.combat.bdm`, `COC2BASE.recovery.cg`…) pour les utilisateurs dont le client Foundry est en anglais : le fichier `lang/fr.json` est désormais déclaré sous les langues `fr` et `en`, comme le fait le système `co2`
 
 ## Technique
 

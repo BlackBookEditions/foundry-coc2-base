@@ -52,6 +52,10 @@ export default class COC2CharacterSheet extends COCharacterSheet {
     const currentBracket = getAgeBracket(this.document.system)
     context.ageBracketLabel = currentBracket ? game.i18n.localize(currentBracket.label) : null
 
+    // XP gagnés en séances : éditable par le MJ seul, en mode Édition. Le total affiché (xpMax) en est dérivé,
+    // et la valeur 0 vaut phase de création — la corriger suffit à retarifer tout le build (cf. COC2CapacityData.getXpCost).
+    context.canEditXpEarned = game.user.isGM && this.isEditMode
+
     // Plafonds de création liés à la tranche d'âge : compteur injecté dans l'onglet Voies par _onRender.
     // null dès que le personnage a gagné un XP de séance : la progression n'est plus plafonnée.
     context.ageLimits =
@@ -113,6 +117,7 @@ export default class COC2CharacterSheet extends COCharacterSheet {
     this.#renderTraitBalance(context)
     await this.#renderAvantagesDesavantages(context)
     this.#renderAgeLimits(context)
+    this.#renderCreationCapacities()
     this.#renderProtectionDetails()
   }
 
@@ -272,6 +277,35 @@ export default class COC2CharacterSheet extends COCharacterSheet {
     const status = errors.length ? "error" : "info"
     const html = `<div class="notification ${status} permanent coc2-age-limits">${message}${suffix}</div>`
     target.insertAdjacentHTML("beforebegin", html)
+  }
+
+  /**
+   * Repère des capacités achetées en phase de création (coût 1 point) : petite icône posée dans la case du
+   * rang, dans l'onglet Voies. Même motif d'injection DOM que les compteurs ci-dessus, le template paths.hbs
+   * appartenant au système.
+   * Le repère ne sert qu'à relire et corriger un build : il n'est posé qu'en mode Édition, et pas pendant la
+   * phase de création elle-même, où toutes les capacités apprises l'ont été à la création.
+   */
+  #renderCreationCapacities() {
+    const pathsPart = this.element?.querySelector('[data-application-part="paths"]')
+    if (!pathsPart) return
+
+    // Idempotence : retrait avant toute condition, pour que les repères disparaissent au passage en mode Jeu
+    pathsPart.querySelectorAll(".coc2-creation-mark").forEach((node) => node.remove())
+
+    if (!this.isEditMode || this.document.system.isCreation) return
+
+    const tooltip = game.i18n.localize("COC2BASE.xp.learnedAtCreation")
+    for (const row of pathsPart.querySelectorAll('li.item[data-item-type="capacity"][data-item-id]')) {
+      const capacity = this.document.items.get(row.dataset.itemId)
+      if (!capacity?.system.learned) continue
+      if (capacity.getFlag("coc2-base", "learnedInPlay") === true) continue
+      // Seules les lignes de capacités de voie portent une case de rang : les capacités hors voie (toujours
+      // à 1 point, donc sans distinction utile) et les capacités liées sont écartées par l'absence d'ancre.
+      const anchor = row.querySelector(".item-detail.rank")
+      if (!anchor) continue
+      anchor.insertAdjacentHTML("beforeend", `<i class="fa-solid fa-seedling coc2-creation-mark" data-tooltip="${tooltip}"></i>`)
+    }
   }
 
   /**
