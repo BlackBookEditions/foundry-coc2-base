@@ -17,9 +17,9 @@ import { CORoll } from "../../systems/co2/module/documents/_module.mjs"
  * pilotent la mécanique (pose automatique des statuts, flags, classes CSS du ruban) et ne doivent pas
  * être modifiés.
  *
- * Attention : statusChanges et removedStatusIds sont lus au moment du hook init de coc2-base, un
- * module d'univers qui les modifie doit donc être chargé avant. Les libellés et stateTestMalus, eux,
- * sont lus au rendu et peuvent être modifiés à tout moment.
+ * Attention : statusChanges, statusOverrides, additionalStatusEffects et removedStatusIds sont lus
+ * au hook init de coc2-base. Un module d'univers dépendant doit donc les modifier au chargement de
+ * son script, avant que les hooks init ne soient déclenchés. stateTestMalus reste lu au rendu.
  *
  * @example Renommer un état depuis un module d'univers
  * Hooks.once("init", () => {
@@ -33,6 +33,8 @@ CONFIG.COC2BASE = {
   physicalAbilities: config.PHYSICAL_ABILITIES,
   statusChanges: config.COC2_STATUS_CHANGES,
   removedStatusIds: config.REMOVED_STATUS_IDS,
+  additionalStatusEffects: config.COC2_STATUS_EFFECTS,
+  statusOverrides: config.COC2_STATUS_OVERRIDES,
   stateTestMalus: config.STATE_TEST_MALUS,
   // Sous-types masqués dans la liste déroulante des fiches de trait et de voie. Lues au rendu, donc
   // modifiables à tout moment par un module d'univers (ajout ou retrait d'un id).
@@ -121,7 +123,11 @@ Hooks.once("init", () => {
   foundry.documents.collections.Actors.registerSheet("coc2-base", applications.COC2EncounterSheet, { types: ["encounter"], makeDefault: true, label: "COC2BASE.sheet.encounter" })
 
   // Liste des états alignée sur le livre de règles COC2 : localisée et triée ensuite par le hook i18nInit du système
-  CONFIG.statusEffects = config.buildStatusEffects()
+  CONFIG.statusEffects = config.buildStatusEffects(CONFIG.COC2BASE)
+
+  // En COC2, une cible immobilisée subit un critique automatique au contact. Le « bout portant »
+  // reste arbitré manuellement : le moteur ne force ici que les actions explicitement de type melee.
+  game.system.CONST.statusRules.incomingAttack.immobilized = { automaticCritical: ["melee"] }
 
   // Domaines et traits distinctifs : nouveaux sous-types de features proposés dans la fiche feature
   Object.assign(game.system.CONST.FEATURE_SUBTYPE, config.FEATURE_SUBTYPES_COC2)

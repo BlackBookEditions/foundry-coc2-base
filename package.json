@@ -6,6 +6,7 @@
     "less": "^4.2.0"
   },
   "scripts": {
-    "compile": "node ./tools/compile-less.mjs"
+    "compile": "node ./tools/compile-less.mjs",
+    "test": "node --test test/*.test.mjs"
   }
 }

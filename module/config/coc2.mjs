@@ -171,6 +171,13 @@ export const COC2_STATUS_CHANGES = {
   asphyxie: { init: -5, def: -5 },
 }
 
+/** Textes COC2 des états communs dont les effets diffèrent de la base COF2. */
+export const COC2_STATUS_OVERRIDES = {
+  blind: { description: "COC2BASE.status.blindDescription" },
+  immobilized: { description: "COC2BASE.status.immobilizedDescription" },
+  unconscious: { description: "COC2BASE.status.unconsciousDescription" },
+}
+
 /** États préjudiciables de COF2 sans équivalent dans le livre de règles COC2 */
 export const REMOVED_STATUS_IDS = ["weakened", "stun", "invalid", "paralysis"]
 
@@ -210,17 +217,26 @@ export const STATE_TEST_MALUS = {
  * À appeler depuis le hook init, avant le hook i18nInit du système qui localise et trie la liste.
  * @returns {Array<object>} Nouvelle valeur de CONFIG.statusEffects
  */
-export function buildStatusEffects() {
-  const kept = CONFIG.statusEffects
-    .filter((effect) => !REMOVED_STATUS_IDS.includes(effect.id))
-    .map((effect) => (COC2_STATUS_CHANGES[effect.id] ? { ...effect, changes: buildChanges(COC2_STATUS_CHANGES[effect.id]) } : effect))
+export function buildStatusEffects(profile = CONFIG.COC2BASE, baseStatusEffects = CONFIG.statusEffects) {
+  const removedStatusIds = profile.removedStatusIds ?? REMOVED_STATUS_IDS
+  const statusChanges = profile.statusChanges ?? COC2_STATUS_CHANGES
+  const statusOverrides = profile.statusOverrides ?? COC2_STATUS_OVERRIDES
+  const additionalStatusEffects = profile.additionalStatusEffects ?? COC2_STATUS_EFFECTS
 
-  const added = COC2_STATUS_EFFECTS.map(({ id, img }) => ({
+  const kept = baseStatusEffects
+    .filter((effect) => !removedStatusIds.includes(effect.id))
+    .map((effect) => ({
+      ...effect,
+      ...(statusOverrides[effect.id] ?? {}),
+      ...(statusChanges[effect.id] ? { changes: buildChanges(statusChanges[effect.id]) } : {}),
+    }))
+
+  const added = additionalStatusEffects.map(({ id, img }) => ({
     id,
     img,
     name: `COC2BASE.status.${id}`,
     description: `COC2BASE.status.${id}Description`,
-    changes: buildChanges(COC2_STATUS_CHANGES[id]),
+    changes: buildChanges(statusChanges[id]),
   }))
 
   return [...kept, ...added, ...HEALTH_STATUS_EFFECTS]
@@ -805,4 +821,3 @@ export async function updateSecondScale(actor, echelon) {
   const newValue = echelon === value ? echelon - 1 : echelon
   await actor.update({ "system.attributes.secondScale.value": newValue })
 }
-
