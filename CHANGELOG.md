@@ -1,5 +1,6 @@
 # 0.8.2
 - Ajout de l'échelle d'évolution configurable
+- Configuration des statuts spécifiques à COC2
 
 # 0.8.1
 
