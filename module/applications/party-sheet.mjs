@@ -1,5 +1,5 @@
 import COPartySheet from "../../../../systems/co2/module/applications/party-sheet.mjs"
-import { getHealthState, getSecondScaleState } from "../config/coc2.mjs"
+import { getHealthState, getSecondScaleState, isSecondScaleEnabled } from "../config/coc2.mjs"
 
 /**
  * Groupe de joueurs COC2 : reprend le tableau COF2 en retirant les colonnes de magie (attaque magique et
@@ -48,7 +48,7 @@ export default class COC2PartySheet extends COPartySheet {
     // Seconde échelle : compteur + libellé du palier atteint, affichés uniquement si le réglage est actif ou
     // si un module d'univers la force. Libellés lus depuis CONFIG pour rester surchargeables (cf. cth → conscience).
     const cfg = CONFIG.COC2BASE.secondScale
-    context.showSecondScale = game.settings.get("coc2-base", "showSecondScale") || cfg.forced
+    context.showSecondScale = isSecondScaleEnabled()
     if (context.showSecondScale) {
       context.secondScaleShort = game.i18n.localize(cfg.labelShort)
       for (const member of context.members) {

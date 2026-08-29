@@ -1,0 +1,46 @@
+<div class="coc2-second-scale-settings">
+  <p class="hint">{{localize "COC2BASE.settings.secondScaleModifiers.hint"}}</p>
+
+  <fieldset>
+    <legend>{{localize "COC2BASE.settings.secondScaleModifiers.targets"}}</legend>
+    <div class="form-group">
+      <label>{{localize "COC2BASE.settings.secondScaleModifiers.bonusAbility"}}</label>
+      <div class="form-fields">
+        <select name="bonusAbility">{{selectOptions abilities selected=profile.bonus.ability}}</select>
+      </div>
+    </div>
+    <div class="form-group">
+      <label>{{localize "COC2BASE.settings.secondScaleModifiers.bonusLabel"}}</label>
+      <div class="form-fields"><input type="text" name="bonusLabel" value="{{localize profile.bonus.label}}" /></div>
+    </div>
+    <div class="form-group">
+      <label>{{localize "COC2BASE.settings.secondScaleModifiers.malusAbility"}}</label>
+      <div class="form-fields">
+        <select name="malusAbility">{{selectOptions abilities selected=profile.malus.ability}}</select>
+      </div>
+    </div>
+    <div class="form-group">
+      <label>{{localize "COC2BASE.settings.secondScaleModifiers.malusLabel"}}</label>
+      <div class="form-fields"><input type="text" name="malusLabel" value="{{localize profile.malus.label}}" /></div>
+    </div>
+  </fieldset>
+
+  <fieldset>
+    <legend>{{localize "COC2BASE.settings.secondScaleModifiers.values"}}</legend>
+    {{#each tiers as |tier|}}
+      <div class="form-group">
+        <label>{{tier.label}}</label>
+        <div class="form-fields">
+          <label>{{localize "COC2BASE.settings.secondScaleModifiers.bonusShort"}}</label>
+          <input type="number" min="0" step="1" name="bonus.values.{{tier.id}}" value="{{tier.bonus}}" />
+          <label>{{localize "COC2BASE.settings.secondScaleModifiers.malusShort"}}</label>
+          <input type="number" max="0" step="1" name="malus.values.{{tier.id}}" value="{{tier.malus}}" />
+        </div>
+      </div>
+    {{/each}}
+  </fieldset>
+
+  <footer class="form-footer">
+    <button type="submit"><i class="fa-solid fa-floppy-disk"></i> {{localize "CO.ui.submit"}}</button>
+  </footer>
+</div>

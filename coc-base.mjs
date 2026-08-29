@@ -63,6 +63,7 @@ CONFIG.COC2BASE = {
     states: config.SECOND_SCALE_STATES,
     max: config.SECOND_SCALE.max,
     forced: false,
+    modifierProfile: null,
     label: "COC2BASE.secondScale.label",
     labelShort: "COC2BASE.secondScale.short",
   },
@@ -87,6 +88,22 @@ Hooks.once("init", () => {
     config: true,
     type: Boolean,
     default: false,
+  })
+
+  game.settings.register("coc2-base", "secondScaleModifiers", {
+    scope: "world",
+    config: false,
+    type: Object,
+    default: config.DEFAULT_SECOND_SCALE_MODIFIER_PROFILE,
+  })
+
+  game.settings.registerMenu("coc2-base", "secondScaleConfiguration", {
+    name: "COC2BASE.settings.secondScaleModifiers.name",
+    label: "COC2BASE.settings.secondScaleModifiers.label",
+    hint: "COC2BASE.settings.secondScaleModifiers.hint",
+    icon: "fa-solid fa-chart-line",
+    type: applications.SecondScaleSettings,
+    restricted: true,
   })
 
   // Ambiance « action décomplexée » : échelles de santé raccourcies pour les adversaires mineurs et

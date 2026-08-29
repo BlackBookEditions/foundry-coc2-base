@@ -7,6 +7,7 @@ Contrairement à `cof2-base`, ce module ne contient pas de compendiums : il adap
 ## Adaptations apportées
 
 - **Échelle de santé** : les Points de Vigueur sont remplacés par une échelle de 20 échelons avec 4 états préjudiciables posés automatiquement (Contusionné à 5, Affaibli à 10, Blessé à 15, Mourant à 20). Elle est rendue en ruban pleine largeur dans le header, sous les caractéristiques. Le malus de l'état atteint (−1 / −3 / −5 / −10) est appliqué automatiquement à l'Initiative et à la Défense, et proposé à cocher dans la fenêtre de jet des tests de FOR, AGI et CON — le livre de règles ne le fait porter que sur les actions physiques, ce que le système ne peut pas deviner. Les états s'excluant mutuellement, les malus ne se cumulent jamais. Le stockage réutilise `attributes.hp` (échelons cochés = `hp.max - hp.value`), ce qui conserve sans modification toute la chaîne de dégâts/soins du système (boutons de chat, queries, barres de token).
+- **Échelle d'évolution optionnelle** : le réglage de monde affiche une seconde échelle de 20 échelons et rend disponibles, dans les fenêtres de tests, un bonus et un malus contextuels configurables. Chaque palier (5/10/15/20) accepte indépendamment une valeur nulle, positive ou négative ; les caractéristiques cibles et les libellés de contexte sont communs à l'échelle. Les valeurs proposées par défaut sont ±1/±3/±5/±10, sans caractéristique cible, donc sans effet tant que le MJ ne les configure pas.
 - **Progression sans niveaux** : le niveau est gelé et masqué ; les points de capacité accordés à la création par la tranche d'âge, puis les XP gagnés en séance (bouton « +1 séance » dans le header), sont dépensés directement en rangs de voies. **Un point achète un rang, quel que soit le rang** — là où COF2 facturait 2 points aux rangs 3 et plus. Le contrôle de niveau minimal des capacités est supprimé, la progression séquentielle dans la voie est conservée.
 - **Initiative et Défense** : Init = 10 + INT + PER, DEF = 10 + AGI + PER (+ armure/bouclier).
 - **Attaques** : ATC = FOR et ATD = AGI, sans bonus de niveau. L'attaque magique et les points de magie de COF2 sont retirés de l'interface.
@@ -68,9 +69,15 @@ doivent pas être modifiés.
 
 ## Architecture
 
-Module « overlay » : le hook `init` du module (exécuté après celui du système) remplace `CONFIG.Actor.documentClass`, `CONFIG.Actor.dataModels.character/encounter` et enregistre une fiche de personnage par défaut. Les classes COC2 héritent des classes co2 et ne surchargent que le nécessaire. Aucune modification du système co2 n'est requise.
+Module « overlay » : le hook `init` du module (exécuté après celui du système) remplace `CONFIG.Actor.documentClass`, `CONFIG.Actor.dataModels.character/encounter` et enregistre une fiche de personnage par défaut. Les classes COC2 héritent des classes co2 et ne surchargent que le nécessaire. La présélection des modificateurs contextuels repose sur l'API de jet fournie par la version compatible de `co2`.
 
 ## Développement
+
+### Templates ApplicationV2
+
+Chaque template Handlebars déclaré comme une entrée de `ApplicationV2.PARTS` doit produire exactement
+un élément HTML racine. Envelopper donc tout le contenu de chaque part dans un conteneur unique, même
+si le template contient plusieurs blocs frères (`p`, `fieldset`, `footer`, etc.).
 
 ```bash
 npm install

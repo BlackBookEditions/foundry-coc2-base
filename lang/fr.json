@@ -75,19 +75,38 @@
       "damageTooltip": "Échelons cochés",
       "status": {
         "secondState1": "Palier 1",
-        "secondState1Description": "5e échelon de la seconde échelle. Affichage seul, aucun modificateur.",
+        "secondState1Description": "5e échelon de la seconde échelle. Les modificateurs configurés pour le palier 1 deviennent disponibles.",
         "secondState2": "Palier 2",
-        "secondState2Description": "10e échelon de la seconde échelle. Affichage seul, aucun modificateur.",
+        "secondState2Description": "10e échelon de la seconde échelle. Les modificateurs configurés pour le palier 2 deviennent disponibles.",
         "secondState3": "Palier 3",
-        "secondState3Description": "15e échelon de la seconde échelle. Affichage seul, aucun modificateur.",
+        "secondState3Description": "15e échelon de la seconde échelle. Les modificateurs configurés pour le palier 3 deviennent disponibles.",
         "secondState4": "Palier 4",
-        "secondState4Description": "20e échelon de la seconde échelle. Affichage seul, aucun modificateur."
+        "secondState4Description": "20e échelon de la seconde échelle. Les modificateurs configurés pour le palier 4 deviennent disponibles."
+      },
+      "modifiers": {
+        "bonusContext": "Contexte du bonus",
+        "malusContext": "Contexte du malus"
       }
     },
     "settings": {
       "showSecondScale": {
-        "name": "Afficher la seconde échelle",
-        "hint": "Affiche, sous l'échelle de santé, une seconde échelle (« Échelle ») sur les fiches de personnage."
+        "name": "Activer l'Échelle d'évolution",
+        "hint": "Affiche l'Échelle d'évolution et active ses modificateurs contextuels sur les tests."
+      },
+      "secondScaleModifiers": {
+        "name": "Configuration de l'Échelle d'évolution",
+        "label": "Configurer l'échelle",
+        "title": "Échelle d'évolution",
+        "hint": "Choisissez les caractéristiques concernées et les valeurs de chaque palier. Une caractéristique « Aucune » désactive le modificateur correspondant ; une valeur 0 le désactive seulement pour ce palier.",
+        "none": "Aucune",
+        "targets": "Caractéristiques et contextes",
+        "bonusAbility": "Caractéristique du bonus",
+        "bonusLabel": "Contexte du bonus",
+        "malusAbility": "Caractéristique du malus",
+        "malusLabel": "Contexte du malus",
+        "values": "Valeurs par palier",
+        "bonusShort": "Bonus",
+        "malusShort": "Malus"
       },
       "pulpHealthScales": {
         "name": "Échelles de santé Pulp",

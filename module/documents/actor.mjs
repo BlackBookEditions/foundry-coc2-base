@@ -1,5 +1,5 @@
 import COActor from "../../../../systems/co2/module/documents/actor.mjs"
-import { getStateSkillBonuses, getAgeBracket, MINIMUM_DAMAGE } from "../config/coc2.mjs"
+import { getStateSkillBonuses, getSecondScaleSkillBonuses, getAgeBracket, MINIMUM_DAMAGE } from "../config/coc2.mjs"
 
 /**
  * Document Actor COC2 : adapte le document COF2 aux règles de Chroniques Oubliées Contemporain
@@ -81,9 +81,10 @@ export default class COC2Actor extends COActor {
    * Y ajoute, sur les tests d'AGI, une ligne nommant la source du malus d'encombrement déjà pré-rempli.
    * @inheritDoc
    */
-  getSkillBonuses(ability) {
-    const bonuses = super.getSkillBonuses(ability)
+  getSkillBonuses(ability, options = {}) {
+    const bonuses = super.getSkillBonuses(ability, options)
     bonuses.push(...getStateSkillBonuses(this, ability))
+    bonuses.push(...getSecondScaleSkillBonuses(this, ability, options))
 
     // Encombrement des protections : rollSkill du système pré-remplit déjà le champ « Malus » de la fenêtre
     // pour les tests d'AGI, sans dire d'où vient le chiffre. On ajoute donc une ligne purement informative,

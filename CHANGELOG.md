@@ -1,3 +1,6 @@
+# 0.8.2
+- Ajout de l'échelle d'évolution configurable
+
 # 0.8.1
 
 ## Interface
