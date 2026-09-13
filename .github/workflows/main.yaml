@@ -122,6 +122,7 @@ jobs:
             coc-base.css                         \
             README.md                            \
             CHANGELOG.md                         \
+            release-notes.md                     \
             module/                              \
             assets/                              \
             fonts/                               \

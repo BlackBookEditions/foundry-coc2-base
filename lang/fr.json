@@ -219,7 +219,17 @@
     "Sidebar": {
       "title": "Chroniques Oubliées Contemporain",
       "coc2": "Black Book Éditions",
-      "coc2Tooltip": "Retrouvez toutes les informations sur Chroniques Oubliées Contemporain v2 sur le site de Black Book Éditions"
+      "coc2Tooltip": "Retrouvez toutes les informations sur Chroniques Oubliées Contemporain v2 sur le site de Black Book Éditions",
+      "releaseNotes": "Notes de version",
+      "releaseNotesTooltip": "Consultez les nouveautés des versions du module"
+    },
+    "releaseNotes": {
+      "title": "Notes de version",
+      "heading": "Quoi de neuf ?",
+      "subtitle": "Chroniques Oubliées Contemporain — version {version}",
+      "empty": "Aucune note de version disponible.",
+      "dontShowAgain": "Ne plus afficher les notes de ces versions",
+      "dontShowAgainHint": "Cette fenêtre ne s'ouvrira plus pour les versions affichées ici. Elle réapparaîtra à la prochaine mise à jour du module, avec les seules nouveautés de celle-ci."
     }
   }
 }

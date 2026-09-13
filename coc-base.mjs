@@ -118,6 +118,15 @@ Hooks.once("init", () => {
     default: false,
   })
 
+  // Dernière version des notes affichée (voir applications.COC2ReleaseNotes) : scope "user" pour que
+  // chaque MJ ait son propre suivi de lecture, config: false car piloté par la case à cocher de la fenêtre.
+  game.settings.register("coc2-base", "lastReleaseNotesSeen", {
+    scope: "user",
+    config: false,
+    type: String,
+    default: "",
+  })
+
   // Remplacement des classes du système par les variantes COC2 : le hook init du module s'exécute après celui du système
   CONFIG.Actor.documentClass = documents.COC2Actor
   CONFIG.Actor.dataModels.character = models.COC2CharacterData
@@ -207,6 +216,9 @@ Hooks.once("ready", () => {
 
   // Reproduit l'auto-rendu MJ du système, mais avec notre version, si sa fenêtre était déjà ouverte.
   if (game.user.isGM && replacedRendered) game.system.partySheet.render({ force: true })
+
+  // Notes de version du module (garde MJ interne à displayIfNeeded)
+  applications.COC2ReleaseNotes.displayIfNeeded()
 })
 
 /*
@@ -485,6 +497,11 @@ Hooks.on("renderCOSidebarMenu", async (application, html, context, options) => {
 
     if (renderedHtml !== "") {
       element.insertAdjacentHTML("afterend", renderedHtml)
+      // Pas d'ApplicationV2 ici (template injecté en HTML brut) : câblage manuel, garde anti-double-ouverture
+      // sur le même principe que le bouton équivalent du système (COSidebarMenu#onOpenApp)
+      element.parentElement.querySelector(".coc2-base-release-notes")?.addEventListener("click", () => {
+        if (!foundry.applications.instances.has("coc2-base-release-notes")) applications.COC2ReleaseNotes.displayAll()
+      })
     }
   }
 })
