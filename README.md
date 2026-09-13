@@ -1,4 +1,4 @@
-<h2 align="center">Module Foundry VTT pour <em>Chroniques Oubliées Contemporain 2e édition (CO2)</em> construit au-dessus du système [co2](https://github.com/BlackBookEditions/co2)</h2>
+<h2 align="center">Module Foundry VTT pour <em>Chroniques Oubliées Contemporain 2e édition (COC2)</em> construit au-dessus du système Chroniques Oubliées 2e édition (CO2)</h2>
 
 Contrairement à `Chroniques Oubliées Fantasy - Livre des règles`, ce module ne contient pas l'intégralité du livre : il adapte les **mécaniques** du système Chroniques Oubliées 2e édition aux règles de Chroniques Oubliées Contemporain 2e édition. De plus, il contient l'intégralité des voies et capacités mais sans la description.
 

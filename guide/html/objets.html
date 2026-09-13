@@ -1,0 +1,53 @@
+<div class="journal-page-coc-base">
+  <h2>Les Objets</h2>
+
+  <h3>Traits distinctifs (avantages et désavantages)</h3>
+  <p class="alinea">
+    Deux nouveaux sous-types de Trait, propres à COC2 : <strong>Avantage</strong> et <strong>Désavantage</strong>. Chacun porte un <strong>coût en points</strong> (champ ajouté
+    sur la fiche de l'objet, 1 point par défaut), affiché et totalisé dans l'onglet Biographie de la fiche Personnage.
+  </p>
+  <p class="alinea">
+    La règle affichée sur la fiche impose un équilibre : le total des points d'avantages doit égaler celui des désavantages, avec un plafond de <strong>5 points</strong> de
+    chaque côté. Un message d'erreur signale tout déséquilibre, sans jamais bloquer la fiche.
+  </p>
+
+  <h3>Réduction de Dégâts (RD) et encombrement des protections</h3>
+  <p class="alinea">
+    Sur une armure ou un bouclier, le champ « Défense » de COF2 devient la <strong>RD</strong> (réduction de dégâts) : elle est soustraite des dommages subis, au lieu de
+    s'ajouter à la Défense du personnage. Un second champ, <strong>Encombrement</strong>, porte un malus fixe indépendant, appliqué à l'Initiative, aux tests d'Agilité et à
+    l'attaque au contact — jamais à la valeur d'Agilité elle-même, ni à la Défense, ni à l'attaque à distance.
+  </p>
+  <div class="exemple">
+    Un gilet pare-balles léger avec RD 3 et Encombrement 2 : chaque coup subi voit ses dommages réduits de 3, et le porteur subit -2 à l'Initiative, aux tests d'Agilité et à ses
+    attaques au contact tant qu'il le porte.
+  </div>
+  <p class="alinea">
+    Une case <strong>Cumulable</strong> distingue les protections qui s'additionnent (un casque, par exemple) de celles qui se concurrencent (deux gilets superposés) : parmi les
+    protections non cumulables portées simultanément, seule la plus protectrice compte, et seule elle impose son encombrement. Les autres sont écartées, avec un avertissement au
+    MJ et au joueur, et une ligne barrée dans l'inventaire.
+  </p>
+
+  <h3>Bonus Critique (BC)</h3>
+  <p class="alinea">
+    En COC2, une réussite critique n'ajoute plus le double des dommages comme en COF2 : elle ajoute un <strong>Bonus Critique</strong> fixe. Un champ dédié, sur la fiche d'arme
+    (équipement) comme sur la fiche d'attaque d'une créature, permet de le préciser explicitement. Laissé vide, il est calculé automatiquement comme le maximum du dé de dommages
+    de l'arme (1d8 → 8, 2d6 → 12), à l'exclusion des bonus fixes (Force, BDM, bonus d'arme).
+  </p>
+  <p class="alinea">Cette valeur reste par ailleurs disponible dans toute formule via la variable <code>@bc</code>, y compris hors critique (par exemple pour une capacité qui l'inflige automatiquement).</p>
+
+  <h3>Devise</h3>
+  <p class="alinea">
+    Les pièces d'or, d'argent et de cuivre de COF2 sont remplacées par une devise unique : le <strong>dollar</strong> ($). La richesse d'un personnage ou d'une rencontre se lit et
+    s'édite dans l'onglet correspondant, sur une seule valeur.
+  </p>
+
+  <h3>Entraînements martiaux contemporains</h3>
+  <p class="alinea">
+    Les listes déroulantes de formation martiale (armes, armures, boucliers) sont mises à jour avec du matériel contemporain : arme de poing, fusil d'assaut, taser, bombe
+    lacrymogène côté armes ; vêtements renforcés, gilets pare-balles léger/lourd, armure militaire côté protections ; bouclier anti-émeute et bouclier balistique côté boucliers.
+  </p>
+  <div class="indications-mj">
+    Contrairement à COF2, la formation martiale <strong>n'a aucun effet mécanique</strong> en COC2 : ces listes ne servent qu'à peupler les menus déroulants des fiches d'objet,
+    elles ne restreignent ni ne pénalisent l'usage d'une arme, d'une armure ou d'un bouclier par un profil donné.
+  </div>
+</div>

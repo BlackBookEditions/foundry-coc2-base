@@ -1,0 +1,239 @@
+<div class="journal-page-coc-base">
+  <h2>Les Acteurs</h2>
+
+  <h3>Échelle de santé</h3>
+  <p class="alinea">
+    COC2 remplace les Points de Vigueur de COF2 par un ruban de <strong>20 échelons</strong>, affiché en pleine largeur sur l'en-tête de la fiche Personnage comme de la fiche
+    Rencontre. Chaque dommage subi coche un échelon supplémentaire. Quatre paliers posent automatiquement un état, cumulatif avec le précédent :
+  </p>
+  <table class="tableau">
+    <tbody>
+      <tr class="tableau-titre">
+        <td colspan="3">États de l'échelle de santé</td>
+      </tr>
+      <tr class="tableau-entete">
+        <td>Échelon</td>
+        <td>État</td>
+        <td>Effet</td>
+      </tr>
+      <tr>
+        <td>5</td>
+        <td>Contusionné</td>
+        <td>Malus de -1. Aucun autre effet, aucun test de médecine nécessaire pour entamer la guérison.</td>
+      </tr>
+      <tr>
+        <td>10</td>
+        <td>Affaibli</td>
+        <td>Malus de -3. Test de CON difficulté 10 pour ne pas perdre la prochaine action. Guérison : test d'INT difficulté 10.</td>
+      </tr>
+      <tr>
+        <td>15</td>
+        <td>Blessé</td>
+        <td>
+          Malus de -5. Perte de la prochaine action, déplacement réduit de moitié. Toute action physique impose un test de CON difficulté 15 (échec : 1 DM et inconscience 1d6
+          rounds). Guérison et stabilisation : test d'INT difficulté 15.
+        </td>
+      </tr>
+      <tr>
+        <td>20</td>
+        <td>Mourant</td>
+        <td>
+          Malus de -10. Déplacement impossible, inconscience 1d6 rounds puis test de CON difficulté 20 sous peine de coma et de mort au bout de CON minutes si le personnage n'est
+          pas stabilisé. Stabilisation : test d'INT difficulté 20.
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <p class="alinea">
+    Le malus de l'état est appliqué automatiquement à l'Initiative et à la Défense. Pour toute autre action physique (Force, Agilité, Constitution), il est <strong>proposé à
+    cocher</strong> dans la fenêtre de jet plutôt qu'appliqué d'office — le joueur ou le MJ décide au cas par cas si l'action concernée est bien physique.
+  </p>
+  <div class="exemple">
+    Un personnage Affaibli (10 échelons cochés) subit -3 automatiquement sur son prochain jet d'Initiative. S'il tente ensuite un test d'Agilité pour escalader un mur, la fenêtre
+    de jet lui propose une case « Affaibli -3 » à cocher ; s'il négocie à la place (test de Charisme), la case n'apparaît pas.
+  </div>
+
+  <h3>Tranches d'âge et création de personnage</h3>
+  <p class="alinea">
+    À la création, chaque personnage choisit une tranche d'âge dans l'en-tête de la fiche. Elle fixe le budget de points de capacité de départ ainsi que deux limites purement
+    indicatives (jamais bloquantes) affichées sous forme de compteur dans l'onglet Voies :
+  </p>
+  <table class="tableau">
+    <tbody>
+      <tr class="tableau-titre">
+        <td colspan="4">Tranches d'âge</td>
+      </tr>
+      <tr class="tableau-entete">
+        <td>Tranche</td>
+        <td>Points de capacité</td>
+        <td>Voies max.</td>
+        <td>Rang max.</td>
+      </tr>
+      <tr>
+        <td>Jeune (16 à 30 ans)</td>
+        <td>4</td>
+        <td>4</td>
+        <td>2</td>
+      </tr>
+      <tr>
+        <td>Adulte (31 à 50 ans)</td>
+        <td>7</td>
+        <td>5</td>
+        <td>3</td>
+      </tr>
+      <tr>
+        <td>Expérimenté (51 à 65 ans)</td>
+        <td>10</td>
+        <td>6</td>
+        <td>4</td>
+      </tr>
+    </tbody>
+  </table>
+  <p class="alinea">Sans tranche d'âge choisie, le personnage n'a aucun point de capacité de création : le champ est signalé en permanence tant qu'il reste vide.</p>
+
+  <h3>Progression sans niveaux</h3>
+  <p class="alinea">
+    COC2 n'a pas de niveaux. La progression se fait par <strong>XP de séance</strong> : un bouton « Fin de séance : +1 XP », dans l'en-tête de la fiche, ajoute un point de
+    capacité au budget disponible. Le coût d'un rang de voie dépend alors de la phase du personnage :
+  </p>
+  <ul>
+    <li class="sans-puce"><strong>En phase de création</strong> (XP gagnés = 0) : tout rang de voie coûte <strong>1 point</strong>, quel que soit son numéro.</li>
+    <li class="sans-puce"><strong>En jeu</strong> (dès le premier XP gagné) : chaque nouveau rang coûte son numéro (le rang 3 coûte 3 XP).</li>
+  </ul>
+  <p class="alinea">
+    Chaque capacité apprise pendant la création garde un discret repère dans sa case de rang (visible en mode Édition), pour ne pas la retarifer si les XP gagnés sont ensuite
+    remis à 0 — utile pour corriger un historique d'achats sans désapprendre puis réapprendre les capacités.
+  </p>
+
+  <h3>Bonus de dommages au contact (BDM) et Capacité de guérison (CG)</h3>
+  <p class="alinea">
+    Deux valeurs dérivées, affichées dans la barre latérale de la fiche : le <strong>BDM</strong>, égal à la Force, s'ajoute aux dommages d'une attaque au contact ou à mains nues
+    (formule d'arme : <code>+ @bdm</code>) ; la <strong>CG</strong>, égale à CON + 3, indique le nombre d'échelons de l'échelle de santé récupérés par semaine de repos. Un bouton
+    dédié applique directement ce repos hebdomadaire depuis la fiche ou la mini-fiche, en décochant CG échelons.
+  </p>
+
+  <h3>Échelle d'évolution (seconde échelle)</h3>
+  <p class="alinea">
+    Optionnelle et masquée par défaut (réglage de monde « Activer l'Échelle d'évolution »), c'est un second ruban de 20 échelons, affiché sous l'échelle de santé quand elle est
+    active. Ses 4 paliers (5/10/15/20) sont purement informatifs à l'origine — aucun statut n'est posé sur le token.
+  </p>
+  <p class="alinea">
+    Le MJ peut, via le menu « Configurer l'échelle », associer à chaque palier un bonus et un malus sur une caractéristique de son choix, avec un libellé de contexte librement
+    nommé (ex. « en société » pour un bonus de Charisme). Ces bonus/malus deviennent alors des lignes sélectionnables dans les fenêtres de jet de test de compétence, comme les
+    malus d'état. Une caractéristique laissée sur « Aucune » désactive le modificateur correspondant.
+  </p>
+  <div class="indications-mj">
+    Cette échelle est conçue pour être renommée par un module d'univers (par exemple en « Échelle de conscience » pour un cadre horrifique) : seuls son libellé et le nom de ses
+    paliers changent alors, pas son fonctionnement.
+  </div>
+
+  <h3>Fiche Rencontre</h3>
+  <p class="alinea">
+    Ni Niveau de Créature ni catégorie (Vivante/Humanoïde/etc.) : un adversaire COC2 est décrit soit par son <strong>archétype</strong> (adversaire humain), soit, à défaut, par sa
+    <strong>taille</strong> (créature).
+  </p>
+  <table class="tableau">
+    <tbody>
+      <tr class="tableau-titre">
+        <td colspan="5">Archétypes humains</td>
+      </tr>
+      <tr class="tableau-entete">
+        <td>Archétype</td>
+        <td>Bonus de caractéristiques</td>
+        <td>DEF / Init.</td>
+        <td>Points de capacité</td>
+        <td>Critique</td>
+      </tr>
+      <tr>
+        <td>Figurant</td>
+        <td>1</td>
+        <td>10 / 10</td>
+        <td>1</td>
+        <td>Non</td>
+      </tr>
+      <tr>
+        <td>Second rôle</td>
+        <td>3</td>
+        <td>12 / 12</td>
+        <td>3</td>
+        <td>Non</td>
+      </tr>
+      <tr>
+        <td>Premier rôle</td>
+        <td>5</td>
+        <td>15 / 15</td>
+        <td>5</td>
+        <td>Oui</td>
+      </tr>
+    </tbody>
+  </table>
+  <p class="alinea">
+    Seul un Premier rôle peut faire une réussite critique. L'échelle de santé recommandée est indiquée à la sélection de l'archétype ; avec le réglage « Échelles de santé Pulp »,
+    elle passe à 4/12/24 échelons pour Figurant/Second rôle/Premier rôle — pour des combats de nervis rapides et un boss plus endurant.
+  </p>
+  <p class="alinea">Laissé vide, l'archétype cède la place à la table des créatures, pilotée par la taille (TAI) :</p>
+  <table class="tableau">
+    <tbody>
+      <tr class="tableau-titre">
+        <td colspan="4">Créatures par taille</td>
+      </tr>
+      <tr class="tableau-entete">
+        <td>Taille</td>
+        <td>Points de caractéristiques</td>
+        <td>DM au contact recommandés</td>
+        <td>Échelle de santé recommandée</td>
+      </tr>
+      <tr>
+        <td>Minuscule</td>
+        <td>0</td>
+        <td>—</td>
+        <td>1</td>
+      </tr>
+      <tr>
+        <td>Très petit</td>
+        <td>2 (max +2/carac.)</td>
+        <td>1d2</td>
+        <td>4 à 8</td>
+      </tr>
+      <tr>
+        <td>Petit</td>
+        <td>4 (max +4/carac.)</td>
+        <td>1d4</td>
+        <td>12 à 16</td>
+      </tr>
+      <tr>
+        <td>Moyen</td>
+        <td>6 (max +6/carac.)</td>
+        <td>1d6</td>
+        <td>20 à 24</td>
+      </tr>
+      <tr>
+        <td>Grand</td>
+        <td>8 (max +8/carac.)</td>
+        <td>1d8</td>
+        <td>28 à 36</td>
+      </tr>
+      <tr>
+        <td>Très grand</td>
+        <td>10 (max +10/carac.)</td>
+        <td>1d10</td>
+        <td>40 à 56</td>
+      </tr>
+      <tr>
+        <td>Gigantesque</td>
+        <td>12 (aucun plafond)</td>
+        <td>1d12</td>
+        <td>60</td>
+      </tr>
+    </tbody>
+  </table>
+  <p class="alinea">
+    Ces compteurs (points dépensés / maximum, capacités apprises) restent purement indicatifs : les dépasser affiche un avertissement mais ne bloque jamais la fiche.
+  </p>
+
+  <h3>Fiche Groupe de joueurs</h3>
+  <p class="alinea">
+    Reprend le tableau du système en retirant les colonnes de magie (absente en COC2) et en ajoutant BDM, CG, l'état de santé (libellé et échelons) et, si l'Échelle d'évolution
+    est activée, sa colonne dédiée.
+  </p>
+</div>

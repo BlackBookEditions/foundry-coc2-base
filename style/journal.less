@@ -58,14 +58,14 @@
 
   .journal-entry-content {
     background: url("/modules/coc2-base/assets/artwork/background.webp");
-    background-color: #f6eeea;
+    background-color: var(--co-surface);
 
     .journal-header {
       font-family: "Matrix", sans-serif;
       input {
         border: none;
         background: url("/modules/coc2-base/assets/artwork/background.webp");
-        color: #222;
+        color: var(--co-text-dark);
       }
     }
 
@@ -74,7 +74,7 @@
       .journal-entry-page {
         .journal-page-header {
           h1 {
-            color: #ba9442;
+            color: var(--co-sheet-accent);
             font-family: "Mendl Serif Dusk", serif;
             font-size: calc(var(--font-size-standard) * 2);
             font-style: normal;
@@ -116,7 +116,7 @@
             }
             a {
               i.fa-solid {
-                color: #a88452;
+                color: var(--co-sheet-accent-alt);
               }
             }
 
@@ -126,7 +126,7 @@
               text-align: left;
               text-transform: uppercase;
               font-weight: bold;
-              color: #555756;
+              color: var(--co-text-dark);
               margin: 0 0 10px 10px;
               padding-top: 25px;
               /* 1) Définir une bordure solide, mais uniquement sur le bas */
@@ -134,7 +134,7 @@
               border-width: 0 0 4px 0; /* top right bottom left */
 
               /* 2) Indiquer le dégradé à utiliser comme source */
-              border-image-source: linear-gradient(to right, /* sens du dégradé */ #b99442, /* couleur de départ */ transparent /* couleur d’arrivée */);
+              border-image-source: linear-gradient(to right, /* sens du dégradé */ var(--co-sheet-accent), /* couleur de départ */ transparent /* couleur d’arrivée */);
 
               /* 3) Découper le “9-patch” du gradient : 
         top 0, right 0, bottom 100%, left 0 */
@@ -153,7 +153,7 @@
               font-family: "Matrix", sans-serif;
               text-align: left;
               font-weight: bold;
-              color: #b99442;
+              color: var(--co-sheet-accent);
               margin: 0 0 10px 10px;
               padding-top: 20px;
             }
@@ -163,7 +163,7 @@
               font-family: "Mendel Semibold", sans-serif;
               text-align: left;
               font-weight: bold;
-              color: #474846;
+              color: var(--co-text-dark);
               margin: 0 0 10px 20px;
               padding-top: 15px;
             }
@@ -173,7 +173,7 @@
               font-family: "Mendel Semibold", sans-serif;
               text-align: left;
               font-weight: bold;
-              color: #474846;
+              color: var(--co-text-dark);
               margin: 10px 0 10px 20px;
               font-style: italic;
             }
@@ -219,7 +219,7 @@
               text-align: justify;
               margin-left: 8px;
               &.dialogues {
-                color: #a88452;
+                color: var(--co-sheet-accent-alt);
                 font-family: "Hypatia Sans Pro", sans-serif;
                 font-style: italic;
                 font-variant: normal;
@@ -246,7 +246,7 @@
                   content: "\00AF"; /* U+00AF → octet 0xAF dans Wingdings 2 → rhombopen */
                   font-family: "Wingdings 2";
                   font-size: 1rem;
-                  color: #ba9442;
+                  color: var(--co-sheet-accent);
                   font-weight: bold;
                 }
 
@@ -255,7 +255,7 @@
                     content: "\0075";
                     font-family: "Wingdings";
                     font-size: 0.8rem;
-                    color: black;
+                    color: var(--co-text-dark);
                     font-weight: bold;
                   }
                 }
@@ -281,8 +281,8 @@
               .bestiaire-titre {
                 display: flex;
                 justify-content: space-between;
-                background-color: #ceb279;
-                color: #ffffff;
+                background-color: var(--co-sheet-accent);
+                color: var(--co-text-light);
                 font-family: "Mendl Serif Dusk SemiBold", serif;
                 font-variant: normal;
                 margin: 10px 0 0 20px;
@@ -294,7 +294,7 @@
                   text-align: center;
                 }
                 .bestiaire-niveau {
-                  color: #ffffff;
+                  color: var(--co-text-light);
                   font-family: "Mendl Serif Dusk SemiBold", serif;
                   font-size: calc(var(--font-size-standard) * 1.2);
                   font-style: normal;
@@ -307,8 +307,8 @@
               .bestiaire-onglet {
                 width: 70%;
                 margin: 10px 0 0 50px;
-                background-color: #ede2cc;
-                color: #12120d;
+                background-color: var(--co-surface);
+                color: var(--co-text-dark);
                 font-family: "Mendl Serif Dusk SemiBold", serif;
                 font-style: normal;
                 font-variant: normal;
@@ -328,7 +328,7 @@
                 justify-content: space-between;
                 margin: 0 20px 0 20px;
                 font-size: calc(var(--font-size-standard) * 1.1);
-                color: #12120d;
+                color: var(--co-text-dark);
                 span {
                   margin-right: 5px;
                 }
@@ -338,10 +338,10 @@
                 }
               }
               .bestiaire-capacite {
-                border-top: #b99442 solid 1px;
-                border-bottom: #b99442 solid 1px;
+                border-top: var(--co-sheet-accent) solid 1px;
+                border-bottom: var(--co-sheet-accent) solid 1px;
                 text-transform: uppercase;
-                color: black;
+                color: var(--co-text-dark);
                 margin: 10px;
                 align-items: center;
               }
@@ -383,7 +383,7 @@
               font-size: calc(var(--font-size-standard) * 2);
               font-family: Alana, serif;
               text-align: center;
-              color: #626463;
+              color: var(--co-text-dark);
             }
 
             .titre {
@@ -392,7 +392,7 @@
               text-align: center;
               text-transform: capitalize;
               font-weight: bold;
-              color: #b99442;
+              color: var(--co-sheet-accent);
             }
 
             .titre-fond-blanc {
@@ -404,9 +404,9 @@
               margin: 10px 0 10px 30px;
               text-transform: capitalize;
               font-weight: bold;
-              color: #b99442;
-              background-color: #ffffff;
-              border: solid 1px #b99442;
+              color: var(--co-sheet-accent);
+              background-color: var(--co-surface);
+              border: solid 1px var(--co-sheet-accent);
               text-transform: uppercase;
             }
             .lettrine {
@@ -420,21 +420,21 @@
               text-align: center;
               text-transform: capitalize;
               font-weight: bold;
-              color: #b99442;
+              color: var(--co-sheet-accent);
               float: left;
               margin-top: -16px;
               line-height: 1;
             }
 
             .dice {
-              color: #cbad70;
+              color: var(--co-sheet-accent-alt);
               font-family: D6Black, sans-serif;
               font-style: normal;
               font-weight: normal;
             }
 
             .encart {
-              border: 3px solid #b99442;
+              border: 3px solid var(--co-sheet-accent);
               font-size: calc(var(--font-size-standard));
               font-family: "Hypatia";
               text-indent: 0.2cm;
@@ -448,8 +448,8 @@
                 text-align: center;
                 text-transform: uppercase;
                 font-weight: bold;
-                color: #ba9442;
-                background-color: #e2d2b0;
+                color: var(--co-text-light);
+                background-color: var(--co-sheet-accent);
                 margin: 0;
                 padding: 5px 0 5px 0;
               }
@@ -483,14 +483,14 @@
             }
 
             .encart-clair {
-              border: 3px solid #b99442;
+              border: 3px solid var(--co-sheet-accent);
               font-size: calc(var(--font-size-standard));
               font-family: "Hypatia";
               text-indent: 0.2cm;
               text-align: justify;
               margin: 20px;
               position: relative;
-              background-color: #ffffff;
+              background-color: var(--co-surface);
               padding-bottom: 20px;
 
               .titre {
@@ -499,8 +499,8 @@
                 text-align: center;
                 text-transform: uppercase;
                 font-weight: bold;
-                color: #ba9442;
-                background-color: #cac3af;
+                color: var(--co-text-light);
+                background-color: var(--co-sheet-accent-alt);
                 margin: 0;
                 padding: 0 0 5px 0;
                 height: 40px;
@@ -517,15 +517,15 @@
             .indications-mj {
               padding: 10px;
               margin: 10px;
-              border-top: 1px solid #b99442;
-              border-bottom: 1px solid #b99442;
+              border-top: 1px solid var(--co-sheet-accent);
+              border-bottom: 1px solid var(--co-sheet-accent);
               font-size: calc(var(--font-size-standard));
               font-family: "Hypatia";
               text-indent: 0.2cm;
               text-align: justify;
               margin: 20px;
               position: relative;
-              background-color: #f1e8d6;
+              background-color: var(--co-surface);
             }
 
             blockquote {
@@ -533,7 +533,7 @@
               font-family: "Hypatia";
               text-indent: 0.2cm;
               text-align: justify;
-              color: #a88352;
+              color: var(--co-sheet-accent-alt);
               font-style: italic;
               padding-left: 10px;
             }
@@ -544,13 +544,13 @@
             }
 
             .credits-titre {
-              color: #12120d;
+              color: var(--co-text-dark);
               font-family: "Hypatia Sans Pro", sans-serif;
               font-size: calc(var(--font-size-standard) * 1.2);
             }
 
             .credits-texte {
-              color: #12120d;
+              color: var(--co-text-dark);
               font-family: "Hypatia Sans Pro", sans-serif;
               font-size: calc(var(--font-size-standard));
               margin: 0 10px 0 10px;
@@ -562,7 +562,7 @@
 
             .exemple {
               font-style: italic;
-              border-left: solid 2px #b99442;
+              border-left: solid 2px var(--co-sheet-accent);
               margin: 0 10px 0 10px;
               padding: 0 10px 0 10px;
               .normal {
@@ -577,7 +577,7 @@
 
             ul.exemple {
               font-style: italic;
-              border-left: solid 2px #b99442;
+              border-left: solid 2px var(--co-sheet-accent);
               margin: 0 10px 0 10px;
               padding: 0 10px 0 10px;
               li {
@@ -601,14 +601,14 @@
             table.variables {
               font-family: "Hypatia", sans-serif;
               border-collapse: collapse;
-              border-color: #12120d;
+              border-color: var(--co-text-dark);
               border-style: none;
               border-width: 0px;
               margin: 20px 0 30px 60px;
               width: 90%;
 
               tr {
-                border-bottom-color: #ba9442;
+                border-bottom-color: var(--co-sheet-accent);
                 border-bottom-width: 1px;
               }
 
@@ -618,8 +618,8 @@
               }
 
               tr.tableau-titre {
-                background-color: #cbad70;
-                color: #ffffff;
+                background-color: var(--co-sheet-accent);
+                color: var(--co-text-light);
                 font-size: 1.1rem;
                 td {
                   text-align: left;
@@ -630,7 +630,7 @@
 
               tr.tableau-entete {
                 font-weight: bold;
-                background-color: #eaddc3;
+                background-color: var(--co-surface);
               }
 
               tr.tableau-note {
@@ -646,9 +646,9 @@
               }
               tr.exemple {
                 font-style: italic;
-                border-left: solid 2px #b99442;
-                border-right: solid 2px #b99442;
-                color: #835d0c;
+                border-left: solid 2px var(--co-sheet-accent);
+                border-right: solid 2px var(--co-sheet-accent);
+                color: var(--co-sheet-accent-alt);
               }
               td {
                 text-align: left;
@@ -675,7 +675,7 @@
 
             span {
               &.pipe {
-                color: #dcc79e;
+                color: var(--co-sheet-accent-alt);
                 font-style: normal;
                 font-weight: bold;
               }
@@ -683,7 +683,7 @@
 
             // Voies
             h2.voie {
-              color: #555756;
+              color: var(--co-text-dark);
               font-family: "Mendl Serif Dusk Medium", serif;
               font-size: calc(var(--font-size-standard) * 1.8);
               font-style: normal;
@@ -693,7 +693,7 @@
             }
 
             h3.voie {
-              color: #555756;
+              color: var(--co-text-dark);
               font-family: "Mendl Serif Dusk Medium", serif;
               font-size: calc(var(--font-size-standard) * 1.6);
               font-style: normal;
@@ -704,8 +704,8 @@
             }
 
             p.voie-titre-3 {
-              background-color: #f1e8d6;
-              color: #474847;
+              background-color: var(--co-surface);
+              color: var(--co-text-dark);
               font-family: "Mendl Serif Dusk SemiBold", serif;
               font-size: calc(var(--font-size-standard) * 1.2);
               font-style: normal;
@@ -716,7 +716,7 @@
             }
 
             p.notes-asterisque {
-              color: #ba9442;
+              color: var(--co-sheet-accent);
               font-family: "Hypatia Sans Pro", sans-serif;
               font-size: 0.9rem;
               font-style: normal;
@@ -730,7 +730,7 @@
               border: none;
               margin: 0;
               padding: 0;
-              color: #a88452;
+              color: var(--co-sheet-accent-alt);
               font-weight: bold;
               text-indent: 0;
               background: none;
@@ -743,7 +743,7 @@
       }
 
       .cof2-icons {
-        color: #cbad70;
+        color: var(--co-sheet-accent-alt);
         font-family: "BBECOF2ICons", serif;
         font-size: calc(var(--font-size-standard) * 0.6);
         font-style: normal;

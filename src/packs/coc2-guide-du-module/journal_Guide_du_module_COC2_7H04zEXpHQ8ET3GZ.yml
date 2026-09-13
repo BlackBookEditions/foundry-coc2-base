@@ -1,0 +1,709 @@
+name: Guide du module COC2
+pages:
+  - sort: 100000
+    name: Introduction
+    type: text
+    _id: 6iOtbHV23vUvHFoz
+    system: {}
+    title:
+      show: false
+      level: 1
+    image: {}
+    text:
+      format: 1
+      content: |-
+        <div class="journal-page-coc-base">
+          <h2>Introduction</h2>
+
+          <p class="lettrine">
+            Chroniques Oubliées Contemporain 2ᵉ édition (COC2) est un module pour le système <strong>Chroniques Oubliées Contemporain 2ᵉ édition (COC2)</strong> : il n'installe pas un jeu de règles autonome, il adapte les mécaniques
+            fantasy de Chroniques Oubliées 2ᵉ édition à un cadre contemporain. Concrètement, ce module change des formules de calcul, retire ou ajoute des notions de règles, et fournit
+            quelques compendiums — mais il s'appuie du début à la fin sur le moteur du système <strong>Chroniques Oubliées 2ᵉ édition (CO2)</strong> (fenêtres de jet, Actions et Effets, résolveurs, etc.), qui n'est pas
+            documenté ici.
+          </p>
+
+          <p class="alinea">
+            Ce guide ne couvre donc que ce qui est <strong>spécifique à COC2</strong>. Pour tout ce qui concerne le fonctionnement générique du système (comment fonctionne une Action, un
+            Effet, un jet d'attaque, un jet de sauvegarde…), reportez-vous à la documentation du système <strong>Chroniques Oubliées 2ᵉ édition (CO2)</strong> ou au Guide du système fourni par le module cof2-base — les
+            mécaniques y sont identiques, seuls les habillages fantasy diffèrent.
+          </p>
+
+          <div class="encart">
+            <h3>Sommaire du guide</h3>
+            <ul>
+              <li class="sans-puce"><strong>Les Acteurs</strong> — Échelle de santé, tranches d'âge et création, progression sans niveaux, BDM/CG, Échelle d'évolution, fiches Rencontre et Groupe de joueurs.</li>
+              <li class="sans-puce"><strong>Les Objets</strong> — Traits distinctifs, Réduction de Dégâts et encombrement des protections, Bonus Critique, devise dollar, entraînements martiaux contemporains.</li>
+              <li class="sans-puce"><strong>Actions et Effets</strong> — Application du Bonus Critique, minimum de dégâts garanti, absence des éléments de magie.</li>
+              <li class="sans-puce"><strong>Les Jets et les Messages</strong> — Formules d'Initiative, de Défense et d'attaque propres à COC2, états préjudiciables spécifiques.</li>
+              <li class="sans-puce"><strong>Autres fonctionnalités</strong> — Notes de version intégrées, thème visuel, mini-fiche adaptée.</li>
+            </ul>
+          </div>
+
+          <h3>Compendium fourni</h3>
+          <p class="alinea">
+            Le module fournit un unique compendium d'objets, <strong>COC2 Objets</strong> : voies, capacités et équipements adaptés à COC2, <strong>sans texte descriptif</strong> — seules
+            certaines mécaniques (modificateurs, actions, résolveurs) sont incluses. Le contenu narratif reste la propriété du livre de règles imprimé. Pour les capacités, seules quelques unes sont entièrement configurées.
+          </p>
+
+          <h3>Réglages de monde</h3>
+          <p class="alinea">Trois réglages contrôlent des options optionnelles ou d'ambiance, accessibles au MJ dans la Configuration du monde :</p>
+          <table class="tableau">
+            <tbody>
+              <tr class="tableau-titre">
+                <td colspan="2">Réglages du module</td>
+              </tr>
+              <tr class="tableau-entete">
+                <td>Réglage</td>
+                <td>Effet</td>
+              </tr>
+              <tr>
+                <td>Activer l'Échelle d'évolution</td>
+                <td>Affiche l'Échelle d'évolution sur les fiches et active ses modificateurs contextuels sur les tests (détails page « Les Acteurs »).</td>
+              </tr>
+              <tr>
+                <td>Configurer l'échelle</td>
+                <td>Menu dédié pour choisir, par palier de l'Échelle d'évolution, la caractéristique et la valeur du bonus et du malus associés.</td>
+              </tr>
+              <tr>
+                <td>Échelles de santé Pulp</td>
+                <td>Ambiance « action décomplexée » : raccourcit l'échelle de santé des adversaires mineurs et allonge celle du Premier rôle (détails page « Les Acteurs »).</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <h3>Notes de version</h3>
+          <p class="alinea">
+            Un bouton « Notes de version », dans le menu latéral Chroniques Oubliées, ouvre l'historique des nouveautés du module. Cette fenêtre s'ouvre aussi automatiquement au MJ après
+            une mise à jour, tant que les nouvelles entrées n'ont pas été marquées comme lues.
+          </p>
+
+          <div class="indications-mj">
+            Ce module peut lui-même servir de socle à un module d'univers plus spécifique (ex. horreur cthulhienne), qui peut surcharger ses libellés, ses états et ses barèmes via
+            <code>CONFIG.COC2BASE</code>. Cette API est documentée dans le <code>README.md</code> du dépôt, à destination des développeurs de modules, et n'est pas reprise ici.
+          </div>
+        </div>
+    video:
+      controls: true
+      volume: 0.5
+    src: null
+    category: null
+    ownership:
+      default: -1
+    flags: {}
+    _stats:
+      compendiumSource: null
+      duplicateSource: null
+      coreVersion: '14'
+      systemId: co2
+      systemVersion: 2.3.9
+      createdTime: 1789295327305
+      modifiedTime: 1789300059641
+      lastModifiedBy: null
+      exportSource: null
+    _key: '!journal.pages!7H04zEXpHQ8ET3GZ.6iOtbHV23vUvHFoz'
+  - sort: 200000
+    name: Les Acteurs
+    type: text
+    _id: VLTB62ZkXZXNHCCP
+    system: {}
+    title:
+      show: false
+      level: 1
+    image: {}
+    text:
+      format: 1
+      content: |-
+        <div class="journal-page-coc-base">
+          <h2>Les Acteurs</h2>
+
+          <h3>Échelle de santé</h3>
+          <p class="alinea">
+            COC2 remplace les Points de Vigueur de COF2 par un ruban de <strong>20 échelons</strong>, affiché en pleine largeur sur l'en-tête de la fiche Personnage comme de la fiche
+            Rencontre. Chaque dommage subi coche un échelon supplémentaire. Quatre paliers posent automatiquement un état, cumulatif avec le précédent :
+          </p>
+          <table class="tableau">
+            <tbody>
+              <tr class="tableau-titre">
+                <td colspan="3">États de l'échelle de santé</td>
+              </tr>
+              <tr class="tableau-entete">
+                <td>Échelon</td>
+                <td>État</td>
+                <td>Effet</td>
+              </tr>
+              <tr>
+                <td>5</td>
+                <td>Contusionné</td>
+                <td>Malus de -1. Aucun autre effet, aucun test de médecine nécessaire pour entamer la guérison.</td>
+              </tr>
+              <tr>
+                <td>10</td>
+                <td>Affaibli</td>
+                <td>Malus de -3. Test de CON difficulté 10 pour ne pas perdre la prochaine action. Guérison : test d'INT difficulté 10.</td>
+              </tr>
+              <tr>
+                <td>15</td>
+                <td>Blessé</td>
+                <td>
+                  Malus de -5. Perte de la prochaine action, déplacement réduit de moitié. Toute action physique impose un test de CON difficulté 15 (échec : 1 DM et inconscience 1d6
+                  rounds). Guérison et stabilisation : test d'INT difficulté 15.
+                </td>
+              </tr>
+              <tr>
+                <td>20</td>
+                <td>Mourant</td>
+                <td>
+                  Malus de -10. Déplacement impossible, inconscience 1d6 rounds puis test de CON difficulté 20 sous peine de coma et de mort au bout de CON minutes si le personnage n'est
+                  pas stabilisé. Stabilisation : test d'INT difficulté 20.
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <p class="alinea">
+            Le malus de l'état est appliqué automatiquement à l'Initiative et à la Défense. Pour toute autre action physique (Force, Agilité, Constitution), il est <strong>proposé à
+            cocher</strong> dans la fenêtre de jet plutôt qu'appliqué d'office — le joueur ou le MJ décide au cas par cas si l'action concernée est bien physique.
+          </p>
+          <div class="exemple">
+            Un personnage Affaibli (10 échelons cochés) subit -3 automatiquement sur son prochain jet d'Initiative. S'il tente ensuite un test d'Agilité pour escalader un mur, la fenêtre
+            de jet lui propose une case « Affaibli -3 » à cocher ; s'il négocie à la place (test de Charisme), la case n'apparaît pas.
+          </div>
+
+          <h3>Tranches d'âge et création de personnage</h3>
+          <p class="alinea">
+            À la création, chaque personnage choisit une tranche d'âge dans l'en-tête de la fiche. Elle fixe le budget de points de capacité de départ ainsi que deux limites purement
+            indicatives (jamais bloquantes) affichées sous forme de compteur dans l'onglet Voies :
+          </p>
+          <table class="tableau">
+            <tbody>
+              <tr class="tableau-titre">
+                <td colspan="4">Tranches d'âge</td>
+              </tr>
+              <tr class="tableau-entete">
+                <td>Tranche</td>
+                <td>Points de capacité</td>
+                <td>Voies max.</td>
+                <td>Rang max.</td>
+              </tr>
+              <tr>
+                <td>Jeune (16 à 30 ans)</td>
+                <td>4</td>
+                <td>4</td>
+                <td>2</td>
+              </tr>
+              <tr>
+                <td>Adulte (31 à 50 ans)</td>
+                <td>7</td>
+                <td>5</td>
+                <td>3</td>
+              </tr>
+              <tr>
+                <td>Expérimenté (51 à 65 ans)</td>
+                <td>10</td>
+                <td>6</td>
+                <td>4</td>
+              </tr>
+            </tbody>
+          </table>
+          <p class="alinea">Sans tranche d'âge choisie, le personnage n'a aucun point de capacité de création : le champ est signalé en permanence tant qu'il reste vide.</p>
+
+          <h3>Progression sans niveaux</h3>
+          <p class="alinea">
+            COC2 n'a pas de niveaux. La progression se fait par <strong>XP de séance</strong> : un bouton « Fin de séance : +1 XP », dans l'en-tête de la fiche, ajoute un point de
+            capacité au budget disponible. Le coût d'un rang de voie dépend alors de la phase du personnage :
+          </p>
+          <ul>
+            <li class="sans-puce"><strong>En phase de création</strong> (XP gagnés = 0) : tout rang de voie coûte <strong>1 point</strong>, quel que soit son numéro.</li>
+            <li class="sans-puce"><strong>En jeu</strong> (dès le premier XP gagné) : chaque nouveau rang coûte son numéro (le rang 3 coûte 3 XP).</li>
+          </ul>
+          <p class="alinea">
+            Chaque capacité apprise pendant la création garde un discret repère dans sa case de rang (visible en mode Édition), pour ne pas la retarifer si les XP gagnés sont ensuite
+            remis à 0 — utile pour corriger un historique d'achats sans désapprendre puis réapprendre les capacités.
+          </p>
+
+          <h3>Bonus de dommages au contact (BDM) et Capacité de guérison (CG)</h3>
+          <p class="alinea">
+            Deux valeurs dérivées, affichées dans la barre latérale de la fiche : le <strong>BDM</strong>, égal à la Force, s'ajoute aux dommages d'une attaque au contact ou à mains nues
+            (formule d'arme : <code>+ @bdm</code>) ; la <strong>CG</strong>, égale à CON + 3, indique le nombre d'échelons de l'échelle de santé récupérés par semaine de repos. Un bouton
+            dédié applique directement ce repos hebdomadaire depuis la fiche ou la mini-fiche, en décochant CG échelons.
+          </p>
+
+          <h3>Échelle d'évolution (seconde échelle)</h3>
+          <p class="alinea">
+            Optionnelle et masquée par défaut (réglage de monde « Activer l'Échelle d'évolution »), c'est un second ruban de 20 échelons, affiché sous l'échelle de santé quand elle est
+            active. Ses 4 paliers (5/10/15/20) sont purement informatifs à l'origine — aucun statut n'est posé sur le token.
+          </p>
+          <p class="alinea">
+            Le MJ peut, via le menu « Configurer l'échelle », associer à chaque palier un bonus et un malus sur une caractéristique de son choix, avec un libellé de contexte librement
+            nommé (ex. « en société » pour un bonus de Charisme). Ces bonus/malus deviennent alors des lignes sélectionnables dans les fenêtres de jet de test de compétence, comme les
+            malus d'état. Une caractéristique laissée sur « Aucune » désactive le modificateur correspondant.
+          </p>
+          <div class="indications-mj">
+            Cette échelle est conçue pour être renommée par un module d'univers (par exemple en « Échelle de conscience » pour un cadre horrifique) : seuls son libellé et le nom de ses
+            paliers changent alors, pas son fonctionnement.
+          </div>
+
+          <h3>Fiche Rencontre</h3>
+          <p class="alinea">
+            Ni Niveau de Créature ni catégorie (Vivante/Humanoïde/etc.) : un adversaire COC2 est décrit soit par son <strong>archétype</strong> (adversaire humain), soit, à défaut, par sa
+            <strong>taille</strong> (créature).
+          </p>
+          <table class="tableau">
+            <tbody>
+              <tr class="tableau-titre">
+                <td colspan="5">Archétypes humains</td>
+              </tr>
+              <tr class="tableau-entete">
+                <td>Archétype</td>
+                <td>Bonus de caractéristiques</td>
+                <td>DEF / Init.</td>
+                <td>Points de capacité</td>
+                <td>Critique</td>
+              </tr>
+              <tr>
+                <td>Figurant</td>
+                <td>1</td>
+                <td>10 / 10</td>
+                <td>1</td>
+                <td>Non</td>
+              </tr>
+              <tr>
+                <td>Second rôle</td>
+                <td>3</td>
+                <td>12 / 12</td>
+                <td>3</td>
+                <td>Non</td>
+              </tr>
+              <tr>
+                <td>Premier rôle</td>
+                <td>5</td>
+                <td>15 / 15</td>
+                <td>5</td>
+                <td>Oui</td>
+              </tr>
+            </tbody>
+          </table>
+          <p class="alinea">
+            Seul un Premier rôle peut faire une réussite critique. L'échelle de santé recommandée est indiquée à la sélection de l'archétype ; avec le réglage « Échelles de santé Pulp »,
+            elle passe à 4/12/24 échelons pour Figurant/Second rôle/Premier rôle — pour des combats de nervis rapides et un boss plus endurant.
+          </p>
+          <p class="alinea">Laissé vide, l'archétype cède la place à la table des créatures, pilotée par la taille (TAI) :</p>
+          <table class="tableau">
+            <tbody>
+              <tr class="tableau-titre">
+                <td colspan="4">Créatures par taille</td>
+              </tr>
+              <tr class="tableau-entete">
+                <td>Taille</td>
+                <td>Points de caractéristiques</td>
+                <td>DM au contact recommandés</td>
+                <td>Échelle de santé recommandée</td>
+              </tr>
+              <tr>
+                <td>Minuscule</td>
+                <td>0</td>
+                <td>—</td>
+                <td>1</td>
+              </tr>
+              <tr>
+                <td>Très petit</td>
+                <td>2 (max +2/carac.)</td>
+                <td>1d2</td>
+                <td>4 à 8</td>
+              </tr>
+              <tr>
+                <td>Petit</td>
+                <td>4 (max +4/carac.)</td>
+                <td>1d4</td>
+                <td>12 à 16</td>
+              </tr>
+              <tr>
+                <td>Moyen</td>
+                <td>6 (max +6/carac.)</td>
+                <td>1d6</td>
+                <td>20 à 24</td>
+              </tr>
+              <tr>
+                <td>Grand</td>
+                <td>8 (max +8/carac.)</td>
+                <td>1d8</td>
+                <td>28 à 36</td>
+              </tr>
+              <tr>
+                <td>Très grand</td>
+                <td>10 (max +10/carac.)</td>
+                <td>1d10</td>
+                <td>40 à 56</td>
+              </tr>
+              <tr>
+                <td>Gigantesque</td>
+                <td>12 (aucun plafond)</td>
+                <td>1d12</td>
+                <td>60</td>
+              </tr>
+            </tbody>
+          </table>
+          <p class="alinea">
+            Ces compteurs (points dépensés / maximum, capacités apprises) restent purement indicatifs : les dépasser affiche un avertissement mais ne bloque jamais la fiche.
+          </p>
+
+          <h3>Fiche Groupe de joueurs</h3>
+          <p class="alinea">
+            Reprend le tableau du système en retirant les colonnes de magie (absente en COC2) et en ajoutant BDM, CG, l'état de santé (libellé et échelons) et, si l'Échelle d'évolution
+            est activée, sa colonne dédiée.
+          </p>
+        </div>
+    video:
+      controls: true
+      volume: 0.5
+    src: null
+    category: null
+    ownership:
+      default: -1
+    flags: {}
+    _stats:
+      compendiumSource: null
+      duplicateSource: null
+      coreVersion: '14'
+      systemId: co2
+      systemVersion: 2.3.9
+      createdTime: 1789295327305
+      modifiedTime: 1789300059641
+      lastModifiedBy: null
+      exportSource: null
+    _key: '!journal.pages!7H04zEXpHQ8ET3GZ.VLTB62ZkXZXNHCCP'
+  - sort: 300000
+    name: Les Objets
+    type: text
+    _id: ccIyTfB7UYkosg6i
+    system: {}
+    title:
+      show: false
+      level: 1
+    image: {}
+    text:
+      format: 1
+      content: |-
+        <div class="journal-page-coc-base">
+          <h2>Les Objets</h2>
+
+          <h3>Traits distinctifs (avantages et désavantages)</h3>
+          <p class="alinea">
+            Deux nouveaux sous-types de Trait, propres à COC2 : <strong>Avantage</strong> et <strong>Désavantage</strong>. Chacun porte un <strong>coût en points</strong> (champ ajouté
+            sur la fiche de l'objet, 1 point par défaut), affiché et totalisé dans l'onglet Biographie de la fiche Personnage.
+          </p>
+          <p class="alinea">
+            La règle affichée sur la fiche impose un équilibre : le total des points d'avantages doit égaler celui des désavantages, avec un plafond de <strong>5 points</strong> de
+            chaque côté. Un message d'erreur signale tout déséquilibre, sans jamais bloquer la fiche.
+          </p>
+
+          <h3>Réduction de Dégâts (RD) et encombrement des protections</h3>
+          <p class="alinea">
+            Sur une armure ou un bouclier, le champ « Défense » de COF2 devient la <strong>RD</strong> (réduction de dégâts) : elle est soustraite des dommages subis, au lieu de
+            s'ajouter à la Défense du personnage. Un second champ, <strong>Encombrement</strong>, porte un malus fixe indépendant, appliqué à l'Initiative, aux tests d'Agilité et à
+            l'attaque au contact — jamais à la valeur d'Agilité elle-même, ni à la Défense, ni à l'attaque à distance.
+          </p>
+          <div class="exemple">
+            Un gilet pare-balles léger avec RD 3 et Encombrement 2 : chaque coup subi voit ses dommages réduits de 3, et le porteur subit -2 à l'Initiative, aux tests d'Agilité et à ses
+            attaques au contact tant qu'il le porte.
+          </div>
+          <p class="alinea">
+            Une case <strong>Cumulable</strong> distingue les protections qui s'additionnent (un casque, par exemple) de celles qui se concurrencent (deux gilets superposés) : parmi les
+            protections non cumulables portées simultanément, seule la plus protectrice compte, et seule elle impose son encombrement. Les autres sont écartées, avec un avertissement au
+            MJ et au joueur, et une ligne barrée dans l'inventaire.
+          </p>
+
+          <h3>Bonus Critique (BC)</h3>
+          <p class="alinea">
+            En COC2, une réussite critique n'ajoute plus le double des dommages comme en COF2 : elle ajoute un <strong>Bonus Critique</strong> fixe. Un champ dédié, sur la fiche d'arme
+            (équipement) comme sur la fiche d'attaque d'une créature, permet de le préciser explicitement. Laissé vide, il est calculé automatiquement comme le maximum du dé de dommages
+            de l'arme (1d8 → 8, 2d6 → 12), à l'exclusion des bonus fixes (Force, BDM, bonus d'arme).
+          </p>
+          <p class="alinea">Cette valeur reste par ailleurs disponible dans toute formule via la variable <code>@bc</code>, y compris hors critique (par exemple pour une capacité qui l'inflige automatiquement).</p>
+
+          <h3>Devise</h3>
+          <p class="alinea">
+            Les pièces d'or, d'argent et de cuivre de COF2 sont remplacées par une devise unique : le <strong>dollar</strong> ($). La richesse d'un personnage ou d'une rencontre se lit et
+            s'édite dans l'onglet correspondant, sur une seule valeur.
+          </p>
+
+          <h3>Entraînements martiaux contemporains</h3>
+          <p class="alinea">
+            Les listes déroulantes de formation martiale (armes, armures, boucliers) sont mises à jour avec du matériel contemporain : arme de poing, fusil d'assaut, taser, bombe
+            lacrymogène côté armes ; vêtements renforcés, gilets pare-balles léger/lourd, armure militaire côté protections ; bouclier anti-émeute et bouclier balistique côté boucliers.
+          </p>
+          <div class="indications-mj">
+            Contrairement à COF2, la formation martiale <strong>n'a aucun effet mécanique</strong> en COC2 : ces listes ne servent qu'à peupler les menus déroulants des fiches d'objet,
+            elles ne restreignent ni ne pénalisent l'usage d'une arme, d'une armure ou d'un bouclier par un profil donné.
+          </div>
+        </div>
+    video:
+      controls: true
+      volume: 0.5
+    src: null
+    category: null
+    ownership:
+      default: -1
+    flags: {}
+    _stats:
+      compendiumSource: null
+      duplicateSource: null
+      coreVersion: '14'
+      systemId: co2
+      systemVersion: 2.3.9
+      createdTime: 1789295327305
+      modifiedTime: 1789300059641
+      lastModifiedBy: null
+      exportSource: null
+    _key: '!journal.pages!7H04zEXpHQ8ET3GZ.ccIyTfB7UYkosg6i'
+  - sort: 400000
+    name: Actions et Effets
+    type: text
+    _id: l9nCx6yP94pq9Ci6
+    system: {}
+    title:
+      show: false
+      level: 1
+    image: {}
+    text:
+      format: 1
+      content: |-
+        <div class="journal-page-coc-base">
+          <h2>Actions et Effets</h2>
+
+          <p class="alinea">
+            Le moteur générique des Actions et Effets (conditions, modificateurs, résolveurs) est celui du système <strong>co2</strong> et n'est pas repris ici. Cette page ne couvre que
+            les comportements que COC2 modifie par rapport à COF2.
+          </p>
+
+          <h3>Application du Bonus Critique</h3>
+          <p class="alinea">
+            Sur une réussite critique d'une attaque, COC2 ajoute automatiquement le Bonus Critique (BC) de l'arme ou de l'attaque au jet de dommages déjà évalué, au lieu du doublement des
+            dommages appliqué par COF2. Ce comportement est transparent pour l'utilisateur : le jet de dommages affiché dans le message de chat inclut déjà le BC, sur toutes les cartes
+            (jet combiné, jet différé, jet en opposition, relance après un point de chance).
+          </p>
+
+          <h3>Minimum de dégâts</h3>
+          <p class="alinea">
+            Une attaque qui touche inflige toujours <strong>au moins 1 point de dégât</strong>, même si la formule tombe à zéro ou en négatif après application des malus de
+            caractéristiques — avant application de la Réduction de Dégâts de la cible.
+          </p>
+
+          <h3>Absence des éléments de magie</h3>
+          <p class="alinea">
+            Attaque magique, Points de Magie, Défense magique et catégorie martiale — notions de COF2 sans équivalent dans le livre de règles COC2 — sont <strong>retirés</strong> des
+            fiches d'objet et de personnage, pas seulement masqués visuellement. Une valeur éventuellement déjà stockée sur un objet migré depuis COF2 reste conservée en base, mais n'est
+            plus éditable ni utilisée par aucun calcul.
+          </p>
+        </div>
+    video:
+      controls: true
+      volume: 0.5
+    src: null
+    category: null
+    ownership:
+      default: -1
+    flags: {}
+    _stats:
+      compendiumSource: null
+      duplicateSource: null
+      coreVersion: '14'
+      systemId: co2
+      systemVersion: 2.3.9
+      createdTime: 1789295327305
+      modifiedTime: 1789300059641
+      lastModifiedBy: null
+      exportSource: null
+    _key: '!journal.pages!7H04zEXpHQ8ET3GZ.l9nCx6yP94pq9Ci6'
+  - sort: 500000
+    name: Les Jets et les Messages
+    type: text
+    _id: JqtWAmERoHxZhKn7
+    system: {}
+    title:
+      show: false
+      level: 1
+    image: {}
+    text:
+      format: 1
+      content: |-
+        <div class="journal-page-coc-base">
+          <h2>Les Jets et les Messages</h2>
+
+          <p class="alinea">
+            Le fonctionnement des fenêtres de jet et des messages de chat (options, visibilité, jets en opposition…) est celui du système <strong>co2</strong> et n'est pas repris ici.
+            Cette page couvre uniquement les formules et les malus propres à COC2.
+          </p>
+
+          <h3>Formules de combat</h3>
+          <table class="tableau">
+            <tbody>
+              <tr class="tableau-titre">
+                <td colspan="2">Formules COC2</td>
+              </tr>
+              <tr class="tableau-entete">
+                <td>Valeur</td>
+                <td>Formule</td>
+              </tr>
+              <tr>
+                <td>Initiative</td>
+                <td>10 + INT + PER</td>
+              </tr>
+              <tr>
+                <td>Défense</td>
+                <td>10 + AGI + PER (l'armure n'y contribue plus, elle apporte de la RD — voir « Les Objets »)</td>
+              </tr>
+              <tr>
+                <td>Attaque au contact (ATC)</td>
+                <td>FOR, sans bonus de niveau</td>
+              </tr>
+              <tr>
+                <td>Attaque à distance (ATD)</td>
+                <td>AGI, sans bonus de niveau</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <h3>États préjudiciables</h3>
+          <p class="alinea">
+            Affaibli (dé de malus), Étourdi, Invalide et Paralysé — sans équivalent dans le livre de règles COC2 — sont retirés de la liste des états. En contrepartie, trois états
+            propres à COC2 sont ajoutés, et les malus des états conservés sont réécrits aux valeurs du livre de règles :
+          </p>
+          <table class="tableau">
+            <tbody>
+              <tr class="tableau-titre">
+                <td colspan="3">Malus d'état COC2</td>
+              </tr>
+              <tr class="tableau-entete">
+                <td>État</td>
+                <td>Malus automatique</td>
+                <td>Malus proposé en fenêtre de jet</td>
+              </tr>
+              <tr>
+                <td>Ralenti</td>
+                <td>-5 Init., -5 DEF (+5 m de déplacement)</td>
+                <td>-5 aux attaques au contact et à distance</td>
+              </tr>
+              <tr>
+                <td>Essoufflé</td>
+                <td>-2 Init., -2 DEF (+5 m de déplacement)</td>
+                <td>—</td>
+              </tr>
+              <tr>
+                <td>Aveuglé</td>
+                <td>-5 DEF</td>
+                <td>-10 aux actions basées sur la vue (réduit à -5 si un test de Perception est réussi)</td>
+              </tr>
+              <tr>
+                <td>Asphyxié</td>
+                <td>-5 Init., -5 DEF</td>
+                <td>-5 à toutes les actions ; 1d4 DM par tour tant que l'état dure (à appliquer manuellement)</td>
+              </tr>
+              <tr>
+                <td>Fatigué</td>
+                <td>—</td>
+                <td>-2 à tous les tests tant que dure l'état</td>
+              </tr>
+              <tr>
+                <td>Épuisé</td>
+                <td>—</td>
+                <td>-5 à tous les tests ; test de VOL difficulté 15 à chaque contrariété, sous peine d'agressivité verbale ou de larmes incontrôlées</td>
+              </tr>
+            </tbody>
+          </table>
+          <p class="alinea">
+            Les malus « à toutes les actions » ou « aux actions basées sur la vue » ne peuvent pas être posés automatiquement par le moteur : ils sont proposés comme case à cocher dans
+            la fenêtre de jet, au joueur ou au MJ de juger si l'action concernée est bien de ce type.
+          </p>
+        </div>
+    video:
+      controls: true
+      volume: 0.5
+    src: null
+    category: null
+    ownership:
+      default: -1
+    flags: {}
+    _stats:
+      compendiumSource: null
+      duplicateSource: null
+      coreVersion: '14'
+      systemId: co2
+      systemVersion: 2.3.9
+      createdTime: 1789295327305
+      modifiedTime: 1789300059641
+      lastModifiedBy: null
+      exportSource: null
+    _key: '!journal.pages!7H04zEXpHQ8ET3GZ.JqtWAmERoHxZhKn7'
+  - sort: 600000
+    name: Autres fonctionnalités
+    type: text
+    _id: TAVDyMPTn4FPIvPP
+    system: {}
+    title:
+      show: false
+      level: 1
+    image: {}
+    text:
+      format: 1
+      content: |-
+        <div class="journal-page-coc-base">
+          <h2>Autres fonctionnalités</h2>
+
+          <h3>Notes de version intégrées</h3>
+          <p class="alinea">
+            Une fenêtre dédiée affiche les nouveautés du module, alimentée par un historique embarqué. Elle s'ouvre automatiquement au MJ après une mise à jour, tant que de nouvelles
+            entrées n'ont pas été marquées comme lues via la case « Ne plus afficher les notes de ces versions ». Elle reste consultable à tout moment via le bouton « Notes de version »
+            du menu latéral Chroniques Oubliées.
+          </p>
+
+          <h3>Thème visuel</h3>
+          <p class="alinea">
+            Les fiches de personnage et de rencontre reprennent une palette de couleurs monochrome, distincte de la palette par défaut du système <strong>co2</strong>, pour un rendu plus
+            sobre adapté à un cadre contemporain.
+          </p>
+
+          <h3>Mini-fiche (Vue actions)</h3>
+          <p class="alinea">
+            La mini-fiche utilisée par la Vue actions est adaptée : les Points de Vigueur et de Mana de COF2 sont retirés au profit des rubans Santé et Échelle d'évolution (cliquables,
+            comme sur la fiche complète), et les valeurs de BDM et de CG sont ajoutées dans la barre latérale.
+          </p>
+        </div>
+    video:
+      controls: true
+      volume: 0.5
+    src: null
+    category: null
+    ownership:
+      default: -1
+    flags: {}
+    _stats:
+      compendiumSource: null
+      duplicateSource: null
+      coreVersion: '14'
+      systemId: co2
+      systemVersion: 2.3.9
+      createdTime: 1789295327305
+      modifiedTime: 1789300059641
+      lastModifiedBy: null
+      exportSource: null
+    _key: '!journal.pages!7H04zEXpHQ8ET3GZ.TAVDyMPTn4FPIvPP'
+folder: null
+categories: []
+ownership:
+  default: 0
+flags:
+  coc2-base:
+    isJournalCOC: true
+_stats:
+  compendiumSource: null
+  duplicateSource: null
+  coreVersion: '14'
+  systemId: co2
+  systemVersion: 2.3.9
+  createdTime: 1789295327305
+  modifiedTime: 1789300059641
+  lastModifiedBy: null
+  exportSource: null
+_id: 7H04zEXpHQ8ET3GZ
+sort: 0
+_key: '!journal!7H04zEXpHQ8ET3GZ'

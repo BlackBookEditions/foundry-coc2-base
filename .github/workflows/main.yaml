@@ -102,12 +102,20 @@ jobs:
           MANIFEST: ${{ env.latest_manifest_url }}
           DOWNLOAD: ${{ env.release_module_url }}
 
+      # `npm ci` is recommended:
+      # https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-nodejs
+      - name: Install Dependencies
+        run: npm ci
+
+      # Pull YAML to LDB packs
+      - name: Build Packs
+        run: npm run YMLtoLDB
+
       # Create a "module.zip" archive containing all the module's required files.
       # If you have other directories or files that will need to be added to
       # your packaged module, add them here.
       #
-      # Note: this module ships no compendium pack, so there is no pack build
-      # step. The compiled CSS is taken as committed in the repository.
+      # Note: the compiled CSS is taken as committed in the repository.
       - name: Create Module Archive
         run: |
           # Note that `zip` will only emit warnings when a file or directory doesn't exist, it will not fail.
@@ -127,7 +135,8 @@ jobs:
             assets/                              \
             fonts/                               \
             lang/                                \
-            templates/
+            templates/                           \
+            packs/
           # Don't forget to add a backslash at the end of the line for any additional files or directories!
 
       # Update the GitHub release with the manifest and module archive files.

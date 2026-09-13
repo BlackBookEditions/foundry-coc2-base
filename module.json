@@ -39,6 +39,17 @@
         "PLAYER": "OBSERVER",
         "ASSISTANT": "OWNER"
       }
+    },
+    {
+      "label": "COC2 Guide du module",
+      "type": "JournalEntry",
+      "name": "coc2-guide-du-module",
+      "path": "packs/coc2-guide-du-module",
+      "system": "co2",
+      "ownership": {
+        "PLAYER": "OBSERVER",
+        "ASSISTANT": "OWNER"
+      }
     }
   ],
   "esmodules": ["coc-base.mjs"],
