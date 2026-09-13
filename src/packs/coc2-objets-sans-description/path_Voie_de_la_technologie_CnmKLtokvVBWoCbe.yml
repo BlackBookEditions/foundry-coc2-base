@@ -1,0 +1,30 @@
+folder: fMDRB6DUEau6k2vL
+name: Voie de la technologie
+type: path
+img: icons/svg/aura.svg
+_id: CnmKLtokvVBWoCbe
+system:
+  subtype: profile
+  description: <p>Livre des règles page 40</p>
+  capacities:
+    - Compendium.coc2-base.coc2-objets-sans-description.Item.E55eINnRQJcaRGA1
+    - Compendium.coc2-base.coc2-objets-sans-description.Item.Kxfoc3rIQOxHOoDQ
+    - Compendium.coc2-base.coc2-objets-sans-description.Item.zs9GMW3ONVcUtEo5
+    - Compendium.coc2-base.coc2-objets-sans-description.Item.jhFZCp7CbFW5ADFH
+    - Compendium.coc2-base.coc2-objets-sans-description.Item.h0SbQJY1wyXs255M
+effects: []
+sort: 1500000
+ownership:
+  default: 0
+flags: {}
+_stats:
+  compendiumSource: null
+  duplicateSource: null
+  coreVersion: '14'
+  systemId: co2
+  systemVersion: 2.3.0
+  createdTime: 1788897614388
+  modifiedTime: 1788897614388
+  lastModifiedBy: null
+  exportSource: null
+_key: '!items!CnmKLtokvVBWoCbe'

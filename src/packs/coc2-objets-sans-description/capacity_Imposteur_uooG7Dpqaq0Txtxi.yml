@@ -1,0 +1,54 @@
+folder: kPOSUps5WsJBWeHH
+name: Imposteur
+type: capacity
+img: icons/svg/upgrade.svg
+_id: uooG7Dpqaq0Txtxi
+system:
+  description: <p>Livre des règles page 35</p>
+  rank: 4
+  learned: false
+  path: Compendium.coc2-base.coc2-objets-sans-description.Item.Kh6iu4hvcvxEj0Gk
+  actions:
+    - source: Compendium.coc2-base.coc2-objets-sans-description.Item.uooG7Dpqaq0Txtxi
+      indice: 0
+      type: buff
+      img: icons/svg/upgrade.svg
+      label: Imposteur
+      chatFlavor: ''
+      actionType: none
+      properties:
+        visible: false
+        activable: false
+        enabled: false
+        temporary: false
+        noManaCost: false
+        noChargesUsed: false
+      conditions:
+        - predicate: isLearned
+          object: ''
+      modifiers:
+        - source: Compendium.coc2-base.coc2-objets-sans-description.Item.uooG7Dpqaq0Txtxi
+          type: capacity
+          subtype: skill
+          target: cha
+          apply: self
+          value: '+5'
+          choiceGroup: 0
+          additionalInfos: Se faire passer pour un autre (déguisement / imitation)
+      resolvers: []
+effects: []
+sort: 400000
+ownership:
+  default: 0
+flags: {}
+_stats:
+  compendiumSource: null
+  duplicateSource: null
+  coreVersion: '14'
+  systemId: co2
+  systemVersion: 2.3.0
+  createdTime: 1788897614388
+  modifiedTime: 1788897614388
+  lastModifiedBy: null
+  exportSource: null
+_key: '!items!uooG7Dpqaq0Txtxi'

@@ -1,0 +1,30 @@
+folder: fMDRB6DUEau6k2vL
+name: Voie de la psychologie
+type: path
+img: icons/svg/aura.svg
+_id: FwPzLLo9XI666KYv
+system:
+  subtype: profile
+  description: <p>Livre des règles page 39</p>
+  capacities:
+    - Compendium.coc2-base.coc2-objets-sans-description.Item.9tlUpJuwaFjXsrdK
+    - Compendium.coc2-base.coc2-objets-sans-description.Item.YZgWOA3WCJPLRMMz
+    - Compendium.coc2-base.coc2-objets-sans-description.Item.wZ0xhZSZ9WrCgXNW
+    - Compendium.coc2-base.coc2-objets-sans-description.Item.Qbb0FrKgJrVcIQKf
+    - Compendium.coc2-base.coc2-objets-sans-description.Item.HtkorJJ7tVG25eU2
+effects: []
+sort: 1400000
+ownership:
+  default: 0
+flags: {}
+_stats:
+  compendiumSource: null
+  duplicateSource: null
+  coreVersion: '14'
+  systemId: co2
+  systemVersion: 2.3.0
+  createdTime: 1788897614388
+  modifiedTime: 1788897614388
+  lastModifiedBy: null
+  exportSource: null
+_key: '!items!FwPzLLo9XI666KYv'

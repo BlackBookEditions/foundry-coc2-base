@@ -1,0 +1,54 @@
+folder: GZtGaORmf1YTbjK3
+name: Furtif
+type: capacity
+img: icons/svg/upgrade.svg
+_id: BiuTQPsunFL14xHv
+system:
+  description: <p>Livre des règles page 36</p>
+  rank: 1
+  learned: false
+  path: Compendium.coc2-base.coc2-objets-sans-description.Item.GiGQ4KLUJQYX2t6d
+  actions:
+    - source: Compendium.coc2-base.coc2-objets-sans-description.Item.BiuTQPsunFL14xHv
+      indice: 0
+      type: buff
+      img: icons/svg/upgrade.svg
+      label: Furtif
+      chatFlavor: ''
+      actionType: none
+      properties:
+        visible: false
+        activable: false
+        enabled: false
+        temporary: false
+        noManaCost: false
+        noChargesUsed: false
+      conditions:
+        - predicate: isLearned
+          object: ''
+      modifiers:
+        - source: Compendium.coc2-base.coc2-objets-sans-description.Item.BiuTQPsunFL14xHv
+          type: capacity
+          subtype: skill
+          target: agi
+          apply: self
+          value: '+5'
+          choiceGroup: 0
+          additionalInfos: Déplacement silencieux / discrétion
+      resolvers: []
+effects: []
+sort: 100000
+ownership:
+  default: 0
+flags: {}
+_stats:
+  compendiumSource: null
+  duplicateSource: null
+  coreVersion: '14'
+  systemId: co2
+  systemVersion: 2.3.0
+  createdTime: 1788897614388
+  modifiedTime: 1788897614388
+  lastModifiedBy: null
+  exportSource: null
+_key: '!items!BiuTQPsunFL14xHv'

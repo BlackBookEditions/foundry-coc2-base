@@ -1,0 +1,30 @@
+folder: fMDRB6DUEau6k2vL
+name: Voie de la médecine
+type: path
+img: icons/svg/aura.svg
+_id: ehB4USBrUd8U906U
+system:
+  subtype: profile
+  description: <p>Livre des règles page 38</p>
+  capacities:
+    - Compendium.coc2-base.coc2-objets-sans-description.Item.qVyxErJ1o6LfIRrC
+    - Compendium.coc2-base.coc2-objets-sans-description.Item.yLrvEXP9JAC8eiGy
+    - Compendium.coc2-base.coc2-objets-sans-description.Item.xSiuOuolzhZEc8B2
+    - Compendium.coc2-base.coc2-objets-sans-description.Item.QGHq9qngKmbjSmpn
+    - Compendium.coc2-base.coc2-objets-sans-description.Item.DNbKsjhTSLkwiBa5
+effects: []
+sort: 1300000
+ownership:
+  default: 0
+flags: {}
+_stats:
+  compendiumSource: null
+  duplicateSource: null
+  coreVersion: '14'
+  systemId: co2
+  systemVersion: 2.3.0
+  createdTime: 1788897614388
+  modifiedTime: 1788897614388
+  lastModifiedBy: null
+  exportSource: null
+_key: '!items!ehB4USBrUd8U906U'

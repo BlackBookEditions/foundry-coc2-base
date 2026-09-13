@@ -1,0 +1,54 @@
+folder: iDFBCqsLTRhoL5bh
+name: Rhétoricien
+type: capacity
+img: icons/svg/upgrade.svg
+_id: 2XzqOiZANoI8IQ7W
+system:
+  description: <p>Livre des règles page 36</p>
+  rank: 3
+  learned: false
+  path: Compendium.coc2-base.coc2-objets-sans-description.Item.vssqPNENgBbJ19FB
+  actions:
+    - source: Compendium.coc2-base.coc2-objets-sans-description.Item.2XzqOiZANoI8IQ7W
+      indice: 0
+      type: buff
+      img: icons/svg/upgrade.svg
+      label: Rhétoricien
+      chatFlavor: ''
+      actionType: none
+      properties:
+        visible: false
+        activable: false
+        enabled: false
+        temporary: false
+        noManaCost: false
+        noChargesUsed: false
+      conditions:
+        - predicate: isLearned
+          object: ''
+      modifiers:
+        - source: Compendium.coc2-base.coc2-objets-sans-description.Item.2XzqOiZANoI8IQ7W
+          type: capacity
+          subtype: skill
+          target: cha
+          apply: self
+          value: '+5'
+          choiceGroup: 0
+          additionalInfos: 'Interaction sociale : 3e approche (au choix)'
+      resolvers: []
+effects: []
+sort: 300000
+ownership:
+  default: 0
+flags: {}
+_stats:
+  compendiumSource: null
+  duplicateSource: null
+  coreVersion: '14'
+  systemId: co2
+  systemVersion: 2.3.0
+  createdTime: 1788897614388
+  modifiedTime: 1788897614388
+  lastModifiedBy: null
+  exportSource: null
+_key: '!items!2XzqOiZANoI8IQ7W'

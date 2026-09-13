@@ -1,3 +1,7 @@
+# 0.9.0
+- Première release officielle
+- Ajout des compendiums des voies, capacités, équipement
+
 # 0.8.2
 - Ajout de l'échelle d'évolution configurable
 - Configuration des statuts spécifiques à COC2

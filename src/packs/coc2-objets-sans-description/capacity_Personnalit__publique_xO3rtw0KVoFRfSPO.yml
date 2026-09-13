@@ -1,0 +1,54 @@
+folder: msmVFDaRTUGkBG3C
+name: Personnalité publique
+type: capacity
+img: icons/svg/upgrade.svg
+_id: xO3rtw0KVoFRfSPO
+system:
+  description: <p>Livre des règles page 42</p>
+  rank: 5
+  learned: false
+  path: Compendium.coc2-base.coc2-objets-sans-description.Item.K3wkFZztx4BB84oD
+  actions:
+    - source: Compendium.coc2-base.coc2-objets-sans-description.Item.xO3rtw0KVoFRfSPO
+      indice: 0
+      type: buff
+      img: icons/svg/upgrade.svg
+      label: Personnalité publique
+      chatFlavor: ''
+      actionType: none
+      properties:
+        visible: false
+        activable: false
+        enabled: false
+        temporary: false
+        noManaCost: false
+        noChargesUsed: false
+      conditions:
+        - predicate: isLearned
+          object: ''
+      modifiers:
+        - source: Compendium.coc2-base.coc2-objets-sans-description.Item.xO3rtw0KVoFRfSPO
+          type: capacity
+          subtype: ability
+          target: int
+          apply: self
+          value: '+1'
+          choiceGroup: 0
+          additionalInfos: ''
+      resolvers: []
+effects: []
+sort: 500000
+ownership:
+  default: 0
+flags: {}
+_stats:
+  compendiumSource: null
+  duplicateSource: null
+  coreVersion: '14'
+  systemId: co2
+  systemVersion: 2.3.0
+  createdTime: 1788897614388
+  modifiedTime: 1788897614388
+  lastModifiedBy: null
+  exportSource: null
+_key: '!items!xO3rtw0KVoFRfSPO'

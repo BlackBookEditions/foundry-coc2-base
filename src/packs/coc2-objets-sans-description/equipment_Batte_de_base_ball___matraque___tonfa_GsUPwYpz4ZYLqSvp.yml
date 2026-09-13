@@ -1,0 +1,75 @@
+folder: rG8zmHZXElykbyGv
+name: Batte de base-ball / matraque / tonfa
+type: equipment
+img: icons/svg/sword.svg
+_id: GsUPwYpz4ZYLqSvp
+system:
+  description: <p>Livre des règles page 93</p>
+  subtype: weapon
+  martialCategory: contact
+  damagetype: bludgeoning
+  price:
+    value: 30
+    unit: usd
+  equipped: false
+  properties:
+    equipable: true
+    reloadable: false
+    stackable: false
+  usage:
+    oneHand: true
+    twoHand: false
+  actions:
+    - source: Compendium.coc2-base.coc2-objets-sans-description.Item.GsUPwYpz4ZYLqSvp
+      indice: 0
+      label: ''
+      chatFlavor: ''
+      type: melee
+      img: icons/svg/d20-highlight.svg
+      properties:
+        visible: false
+        enabled: false
+        activable: true
+        temporary: false
+        noManaCost: false
+      conditions:
+        - predicate: isEquipped
+      resolvers:
+        - type: attack
+          bonusDiceAdd: false
+          malusDiceAdd: false
+          skill:
+            formula: '@atc'
+            crit: ''
+            difficulty: '@cible.def'
+          dmg:
+            formula: 1d6 + @for
+          target:
+            type: none
+            number: '0'
+            scope: all
+          additionalEffect:
+            active: false
+            applyOn: success
+            statuses: []
+            duration: '0'
+            unit: round
+      modifiers: []
+  tags:
+    - contondant
+effects: []
+sort: 300000
+ownership:
+  default: 0
+flags: {}
+_stats:
+  compendiumSource: null
+  duplicateSource: null
+  coreVersion: '14'
+  systemId: co2
+  systemVersion: 2.3.0
+  createdTime: 1788897614388
+  modifiedTime: 1788897614388
+  lastModifiedBy: null
+  exportSource: null
+_key: '!items!GsUPwYpz4ZYLqSvp'

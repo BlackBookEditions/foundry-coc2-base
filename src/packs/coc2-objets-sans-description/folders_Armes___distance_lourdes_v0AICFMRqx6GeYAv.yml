@@ -1,0 +1,20 @@
+name: Armes à distance lourdes
+sorting: m
+folder: HrHDlL3UAQ0sE2E8
+type: Item
+_id: v0AICFMRqx6GeYAv
+description: ''
+sort: 300000
+color: null
+flags: {}
+_stats:
+  compendiumSource: null
+  duplicateSource: null
+  coreVersion: '14'
+  systemId: co2
+  systemVersion: 2.3.0
+  createdTime: 1788897614388
+  modifiedTime: 1788897614388
+  lastModifiedBy: null
+  exportSource: null
+_key: '!folders!v0AICFMRqx6GeYAv'

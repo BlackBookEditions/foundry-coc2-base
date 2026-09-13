@@ -1,0 +1,30 @@
+folder: fMDRB6DUEau6k2vL
+name: Voie des armes de contact
+type: path
+img: icons/svg/aura.svg
+_id: 4FbCKhthfNsuLhzV
+system:
+  subtype: profile
+  description: <p>Livre des règles page 29</p>
+  capacities:
+    - Compendium.coc2-base.coc2-objets-sans-description.Item.U9oiUPpIgagHzPtO
+    - Compendium.coc2-base.coc2-objets-sans-description.Item.Atw2SCVleQnOi7pE
+    - Compendium.coc2-base.coc2-objets-sans-description.Item.ZwP7ceGZwrF9XJYA
+    - Compendium.coc2-base.coc2-objets-sans-description.Item.DXygwDYwEdoUk1GU
+    - Compendium.coc2-base.coc2-objets-sans-description.Item.4d1gKste3wkPEXZT
+effects: []
+sort: 100000
+ownership:
+  default: 0
+flags: {}
+_stats:
+  compendiumSource: null
+  duplicateSource: null
+  coreVersion: '14'
+  systemId: co2
+  systemVersion: 2.3.0
+  createdTime: 1788897614388
+  modifiedTime: 1788897614388
+  lastModifiedBy: null
+  exportSource: null
+_key: '!items!4FbCKhthfNsuLhzV'

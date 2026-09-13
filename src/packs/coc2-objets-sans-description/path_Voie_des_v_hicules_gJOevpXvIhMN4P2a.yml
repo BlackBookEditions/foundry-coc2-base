@@ -1,0 +1,30 @@
+folder: fMDRB6DUEau6k2vL
+name: Voie des véhicules
+type: path
+img: icons/svg/aura.svg
+_id: gJOevpXvIhMN4P2a
+system:
+  subtype: profile
+  description: <p>Livre des règles page 43</p>
+  capacities:
+    - Compendium.coc2-base.coc2-objets-sans-description.Item.SLAu7yqr8kBNdugk
+    - Compendium.coc2-base.coc2-objets-sans-description.Item.LGVjmyoMuUaeeBKc
+    - Compendium.coc2-base.coc2-objets-sans-description.Item.BMxX04ZYI43l1NXg
+    - Compendium.coc2-base.coc2-objets-sans-description.Item.EyXXWeu9hf50hrSj
+    - Compendium.coc2-base.coc2-objets-sans-description.Item.DIzl0fk7Yg254G4F
+effects: []
+sort: 1800000
+ownership:
+  default: 0
+flags: {}
+_stats:
+  compendiumSource: null
+  duplicateSource: null
+  coreVersion: '14'
+  systemId: co2
+  systemVersion: 2.3.0
+  createdTime: 1788897614388
+  modifiedTime: 1788897614388
+  lastModifiedBy: null
+  exportSource: null
+_key: '!items!gJOevpXvIhMN4P2a'

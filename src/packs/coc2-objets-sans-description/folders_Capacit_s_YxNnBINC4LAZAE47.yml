@@ -1,0 +1,20 @@
+name: Capacités
+sorting: m
+folder: null
+type: Item
+_id: YxNnBINC4LAZAE47
+description: ''
+sort: 200000
+color: null
+flags: {}
+_stats:
+  compendiumSource: null
+  duplicateSource: null
+  coreVersion: '14'
+  systemId: co2
+  systemVersion: 2.3.0
+  createdTime: 1788897614388
+  modifiedTime: 1788897614388
+  lastModifiedBy: null
+  exportSource: null
+_key: '!folders!YxNnBINC4LAZAE47'

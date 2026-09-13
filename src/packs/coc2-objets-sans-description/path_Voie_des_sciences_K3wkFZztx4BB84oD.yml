@@ -1,0 +1,30 @@
+folder: fMDRB6DUEau6k2vL
+name: Voie des sciences
+type: path
+img: icons/svg/aura.svg
+_id: K3wkFZztx4BB84oD
+system:
+  subtype: profile
+  description: <p>Livre des règles page 41</p>
+  capacities:
+    - Compendium.coc2-base.coc2-objets-sans-description.Item.KAoiGvGyomXX6mbR
+    - Compendium.coc2-base.coc2-objets-sans-description.Item.ClysGp3oRyPyuvFN
+    - Compendium.coc2-base.coc2-objets-sans-description.Item.UIJrAlxBwnvGvMoB
+    - Compendium.coc2-base.coc2-objets-sans-description.Item.C1MnxmXMBKuFYpfa
+    - Compendium.coc2-base.coc2-objets-sans-description.Item.xO3rtw0KVoFRfSPO
+effects: []
+sort: 1600000
+ownership:
+  default: 0
+flags: {}
+_stats:
+  compendiumSource: null
+  duplicateSource: null
+  coreVersion: '14'
+  systemId: co2
+  systemVersion: 2.3.0
+  createdTime: 1788897614388
+  modifiedTime: 1788897614388
+  lastModifiedBy: null
+  exportSource: null
+_key: '!items!K3wkFZztx4BB84oD'

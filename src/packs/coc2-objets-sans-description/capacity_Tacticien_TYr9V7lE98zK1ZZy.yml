@@ -1,0 +1,26 @@
+folder: 3XQP5HXM87DCdIPX
+name: Tacticien
+type: capacity
+img: icons/svg/upgrade.svg
+_id: TYr9V7lE98zK1ZZy
+system:
+  description: <p>Livre des règles page 34</p>
+  rank: 3
+  learned: false
+  path: Compendium.coc2-base.coc2-objets-sans-description.Item.8UVyQ3IKjncrzX5b
+effects: []
+sort: 300000
+ownership:
+  default: 0
+flags: {}
+_stats:
+  compendiumSource: null
+  duplicateSource: null
+  coreVersion: '14'
+  systemId: co2
+  systemVersion: 2.3.0
+  createdTime: 1788897614388
+  modifiedTime: 1788897614388
+  lastModifiedBy: null
+  exportSource: null
+_key: '!items!TYr9V7lE98zK1ZZy'

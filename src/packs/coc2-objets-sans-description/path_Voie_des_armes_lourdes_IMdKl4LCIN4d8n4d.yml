@@ -1,0 +1,30 @@
+folder: fMDRB6DUEau6k2vL
+name: Voie des armes lourdes
+type: path
+img: icons/svg/aura.svg
+_id: IMdKl4LCIN4d8n4d
+system:
+  subtype: profile
+  description: <p>Livre des règles page 30</p>
+  capacities:
+    - Compendium.coc2-base.coc2-objets-sans-description.Item.Uh9lyEOicaApwH0y
+    - Compendium.coc2-base.coc2-objets-sans-description.Item.y1229uiYTGfN54by
+    - Compendium.coc2-base.coc2-objets-sans-description.Item.MJ9hrIwh9MxiLy0U
+    - Compendium.coc2-base.coc2-objets-sans-description.Item.gwbNtrDGy7sEDJyo
+    - Compendium.coc2-base.coc2-objets-sans-description.Item.Qrs28IrBl2sIC3CO
+effects: []
+sort: 300000
+ownership:
+  default: 0
+flags: {}
+_stats:
+  compendiumSource: null
+  duplicateSource: null
+  coreVersion: '14'
+  systemId: co2
+  systemVersion: 2.3.0
+  createdTime: 1788897614388
+  modifiedTime: 1788897614388
+  lastModifiedBy: null
+  exportSource: null
+_key: '!items!IMdKl4LCIN4d8n4d'

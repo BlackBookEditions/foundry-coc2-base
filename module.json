@@ -15,7 +15,8 @@
         "id": "co2",
         "type": "system",
         "compatibility": {
-          "verified": "2.3.0"
+          "minimum": "2.3.7",
+          "verified": "2.3.7"
         }
       }
     ],
@@ -25,6 +26,19 @@
   "authors": [
     {
       "name": "kristov"
+    }
+  ],
+  "packs": [
+    {
+      "label": "COC2 Objets",
+      "type": "Item",
+      "name": "coc2-objets-sans-description",
+      "path": "packs/coc2-objets-sans-description",
+      "system": "co2",
+      "ownership": {
+        "PLAYER": "OBSERVER",
+        "ASSISTANT": "OWNER"
+      }
     }
   ],
   "esmodules": ["coc-base.mjs"],

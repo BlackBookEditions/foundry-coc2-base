@@ -1,0 +1,54 @@
+folder: RSV1yGBksKQCYCge
+name: Artilleur
+type: capacity
+img: icons/svg/upgrade.svg
+_id: Uh9lyEOicaApwH0y
+system:
+  description: <p>Livre des règles page 30</p>
+  rank: 1
+  learned: false
+  path: Compendium.coc2-base.coc2-objets-sans-description.Item.IMdKl4LCIN4d8n4d
+  actions:
+    - source: Compendium.coc2-base.coc2-objets-sans-description.Item.Uh9lyEOicaApwH0y
+      indice: 0
+      type: buff
+      img: icons/svg/upgrade.svg
+      label: Artilleur
+      chatFlavor: ''
+      actionType: none
+      properties:
+        visible: false
+        activable: false
+        enabled: false
+        temporary: false
+        noManaCost: false
+        noChargesUsed: false
+      conditions:
+        - predicate: isLearned
+          object: ''
+      modifiers:
+        - source: Compendium.coc2-base.coc2-objets-sans-description.Item.Uh9lyEOicaApwH0y
+          type: capacity
+          subtype: combat
+          target: ranged
+          apply: self
+          value: '@rang'
+          choiceGroup: 0
+          additionalInfos: Arme lourde
+      resolvers: []
+effects: []
+sort: 100000
+ownership:
+  default: 0
+flags: {}
+_stats:
+  compendiumSource: null
+  duplicateSource: null
+  coreVersion: '14'
+  systemId: co2
+  systemVersion: 2.3.0
+  createdTime: 1788897614388
+  modifiedTime: 1788897614388
+  lastModifiedBy: null
+  exportSource: null
+_key: '!items!Uh9lyEOicaApwH0y'

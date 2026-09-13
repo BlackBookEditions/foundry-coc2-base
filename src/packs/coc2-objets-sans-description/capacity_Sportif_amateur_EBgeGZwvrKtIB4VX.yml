@@ -1,0 +1,54 @@
+folder: EHBG54VunWmGF4vA
+name: Sportif amateur
+type: capacity
+img: icons/svg/upgrade.svg
+_id: EBgeGZwvrKtIB4VX
+system:
+  description: <p>Livre des règles page 33</p>
+  rank: 1
+  learned: false
+  path: Compendium.coc2-base.coc2-objets-sans-description.Item.dcDfPSmYdHiYykQ6
+  actions:
+    - source: Compendium.coc2-base.coc2-objets-sans-description.Item.EBgeGZwvrKtIB4VX
+      indice: 0
+      type: buff
+      img: icons/svg/upgrade.svg
+      label: Sportif amateur
+      chatFlavor: ''
+      actionType: none
+      properties:
+        visible: false
+        activable: false
+        enabled: false
+        temporary: false
+        noManaCost: false
+        noChargesUsed: false
+      conditions:
+        - predicate: isLearned
+          object: ''
+      modifiers:
+        - source: Compendium.coc2-base.coc2-objets-sans-description.Item.EBgeGZwvrKtIB4VX
+          type: capacity
+          subtype: ability
+          target: con
+          apply: self
+          value: '+1'
+          choiceGroup: 0
+          additionalInfos: ''
+      resolvers: []
+effects: []
+sort: 100000
+ownership:
+  default: 0
+flags: {}
+_stats:
+  compendiumSource: null
+  duplicateSource: null
+  coreVersion: '14'
+  systemId: co2
+  systemVersion: 2.3.0
+  createdTime: 1788897614388
+  modifiedTime: 1788897614388
+  lastModifiedBy: null
+  exportSource: null
+_key: '!items!EBgeGZwvrKtIB4VX'

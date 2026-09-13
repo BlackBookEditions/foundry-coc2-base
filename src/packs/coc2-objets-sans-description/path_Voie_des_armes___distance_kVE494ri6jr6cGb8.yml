@@ -1,0 +1,30 @@
+folder: fMDRB6DUEau6k2vL
+name: Voie des armes à distance
+type: path
+img: icons/svg/aura.svg
+_id: kVE494ri6jr6cGb8
+system:
+  subtype: profile
+  description: <p>Livre des règles page 30</p>
+  capacities:
+    - Compendium.coc2-base.coc2-objets-sans-description.Item.GQI1iPkJoTMn3Kiv
+    - Compendium.coc2-base.coc2-objets-sans-description.Item.xAHyE8QhZADsiUwR
+    - Compendium.coc2-base.coc2-objets-sans-description.Item.zZtzkF2Kene99fx4
+    - Compendium.coc2-base.coc2-objets-sans-description.Item.yBZIlseO1FvUaBQB
+    - Compendium.coc2-base.coc2-objets-sans-description.Item.Yl6MPnjrxrKBvFDc
+effects: []
+sort: 200000
+ownership:
+  default: 0
+flags: {}
+_stats:
+  compendiumSource: null
+  duplicateSource: null
+  coreVersion: '14'
+  systemId: co2
+  systemVersion: 2.3.0
+  createdTime: 1788897614388
+  modifiedTime: 1788897614388
+  lastModifiedBy: null
+  exportSource: null
+_key: '!items!kVE494ri6jr6cGb8'

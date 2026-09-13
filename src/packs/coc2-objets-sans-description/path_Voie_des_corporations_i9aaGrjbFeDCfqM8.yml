@@ -1,0 +1,30 @@
+folder: fMDRB6DUEau6k2vL
+name: Voie des corporations
+type: path
+img: icons/svg/aura.svg
+_id: i9aaGrjbFeDCfqM8
+system:
+  subtype: profile
+  description: <p>Livre des règles page 34</p>
+  capacities:
+    - Compendium.coc2-base.coc2-objets-sans-description.Item.OJOrzhRLCE2dcSJD
+    - Compendium.coc2-base.coc2-objets-sans-description.Item.61jmsP7U1pxE9Ggt
+    - Compendium.coc2-base.coc2-objets-sans-description.Item.rlrigQqDnKEYt0V6
+    - Compendium.coc2-base.coc2-objets-sans-description.Item.iem2e55AZjz8kwBP
+    - Compendium.coc2-base.coc2-objets-sans-description.Item.urXKW1CJ1IWSEvk9
+effects: []
+sort: 700000
+ownership:
+  default: 0
+flags: {}
+_stats:
+  compendiumSource: null
+  duplicateSource: null
+  coreVersion: '14'
+  systemId: co2
+  systemVersion: 2.3.0
+  createdTime: 1788897614388
+  modifiedTime: 1788897614388
+  lastModifiedBy: null
+  exportSource: null
+_key: '!items!i9aaGrjbFeDCfqM8'

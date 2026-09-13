@@ -1,0 +1,54 @@
+folder: kPOSUps5WsJBWeHH
+name: Pickpocket
+type: capacity
+img: icons/svg/upgrade.svg
+_id: mWDWGISgC1u5WjnT
+system:
+  description: <p>Livre des règles page 35</p>
+  rank: 1
+  learned: false
+  path: Compendium.coc2-base.coc2-objets-sans-description.Item.Kh6iu4hvcvxEj0Gk
+  actions:
+    - source: Compendium.coc2-base.coc2-objets-sans-description.Item.mWDWGISgC1u5WjnT
+      indice: 0
+      type: buff
+      img: icons/svg/upgrade.svg
+      label: Pickpocket
+      chatFlavor: ''
+      actionType: none
+      properties:
+        visible: false
+        activable: false
+        enabled: false
+        temporary: false
+        noManaCost: false
+        noChargesUsed: false
+      conditions:
+        - predicate: isLearned
+          object: ''
+      modifiers:
+        - source: Compendium.coc2-base.coc2-objets-sans-description.Item.mWDWGISgC1u5WjnT
+          type: capacity
+          subtype: skill
+          target: agi
+          apply: self
+          value: '+5'
+          choiceGroup: 0
+          additionalInfos: Voler, tricher, dissimuler un petit objet
+      resolvers: []
+effects: []
+sort: 100000
+ownership:
+  default: 0
+flags: {}
+_stats:
+  compendiumSource: null
+  duplicateSource: null
+  coreVersion: '14'
+  systemId: co2
+  systemVersion: 2.3.0
+  createdTime: 1788897614388
+  modifiedTime: 1788897614388
+  lastModifiedBy: null
+  exportSource: null
+_key: '!items!mWDWGISgC1u5WjnT'

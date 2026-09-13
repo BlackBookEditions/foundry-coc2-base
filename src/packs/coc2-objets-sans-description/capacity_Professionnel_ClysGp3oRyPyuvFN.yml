@@ -1,0 +1,54 @@
+folder: msmVFDaRTUGkBG3C
+name: Professionnel
+type: capacity
+img: icons/svg/upgrade.svg
+_id: ClysGp3oRyPyuvFN
+system:
+  description: <p>Livre des règles page 41</p>
+  rank: 2
+  learned: false
+  path: Compendium.coc2-base.coc2-objets-sans-description.Item.K3wkFZztx4BB84oD
+  actions:
+    - source: Compendium.coc2-base.coc2-objets-sans-description.Item.ClysGp3oRyPyuvFN
+      indice: 0
+      type: buff
+      img: icons/svg/upgrade.svg
+      label: Professionnel
+      chatFlavor: ''
+      actionType: none
+      properties:
+        visible: false
+        activable: false
+        enabled: false
+        temporary: false
+        noManaCost: false
+        noChargesUsed: false
+      conditions:
+        - predicate: isLearned
+          object: ''
+      modifiers:
+        - source: Compendium.coc2-base.coc2-objets-sans-description.Item.ClysGp3oRyPyuvFN
+          type: capacity
+          subtype: skill
+          target: int
+          apply: self
+          value: '+5'
+          choiceGroup: 0
+          additionalInfos: Discipline scientifique nº2 (même ensemble)
+      resolvers: []
+effects: []
+sort: 200000
+ownership:
+  default: 0
+flags: {}
+_stats:
+  compendiumSource: null
+  duplicateSource: null
+  coreVersion: '14'
+  systemId: co2
+  systemVersion: 2.3.0
+  createdTime: 1788897614388
+  modifiedTime: 1788897614388
+  lastModifiedBy: null
+  exportSource: null
+_key: '!items!ClysGp3oRyPyuvFN'

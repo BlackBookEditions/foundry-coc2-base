@@ -1,0 +1,74 @@
+folder: rG8zmHZXElykbyGv
+name: Hallebarde / pique
+type: equipment
+img: icons/svg/sword.svg
+_id: WxeFHXjU59hO7Gfo
+system:
+  description: <p>Livre des règles page 93</p>
+  subtype: weapon
+  martialCategory: contact
+  damagetype: piercing
+  price:
+    value: 0
+    unit: usd
+  equipped: false
+  properties:
+    equipable: true
+    reloadable: false
+    stackable: false
+  usage:
+    oneHand: false
+    twoHand: true
+  actions:
+    - source: Compendium.coc2-base.coc2-objets-sans-description.Item.WxeFHXjU59hO7Gfo
+      indice: 0
+      label: ''
+      chatFlavor: ''
+      type: melee
+      img: icons/svg/d20-highlight.svg
+      properties:
+        visible: false
+        enabled: false
+        activable: true
+        temporary: false
+        noManaCost: false
+      conditions:
+        - predicate: isEquipped
+      resolvers:
+        - type: attack
+          bonusDiceAdd: false
+          malusDiceAdd: false
+          skill:
+            formula: '@atc'
+            crit: ''
+            difficulty: '@cible.def'
+          dmg:
+            formula: 1d10 + @for
+          target:
+            type: none
+            number: '0'
+            scope: all
+          additionalEffect:
+            active: false
+            applyOn: success
+            statuses: []
+            duration: '0'
+            unit: round
+      modifiers: []
+  tags: []
+effects: []
+sort: 1000000
+ownership:
+  default: 0
+flags: {}
+_stats:
+  compendiumSource: null
+  duplicateSource: null
+  coreVersion: '14'
+  systemId: co2
+  systemVersion: 2.3.0
+  createdTime: 1788897614388
+  modifiedTime: 1788897614388
+  lastModifiedBy: null
+  exportSource: null
+_key: '!items!WxeFHXjU59hO7Gfo'

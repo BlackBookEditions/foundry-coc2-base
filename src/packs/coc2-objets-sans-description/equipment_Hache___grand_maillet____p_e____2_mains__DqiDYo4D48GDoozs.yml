@@ -1,0 +1,97 @@
+folder: rG8zmHZXElykbyGv
+name: Hache / grand maillet / épée (à 2 mains)
+type: equipment
+img: icons/svg/sword.svg
+_id: DqiDYo4D48GDoozs
+system:
+  description: <p>Livre des règles page 93</p>
+  subtype: weapon
+  martialCategory: contact
+  damagetype: slashing
+  price:
+    value: 150
+    unit: usd
+  equipped: false
+  properties:
+    equipable: true
+    reloadable: false
+    stackable: false
+  usage:
+    oneHand: false
+    twoHand: true
+  actions:
+    - source: Compendium.coc2-base.coc2-objets-sans-description.Item.DqiDYo4D48GDoozs
+      indice: 0
+      label: ''
+      chatFlavor: ''
+      type: melee
+      img: icons/svg/d20-highlight.svg
+      properties:
+        visible: false
+        enabled: false
+        activable: true
+        temporary: false
+        noManaCost: false
+      conditions:
+        - predicate: isEquipped
+      resolvers:
+        - type: attack
+          bonusDiceAdd: false
+          malusDiceAdd: false
+          skill:
+            formula: '@atc'
+            crit: ''
+            difficulty: '@cible.def'
+          dmg:
+            formula: 1d10 + @for
+          target:
+            type: none
+            number: '0'
+            scope: all
+          additionalEffect:
+            active: false
+            applyOn: success
+            statuses: []
+            duration: '0'
+            unit: round
+      modifiers: []
+    - source: Compendium.coc2-base.coc2-objets-sans-description.Item.DqiDYo4D48GDoozs
+      indice: 0
+      label: ''
+      chatFlavor: ''
+      type: buff
+      img: icons/svg/d20-highlight.svg
+      properties:
+        visible: false
+        enabled: false
+        activable: false
+        temporary: false
+        noManaCost: false
+      conditions:
+        - predicate: isEquipped
+      modifiers:
+        - type: equipment
+          source: Compendium.coc2-base.coc2-objets-sans-description.Item.DqiDYo4D48GDoozs
+          additionalInfos: ''
+          subtype: combat
+          target: init
+          apply: self
+          value: '-2'
+      resolvers: []
+  tags: []
+effects: []
+sort: 900000
+ownership:
+  default: 0
+flags: {}
+_stats:
+  compendiumSource: null
+  duplicateSource: null
+  coreVersion: '14'
+  systemId: co2
+  systemVersion: 2.3.0
+  createdTime: 1788897614388
+  modifiedTime: 1788897614388
+  lastModifiedBy: null
+  exportSource: null
+_key: '!items!DqiDYo4D48GDoozs'

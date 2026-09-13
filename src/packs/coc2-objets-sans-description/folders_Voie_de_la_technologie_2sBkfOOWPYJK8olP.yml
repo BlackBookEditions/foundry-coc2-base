@@ -1,0 +1,20 @@
+name: Voie de la technologie
+sorting: m
+folder: YxNnBINC4LAZAE47
+type: Item
+_id: 2sBkfOOWPYJK8olP
+description: ''
+sort: 1500000
+color: null
+flags: {}
+_stats:
+  compendiumSource: null
+  duplicateSource: null
+  coreVersion: '14'
+  systemId: co2
+  systemVersion: 2.3.0
+  createdTime: 1788897614388
+  modifiedTime: 1788897614388
+  lastModifiedBy: null
+  exportSource: null
+_key: '!folders!2sBkfOOWPYJK8olP'

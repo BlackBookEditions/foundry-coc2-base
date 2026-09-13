@@ -5,8 +5,13 @@
   "dependencies": {
     "less": "^4.2.0"
   },
+  "devDependencies": {
+    "@foundryvtt/foundryvtt-cli": "^3.0.0"
+  },
   "scripts": {
     "compile": "node ./tools/compile-less.mjs",
-    "test": "node --test test/*.test.mjs"
+    "test": "node --test test/*.test.mjs",
+    "LDBtoYML": "node ./tools/LDBtoYML.mjs",
+    "YMLtoLDB": "node ./tools/YMLtoLDB.mjs"
   }
 }

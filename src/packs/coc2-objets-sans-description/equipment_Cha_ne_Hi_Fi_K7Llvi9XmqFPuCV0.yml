@@ -1,0 +1,39 @@
+folder: odhgzp60B7cshz7X
+name: Chaîne Hi-Fi
+type: equipment
+img: icons/svg/item-bag.svg
+_id: K7Llvi9XmqFPuCV0
+system:
+  description: <p>Livre des règles pages 50-51</p>
+  subtype: misc
+  martialCategory: divers
+  damagetype: ''
+  price:
+    value: 400
+    unit: usd
+  equipped: false
+  properties:
+    equipable: false
+    reloadable: false
+    stackable: false
+  usage:
+    oneHand: false
+    twoHand: false
+  actions: []
+  tags: []
+effects: []
+sort: 900000
+ownership:
+  default: 0
+flags: {}
+_stats:
+  compendiumSource: null
+  duplicateSource: null
+  coreVersion: '14'
+  systemId: co2
+  systemVersion: 2.3.0
+  createdTime: 1788897614388
+  modifiedTime: 1788897614388
+  lastModifiedBy: null
+  exportSource: null
+_key: '!items!K7Llvi9XmqFPuCV0'

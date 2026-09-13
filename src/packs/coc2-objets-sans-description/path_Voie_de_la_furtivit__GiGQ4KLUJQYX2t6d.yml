@@ -1,0 +1,30 @@
+folder: fMDRB6DUEau6k2vL
+name: Voie de la furtivité
+type: path
+img: icons/svg/aura.svg
+_id: GiGQ4KLUJQYX2t6d
+system:
+  subtype: profile
+  description: <p>Livre des règles page 36</p>
+  capacities:
+    - Compendium.coc2-base.coc2-objets-sans-description.Item.BiuTQPsunFL14xHv
+    - Compendium.coc2-base.coc2-objets-sans-description.Item.0f5mVPCgYtjCoUQA
+    - Compendium.coc2-base.coc2-objets-sans-description.Item.PG5u7NXOKEwv7xBy
+    - Compendium.coc2-base.coc2-objets-sans-description.Item.vxjf6A9EVT9XStW0
+    - Compendium.coc2-base.coc2-objets-sans-description.Item.883IGcF4U9NuUR7g
+effects: []
+sort: 1000000
+ownership:
+  default: 0
+flags: {}
+_stats:
+  compendiumSource: null
+  duplicateSource: null
+  coreVersion: '14'
+  systemId: co2
+  systemVersion: 2.3.0
+  createdTime: 1788897614388
+  modifiedTime: 1788897614388
+  lastModifiedBy: null
+  exportSource: null
+_key: '!items!GiGQ4KLUJQYX2t6d'

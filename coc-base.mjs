@@ -221,6 +221,22 @@ Hooks.on("renderCoPathSheet", (application, element, context, options) => {
 })
 
 /*
+ * Défense max de l'armure (system.maxDefenseArmor) : plafond de Défense d'armure avant surcoût en PM lors
+ * du lancement d'un sort (profils hybrides COF2, cf. COActor#getManaCostFromArmor) — notion de magie/PM
+ * absente de COC2. Le champ système reste inerte (valeur éventuellement stockée conservée, simplement plus
+ * éditable) : on retire son groupe de formulaire des fiches de voie et de profil, même traitement que
+ * system.magicalDefense/system.martialCategory sur la fiche d'équipement ci-dessous.
+ */
+Hooks.on("renderCoPathSheet", (application, element, context, options) => {
+  // Idempotent : null après la première suppression (la fiche peut être rendue partiellement)
+  element.querySelector('[name="system.maxDefenseArmor"]')?.closest(".form-group")?.remove()
+})
+
+Hooks.on("renderCoProfileSheet", (application, element, context, options) => {
+  element.querySelector('[name="system.maxDefenseArmor"]')?.closest(".form-group")?.remove()
+})
+
+/*
  * Coût en points des traits distinctifs (avantages/désavantages) : champ injecté dans la fiche feature, stocké en flag
  */
 Hooks.on("renderCoFeatureSheet", (application, element, context, options) => {
