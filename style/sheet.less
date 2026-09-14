@@ -9,7 +9,7 @@
 /* Largeurs partagées par les deux rubans (santé + seconde échelle) : le libellé et le bloc résumé
    ont la même largeur d'une ligne à l'autre, donc le bloc icône X/Y et le début du ruban s'alignent
    verticalement. Dimensionnées pour le plus long libellé attendu (« Conscience »). */
-@coc2-scale-label-width: 8em;
+@coc2-scale-label-width: 6em;
 @coc2-scale-summary-width: 5em;
 
 .co.actor.coc2 {
@@ -77,7 +77,7 @@
     gap: 6px;
     min-width: 0;
     /* Réserve la hauteur du libellé d'état, positionné en absolu sous le bloc coeur */
-    padding-bottom: 1.1em;
+    //padding-bottom: 1.1em;
 
     .health-label {
       align-self: center;
@@ -87,8 +87,8 @@
       /* Largeur fixe partagée avec la seconde échelle : aligne le bloc coeur d'une ligne à l'autre */
       width: @coc2-scale-label-width;
       box-sizing: border-box;
-      text-align: center;
-      background-color: var(--co-sheet-accent);
+      text-align: right;
+      //background-color: var(--co-sheet-accent);
       color: var(--co-text-light);
       font-weight: bold;
       padding: 2px 8px;
@@ -104,6 +104,7 @@
       min-width: @coc2-scale-summary-width;
       white-space: nowrap;
       text-align: center;
+      align-self: flex-start;
     }
 
     .health-points {
@@ -120,12 +121,14 @@
       flex: 1;
       gap: 1px;
       min-width: 0;
+      overflow-x: auto;
+      height: stretch;
     }
 
     /* clip-path rogne bordures et ombres : la distinction des échelons passe par le fond */
     .health-step {
       flex: 1 1 0;
-      min-width: 0;
+      min-width: calc(94% / 20);
       overflow: hidden;
       /* Dimensions relatives à la taille du numéro ; height == line-height le centre verticalement */
       font-size: 0.7rem;
@@ -186,7 +189,7 @@
     gap: 6px;
     min-width: 0;
     /* Réserve la hauteur du libellé d'état, positionné en absolu sous le bloc résumé */
-    padding-bottom: 1.1em;
+    //padding-bottom: 1.1em;
 
     .scale-label {
       align-self: center;
@@ -194,7 +197,7 @@
       /* Même largeur que .health-label : aligne le bloc icône X/Y d'une échelle à l'autre */
       width: @coc2-scale-label-width;
       box-sizing: border-box;
-      text-align: center;
+      text-align: right;
       background-color: var(--co-sheet-accent);
       color: var(--co-text-light);
       font-weight: bold;
@@ -209,6 +212,7 @@
       min-width: @coc2-scale-summary-width;
       white-space: nowrap;
       text-align: center;
+      align-self: flex-start;
     }
 
     .scale-points {
@@ -294,6 +298,7 @@
     /* Le libellé, le X/Y et la ligne d'édition se succèdent en trois lignes (le libellé est un bloc) :
        on les centre au niveau du conteneur pour qu'ils s'alignent entre eux. */
     text-align: center;
+    align-content: center;
 
     .add-session {
       margin-left: 4px;
@@ -438,6 +443,31 @@
       "abilities"
       "health"
       "secondscale";
+  }
+  .health-bar {
+    height: 2rem;
+    margin-top: 5px;
+    .health-label {
+      display: none;
+    }
+    .health-step {
+      clip-path: none;
+    }
+  }
+  .second-scale-bar {
+    height: 2rem;
+    .scale-label {
+      display: none;
+    }
+    .scale-step {
+      clip-path: none;
+    }
+  }
+  .sidebar-section {
+    padding: 5px;
+  }
+  .window-content .mini-sidebar {
+    grid-template-rows: 1fr;
   }
 }
 
