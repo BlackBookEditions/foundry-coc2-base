@@ -1,7 +1,7 @@
 folder: fMDRB6DUEau6k2vL
 name: Voie de la psychologie
 type: path
-img: icons/svg/aura.svg
+img: icons/commodities/tech/lamp-bulb-incandescent.webp
 _id: FwPzLLo9XI666KYv
 system:
   subtype: profile
@@ -20,11 +20,11 @@ flags: {}
 _stats:
   compendiumSource: null
   duplicateSource: null
-  coreVersion: '14'
+  coreVersion: '14.367'
   systemId: co2
   systemVersion: 2.3.0
   createdTime: 1788897614388
-  modifiedTime: 1788897614388
-  lastModifiedBy: null
+  modifiedTime: 1789343383071
+  lastModifiedBy: Oi5VODFJW1pIN1Sg
   exportSource: null
 _key: '!items!FwPzLLo9XI666KYv'
