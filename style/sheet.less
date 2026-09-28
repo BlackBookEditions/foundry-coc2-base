@@ -76,8 +76,12 @@
     align-items: center;
     gap: 6px;
     min-width: 0;
-    /* Réserve la hauteur du libellé d'état, positionné en absolu sous le bloc coeur */
-    //padding-bottom: 1.1em;
+    /* Réserve la place du nom d'état, positionné en absolu sous le bloc coeur (donc hors flux : rien
+       ne le contient). Réservée EN PERMANENCE, état atteint ou non — sinon le ruban grandirait à
+       l'apparition de l'état et pousserait toute la suite de l'en-tête vers le bas.
+       MARGIN et non padding : en Vue actions le ruban reçoit une hauteur fixe (2rem) et tout est en
+       border-box, où un padding serait pris SUR cette hauteur et écraserait la rangée d'échelons. */
+    margin-bottom: 1.1em;
 
     .health-label {
       align-self: center;
@@ -104,6 +108,13 @@
       min-width: @coc2-scale-summary-width;
       white-space: nowrap;
       text-align: center;
+      /* Centré sur le ruban par défaut : sans nom d'état sous lui, rien ne justifie de le décaler */
+      align-self: center;
+    }
+
+    /* Un nom d'état est affiché (.health-state n'est rendu que si l'état existe) : le bloc coeur remonte
+       pour lui dégager la place. La hauteur du ruban, elle, ne change pas (marge permanente ci-dessus). */
+    &:has(.health-state) .health-summary {
       align-self: flex-start;
     }
 
@@ -188,8 +199,8 @@
     align-items: center;
     gap: 6px;
     min-width: 0;
-    /* Réserve la hauteur du libellé d'état, positionné en absolu sous le bloc résumé */
-    //padding-bottom: 1.1em;
+    /* Même réserve permanente que .health-bar (cf. le commentaire détaillé là-bas) */
+    margin-bottom: 1.1em;
 
     .scale-label {
       align-self: center;
@@ -212,6 +223,11 @@
       min-width: @coc2-scale-summary-width;
       white-space: nowrap;
       text-align: center;
+      /* Comme .health-summary : centré par défaut, remonté seulement si un nom de palier s'affiche */
+      align-self: center;
+    }
+
+    &:has(.scale-state) .scale-summary {
       align-self: flex-start;
     }
 

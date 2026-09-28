@@ -936,9 +936,16 @@
   align-items: center;
   gap: 6px;
   min-width: 0;
-  /* Réserve la hauteur du libellé d'état, positionné en absolu sous le bloc coeur */
+  /* Réserve la place du nom d'état, positionné en absolu sous le bloc coeur (donc hors flux : rien
+       ne le contient). Réservée EN PERMANENCE, état atteint ou non — sinon le ruban grandirait à
+       l'apparition de l'état et pousserait toute la suite de l'en-tête vers le bas.
+       MARGIN et non padding : en Vue actions le ruban reçoit une hauteur fixe (2rem) et tout est en
+       border-box, où un padding serait pris SUR cette hauteur et écraserait la rangée d'échelons. */
+  margin-bottom: 1.1em;
   /* Bloc coeur. Le nom de l'état est positionné en absolu dessous : il ne participe pas au flux,
        donc son apparition ne décale pas la ligne libellé / coeur / ruban. */
+  /* Un nom d'état est affiché (.health-state n'est rendu que si l'état existe) : le bloc coeur remonte
+       pour lui dégager la place. La hauteur du ruban, elle, ne change pas (marge permanente ci-dessus). */
   /* clip-path rogne bordures et ombres : la distinction des échelons passe par le fond */
 }
 .co.actor.coc2 .health-bar .health-label {
@@ -962,6 +969,10 @@
   min-width: 5em;
   white-space: nowrap;
   text-align: center;
+  /* Centré sur le ruban par défaut : sans nom d'état sous lui, rien ne justifie de le décaler */
+  align-self: center;
+}
+.co.actor.coc2 .health-bar:has(.health-state) .health-summary {
   align-self: flex-start;
 }
 .co.actor.coc2 .health-bar .health-points {
@@ -1032,7 +1043,8 @@
   align-items: center;
   gap: 6px;
   min-width: 0;
-  /* Réserve la hauteur du libellé d'état, positionné en absolu sous le bloc résumé */
+  /* Même réserve permanente que .health-bar (cf. le commentaire détaillé là-bas) */
+  margin-bottom: 1.1em;
   /* Nom de l'état atteint, sous le bloc résumé (comme .health-state) */
 }
 .co.actor.coc2 .second-scale-bar .scale-label {
@@ -1055,6 +1067,10 @@
   min-width: 5em;
   white-space: nowrap;
   text-align: center;
+  /* Comme .health-summary : centré par défaut, remonté seulement si un nom de palier s'affiche */
+  align-self: center;
+}
+.co.actor.coc2 .second-scale-bar:has(.scale-state) .scale-summary {
   align-self: flex-start;
 }
 .co.actor.coc2 .second-scale-bar .scale-points {
