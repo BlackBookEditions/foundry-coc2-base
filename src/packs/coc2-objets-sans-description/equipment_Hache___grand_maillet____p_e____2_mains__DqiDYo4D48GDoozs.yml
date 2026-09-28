@@ -1,7 +1,7 @@
 folder: rG8zmHZXElykbyGv
 name: Hache / grand maillet / épée (à 2 mains)
 type: equipment
-img: icons/svg/sword.svg
+img: icons/weapons/axes/axe-fire.webp
 _id: DqiDYo4D48GDoozs
 system:
   description: <p>Livre des règles page 93</p>
@@ -24,13 +24,15 @@ system:
       indice: 0
       label: ''
       chatFlavor: ''
-      type: melee
       img: icons/svg/d20-highlight.svg
+      type: melee
+      actionType: none
       properties:
-        visible: false
-        enabled: false
         activable: true
         temporary: false
+        noChargesUsed: false
+        visible: false
+        enabled: false
         noManaCost: false
       conditions:
         - predicate: isEquipped
@@ -48,37 +50,53 @@ system:
             type: none
             number: '0'
             scope: all
+          hasAttackSuccessThreshold: false
           additionalEffect:
             active: false
             applyOn: success
             statuses: []
             duration: '0'
             unit: round
+          halfDmgOnSave: true
       modifiers: []
     - source: Compendium.coc2-base.coc2-objets-sans-description.Item.DqiDYo4D48GDoozs
-      indice: 0
+      indice: 1
       label: ''
       chatFlavor: ''
-      type: buff
       img: icons/svg/d20-highlight.svg
+      type: buff
+      actionType: none
       properties:
-        visible: false
-        enabled: false
         activable: false
         temporary: false
+        noChargesUsed: false
+        visible: false
+        enabled: false
         noManaCost: false
       conditions:
         - predicate: isEquipped
       modifiers:
         - type: equipment
           source: Compendium.coc2-base.coc2-objets-sans-description.Item.DqiDYo4D48GDoozs
-          additionalInfos: ''
           subtype: combat
           target: init
-          apply: self
           value: '-2'
+          apply: self
+          additionalInfos: ''
+          choiceGroup: 0
       resolvers: []
   tags: []
+  range:
+    value: null
+    unit: ''
+    base: 0
+    ability: null
+    details: null
+    min: null
+    max: null
+    bonuses:
+      sheet: 0
+      effects: 0
 effects: []
 sort: 900000
 ownership:
@@ -87,11 +105,11 @@ flags: {}
 _stats:
   compendiumSource: null
   duplicateSource: null
-  coreVersion: '14'
+  coreVersion: '14.367'
   systemId: co2
-  systemVersion: 2.3.0
+  systemVersion: 2.3.7
   createdTime: 1788897614388
-  modifiedTime: 1788897614388
-  lastModifiedBy: null
+  modifiedTime: 1789345107362
+  lastModifiedBy: Oi5VODFJW1pIN1Sg
   exportSource: null
 _key: '!items!DqiDYo4D48GDoozs'

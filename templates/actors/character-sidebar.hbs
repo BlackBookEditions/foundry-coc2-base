@@ -1,57 +1,7 @@
 {{!log "Chroniques Oubliées | Character sidebar COC2" this}}
 <div class="sheet-sidebar">
   <div class="scrollable">
-    <!-- INIT -->
-    <div class="sidebar-section init-section">
-      <div class="sidebar-section-header">
-        <div class="sidebar-label init-label">
-          <h4>{{localize "CO.label.long.init"}}</h4>
-          <!--                <a class="roll-icon roll-init"><i class="fas fa-dice-d20"></i><i class="fas fa-fw fa-plus"></i><div>{{!combat.init.value}}</div></a>-->
-          <!--                <a class="roll-icon roll-init"><i class="fas fa-dice-d20"></i><i class="fas fa-fw fa-plus"></i><div>{{!combat.init.value}}</div></a>-->
-        </div>
-        {{#if viewLimited}}
-          <div class="init-value labelled-field">
-            <i class="fas fa-solid fa-swords fa-fw"></i>??
-          </div>
-        {{else}}
-          <div class="init-value labelled-field" data-tooltip="{{combat.init.tooltipValue}}">
-            <i class="fas fa-solid fa-swords fa-fw"></i>
-            {{combat.init.value}}
-          </div>
-        {{/if}}
-      </div>
-      {{#if unlocked}}
-        <div class="sidebar-section-content">
-          <div class="field">
-            <span class="combat-formula" data-tooltip="{{localize 'COC2BASE.combat.formulaTooltip'}}">{{initFormula}}</span>
-          </div>
-        </div>
-        <div class="sidebar-section-content">
-          <div class="field">
-            <input
-              class="init-base"
-              type="number"
-              name="system.combat.init.base"
-              value="{{combat.init.base}}"
-              data-dtype="Number"
-              placeholder="0"
-              readonly
-              data-tooltip="{{localize 'CO.label.long.base'}}"
-            />
-            <span class="slash">/</span>
-            <input
-              class="init-bonus"
-              type="text"
-              name="system.combat.init.bonuses.sheet"
-              value="{{numberFormat combat.init.bonuses.sheet decimals=0 sign=true}}"
-              data-dtype="Number"
-              placeholder="0"
-              data-tooltip="{{localize 'CO.label.long.bonus'}}"
-            />
-          </div>
-        </div>
-      {{/if}}
-    </div>
+
     <!-- MELEE -->
     <div class="sidebar-section melee-section">
       <div class="sidebar-section-header">
@@ -72,14 +22,6 @@
 
       </div>
       {{#if unlocked}}
-        <div class="sidebar-section-content">
-          <div class="field">
-            {{!--<label>{{localize "CO.label.short.ability"}}</label>--}}
-            <select name="system.combat.melee.ability" data-type="String">
-              {{selectOptions choiceAbilities selected=combat.melee.ability localize=true}}
-            </select>
-          </div>
-        </div>
         <div class="sidebar-section-content">
           <div class="field" data-tooltip="{{combat.melee.tooltipBase}}">
             {{!<label></label>}}
@@ -106,6 +48,14 @@
             />
           </div>
         </div>
+        <div class="sidebar-section-content">
+          <div class="field">
+            {{!--<label>{{localize "CO.label.short.ability"}}</label>--}}
+            <select name="system.combat.melee.ability" data-type="String">
+              {{selectOptions choiceAbilities selected=combat.melee.ability localize=true}}
+            </select>
+          </div>
+        </div>
       {{/if}}
     </div>
     <!-- RANGED -->
@@ -130,13 +80,6 @@
       {{#if unlocked}}
         <div class="sidebar-section-content">
           <div class="field">
-            <select name="system.combat.ranged.ability" data-type="String">
-              {{selectOptions choiceAbilities selected=combat.ranged.ability localize=true}}
-            </select>
-          </div>
-        </div>
-        <div class="sidebar-section-content">
-          <div class="field">
             <input
               class="ranged-base"
               type="number"
@@ -159,63 +102,16 @@
             />
           </div>
         </div>
-      {{/if}}
-    </div>
-    {{!-- Pas d'attaque magique en COC2 : le livre de règles ne définit que l'ATC (FOR) et l'ATD (AGI) --}}
-    <!-- DEF -->
-    <div class="sidebar-section armor-section">
-      <div class="sidebar-section-header">
-        <div class="sidebar-label armor-label">
-          {{#if viewLimited}}
-          <h4>{{localize "CO.label.long.def"}}</h4>
-        </div>
-        <div class="armor-base labelled-field">
-          <i class="fas fa-fw fa-shield-alt"></i>??
-        </div>
-        {{else}}
-          {{!-- Pas de tooltip d'encombrement ici (contrairement au template co2) : en COC2 la DEF est la seule
-                valeur de combat que le malus des protections n'affecte pas. Il porte sur l'Init., l'ATC et les
-                tests d'AGI, et s'affiche dans les tooltips de ces valeurs. --}}
-          <h4>{{localize "CO.label.long.def"}}</h4>
-        </div>
-        <div class="armor-base labelled-field" data-tooltip="{{combat.def.tooltipValue}}">
-          <i class="fas fa-fw fa-shield-alt"></i>
-          {{combat.def.value}}
-        </div>
-        {{/if}}
-      </div>
-      {{#if unlocked}}
         <div class="sidebar-section-content">
           <div class="field">
-            <span class="combat-formula" data-tooltip="{{localize 'COC2BASE.combat.formulaTooltip'}}">{{defFormula}}</span>
-          </div>
-        </div>
-        <div class="sidebar-section-content">
-          <div class="field">
-            <input
-              class="def-base"
-              type="number"
-              name="system.combat.def.base"
-              value="{{combat.def.base}}"
-              data-dtype="Number"
-              placeholder="0"
-              readonly
-              data-tooltip="{{combat.def.tooltipBase}}"
-            />
-            <span class="slash">/</span>
-            <input
-              class="def-bonus"
-              type="text"
-              name="system.combat.def.bonuses.sheet"
-              value="{{numberFormat combat.def.bonuses.sheet decimals=0 sign=true}}"
-              data-dtype="Number"
-              placeholder="0"
-              data-tooltip="{{localize 'CO.label.long.bonus'}}"
-            />
+            <select name="system.combat.ranged.ability" data-type="String">
+              {{selectOptions choiceAbilities selected=combat.ranged.ability localize=true}}
+            </select>
           </div>
         </div>
       {{/if}}
     </div>
+
     {{!-- BDM : bonus de dommages au contact, égal à la Force. Valeur affichée et exposée en @bdm :
           c'est la formule de dommages de l'arme qui la porte (ex. « 1d6 + @bdm »). --}}
     <div class="sidebar-section bdm-section">
@@ -261,6 +157,163 @@
         </div>
       {{/if}}
     </div>
+
+    {{!-- Pas d'attaque magique en COC2 : le livre de règles ne définit que l'ATC (FOR) et l'ATD (AGI) --}}
+
+    <!-- INIT -->
+    <div class="sidebar-section init-section">
+      <div class="sidebar-section-header">
+        <div class="sidebar-label init-label">
+          <h4>{{localize "CO.label.long.init"}}</h4>
+          <!--                <a class="roll-icon roll-init"><i class="fas fa-dice-d20"></i><i class="fas fa-fw fa-plus"></i><div>{{!combat.init.value}}</div></a>-->
+          <!--                <a class="roll-icon roll-init"><i class="fas fa-dice-d20"></i><i class="fas fa-fw fa-plus"></i><div>{{!combat.init.value}}</div></a>-->
+        </div>
+        {{#if viewLimited}}
+          <div class="init-value labelled-field">
+            <i class="fas fa-solid fa-swords fa-fw"></i>??
+          </div>
+        {{else}}
+          <div class="init-value labelled-field" data-tooltip="{{combat.init.tooltipValue}}">
+            <i class="fas fa-solid fa-swords fa-fw"></i>
+            {{combat.init.value}}
+          </div>
+        {{/if}}
+      </div>
+      {{#if unlocked}}
+        <div class="sidebar-section-content">
+          <div class="field">
+            <input
+              class="init-base"
+              type="number"
+              name="system.combat.init.base"
+              value="{{combat.init.base}}"
+              data-dtype="Number"
+              placeholder="0"
+              readonly
+              data-tooltip="{{localize 'CO.label.long.base'}}"
+            />
+            <span class="slash">/</span>
+            <input
+              class="init-bonus"
+              type="text"
+              name="system.combat.init.bonuses.sheet"
+              value="{{numberFormat combat.init.bonuses.sheet decimals=0 sign=true}}"
+              data-dtype="Number"
+              placeholder="0"
+              data-tooltip="{{localize 'CO.label.long.bonus'}}"
+            />
+          </div>
+        </div>
+        <div class="sidebar-section-content">
+          <div class="field">
+            <span class="combat-formula" data-tooltip="{{localize 'COC2BASE.combat.formulaTooltip'}}">{{initFormula}}</span>
+          </div>
+        </div>
+      {{/if}}
+    </div>
+
+    <!-- DEF -->
+    <div class="sidebar-section armor-section">
+      <div class="sidebar-section-header">
+        <div class="sidebar-label armor-label">
+          {{#if viewLimited}}
+          <h4>{{localize "CO.label.long.def"}}</h4>
+        </div>
+        <div class="armor-base labelled-field">
+          <i class="fas fa-fw fa-shield-alt"></i>??
+        </div>
+        {{else}}
+          {{!-- Pas de tooltip d'encombrement ici (contrairement au template co2) : en COC2 la DEF est la seule
+                valeur de combat que le malus des protections n'affecte pas. Il porte sur l'Init., l'ATC et les
+                tests d'AGI, et s'affiche dans les tooltips de ces valeurs. --}}
+          <h4>{{localize "CO.label.long.def"}}</h4>
+        </div>
+        <div class="armor-base labelled-field" data-tooltip="{{combat.def.tooltipValue}}">
+          <i class="fas fa-fw fa-shield-alt"></i>
+          {{combat.def.value}}
+        </div>
+        {{/if}}
+      </div>
+      {{#if unlocked}}
+        <div class="sidebar-section-content">
+          <div class="field">
+            <input
+              class="def-base"
+              type="number"
+              name="system.combat.def.base"
+              value="{{combat.def.base}}"
+              data-dtype="Number"
+              placeholder="0"
+              readonly
+              data-tooltip="{{combat.def.tooltipBase}}"
+            />
+            <span class="slash">/</span>
+            <input
+              class="def-bonus"
+              type="text"
+              name="system.combat.def.bonuses.sheet"
+              value="{{numberFormat combat.def.bonuses.sheet decimals=0 sign=true}}"
+              data-dtype="Number"
+              placeholder="0"
+              data-tooltip="{{localize 'CO.label.long.bonus'}}"
+            />
+          </div>
+        </div>
+        <div class="sidebar-section-content">
+          <div class="field">
+            <span class="combat-formula" data-tooltip="{{localize 'COC2BASE.combat.formulaTooltip'}}">{{defFormula}}</span>
+          </div>
+        </div>
+      {{/if}}
+    </div>
+
+    <!-- DR -->
+    <div class="sidebar-section dr-section">
+      <div class="sidebar-section-header">
+        <div class="sidebar-label dr-label">
+          <h4>{{localize "CO.ui.dr"}}</h4>
+        </div>
+        {{#if viewLimited}}
+          <div class="dr-base labelled-field">
+          <i class="fas fa-fw fa-universal-access"></i>??
+        </div>
+        {{else}}
+          <div class="dr-base labelled-field" data-tooltip="{{combat.dr.tooltipValue}}">
+          <i class="fas fa-fw fa-universal-access"></i>
+          {{combat.dr.value}}
+        </div>
+        {{/if}}
+      </div>
+      {{#if unlocked}}
+        <div class="sidebar-section-content">
+          <div class="field">
+            <input
+              class="dr-base"
+              type="number"
+              name="system.combat.dr.base"
+              value="{{combat.dr.base}}"
+              data-dtype="Number"
+              placeholder="0"
+              readonly
+              data-tooltip="{{combat.dr.tooltipBase}}"
+            />
+            <span class="slash">/</span>
+            <input
+              class="dr-bonus"
+              type="text"
+              name="system.combat.dr.bonuses.sheet"
+              value="{{numberFormat combat.dr.bonuses.sheet decimals=0 sign=true}}"
+              data-dtype="Number"
+              placeholder="0"
+              data-tooltip="{{localize 'CO.label.long.bonus'}}"
+            />
+          </div>
+        </div>
+      {{/if}}
+    </div>
+    {{!-- L'échelle de santé est rendue en ruban pleine largeur dans le header --}}
+    {{!-- Pas de DM temporaires ni de dés de récupération en COC2 : ce sont des règles propres à COF2 --}}
+
     {{!-- CG : capacité de guérison, CON + 3. Échelons de l'échelle de santé récupérés par semaine de
           repos, personnage stabilisé. Le bouton décoche CG échelons d'un clic. --}}
     <div class="sidebar-section cg-section">
@@ -309,52 +362,7 @@
         </div>
       {{/if}}
     </div>
-    <!-- DR -->
-    <div class="sidebar-section dr-section">
-      <div class="sidebar-section-header">
-        <div class="sidebar-label dr-label">
-          <h4>{{localize "CO.ui.dr"}}</h4>
-        </div>
-        {{#if viewLimited}}
-          <div class="dr-base labelled-field">
-          <i class="fas fa-fw fa-universal-access"></i>??
-        </div>
-        {{else}}
-          <div class="dr-base labelled-field" data-tooltip="{{combat.dr.tooltipValue}}">
-          <i class="fas fa-fw fa-universal-access"></i>
-          {{combat.dr.value}}
-        </div>
-        {{/if}}
-      </div>
-      {{#if unlocked}}
-        <div class="sidebar-section-content">
-          <div class="field">
-            <input
-              class="dr-base"
-              type="number"
-              name="system.combat.dr.base"
-              value="{{combat.dr.base}}"
-              data-dtype="Number"
-              placeholder="0"
-              readonly
-              data-tooltip="{{combat.dr.tooltipBase}}"
-            />
-            <span class="slash">/</span>
-            <input
-              class="dr-bonus"
-              type="text"
-              name="system.combat.dr.bonuses.sheet"
-              value="{{numberFormat combat.dr.bonuses.sheet decimals=0 sign=true}}"
-              data-dtype="Number"
-              placeholder="0"
-              data-tooltip="{{localize 'CO.label.long.bonus'}}"
-            />
-          </div>
-        </div>
-      {{/if}}
-    </div>
-    {{!-- L'échelle de santé est rendue en ruban pleine largeur dans le header --}}
-    {{!-- Pas de DM temporaires ni de dés de récupération en COC2 : ce sont des règles propres à COF2 --}}
+
     <!-- MOVEMENT -->
     <div class="sidebar-section speed-section">
       <div class="sidebar-section-header">

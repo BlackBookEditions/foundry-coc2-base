@@ -75,8 +75,8 @@
  */
 .theme-light,
 .theme-dark {
-  --co-sheet-accent: #14110d;
-  --co-sheet-accent-alt: #241d14;
+  --co-sheet-accent: #2f2444;
+  --co-sheet-accent-alt: #666;
   --co-surface: #efe7d3;
   --co-encounter-accent: #2b1414cc;
   --co-window-content: rgba(233, 224, 204, 0.35);
@@ -86,9 +86,9 @@
   --co-grey: #b9ad93;
   --co-stat-attack: #4a1414;
   --co-stat-initiative: #241d14;
-  --co-stat-defense: #1c2a33;
-  --co-stat-health: #3a1414;
-  --co-stat-damages: #2e2436;
+  --co-stat-defense: #3a5a8a;
+  --co-stat-health: #143a23;
+  --co-stat-damages: darkred;
   --co-stat-resource: #23302a;
   --co-chat-skill: #23303b;
   --co-chat-attack: #3a1a12;
@@ -937,7 +937,6 @@
   gap: 6px;
   min-width: 0;
   /* Réserve la hauteur du libellé d'état, positionné en absolu sous le bloc coeur */
-  padding-bottom: 1.1em;
   /* Bloc coeur. Le nom de l'état est positionné en absolu dessous : il ne participe pas au flux,
        donc son apparition ne décale pas la ligne libellé / coeur / ruban. */
   /* clip-path rogne bordures et ombres : la distinction des échelons passe par le fond */
@@ -948,10 +947,9 @@
          la bande, align-self centrant la boîte marges comprises */
   margin: 0;
   /* Largeur fixe partagée avec la seconde échelle : aligne le bloc coeur d'une ligne à l'autre */
-  width: 8em;
+  width: 6em;
   box-sizing: border-box;
-  text-align: center;
-  background-color: var(--co-sheet-accent);
+  text-align: right;
   color: var(--co-text-light);
   font-weight: bold;
   padding: 2px 8px;
@@ -964,6 +962,7 @@
   min-width: 5em;
   white-space: nowrap;
   text-align: center;
+  align-self: flex-start;
 }
 .co.actor.coc2 .health-bar .health-points {
   font-weight: bold;
@@ -977,10 +976,12 @@
   flex: 1;
   gap: 1px;
   min-width: 0;
+  overflow-x: auto;
+  height: stretch;
 }
 .co.actor.coc2 .health-bar .health-step {
   flex: 1 1 0;
-  min-width: 0;
+  min-width: calc(94% / 20);
   overflow: hidden;
   /* Dimensions relatives à la taille du numéro ; height == line-height le centre verticalement */
   font-size: 0.7rem;
@@ -1032,16 +1033,15 @@
   gap: 6px;
   min-width: 0;
   /* Réserve la hauteur du libellé d'état, positionné en absolu sous le bloc résumé */
-  padding-bottom: 1.1em;
   /* Nom de l'état atteint, sous le bloc résumé (comme .health-state) */
 }
 .co.actor.coc2 .second-scale-bar .scale-label {
   align-self: center;
   margin: 0;
   /* Même largeur que .health-label : aligne le bloc icône X/Y d'une échelle à l'autre */
-  width: 8em;
+  width: 6em;
   box-sizing: border-box;
-  text-align: center;
+  text-align: right;
   background-color: var(--co-sheet-accent);
   color: var(--co-text-light);
   font-weight: bold;
@@ -1055,6 +1055,7 @@
   min-width: 5em;
   white-space: nowrap;
   text-align: center;
+  align-self: flex-start;
 }
 .co.actor.coc2 .second-scale-bar .scale-points {
   font-weight: bold;
@@ -1126,6 +1127,7 @@
   /* Le libellé, le X/Y et la ligne d'édition se succèdent en trois lignes (le libellé est un bloc) :
        on les centre au niveau du conteneur pour qu'ils s'alignent entre eux. */
   text-align: center;
+  align-content: center;
   /* Ligne « gagnés [n] + », sous le X/Y : visible pour le MJ en mode Édition */
 }
 .co.actor.coc2 .level.xp .add-session {
@@ -1225,6 +1227,31 @@
   grid-template-columns: minmax(0, 1fr);
   grid-template-rows: auto auto auto;
   grid-template-areas: "abilities" "health" "secondscale";
+}
+.co.actor.coc2.character-mini .health-bar {
+  height: 2rem;
+  margin-top: 5px;
+}
+.co.actor.coc2.character-mini .health-bar .health-label {
+  display: none;
+}
+.co.actor.coc2.character-mini .health-bar .health-step {
+  clip-path: none;
+}
+.co.actor.coc2.character-mini .second-scale-bar {
+  height: 2rem;
+}
+.co.actor.coc2.character-mini .second-scale-bar .scale-label {
+  display: none;
+}
+.co.actor.coc2.character-mini .second-scale-bar .scale-step {
+  clip-path: none;
+}
+.co.actor.coc2.character-mini .sidebar-section {
+  padding: 5px;
+}
+.co.actor.coc2.character-mini .window-content .mini-sidebar {
+  grid-template-rows: 1fr;
 }
 /* Protections : colonnes RD et Encombrement injectées dans les groupes Armures/Boucliers de l'inventaire
    (cf. #renderProtectionDetails). Plus étroites que les colonnes du système, qui portent des libellés. */

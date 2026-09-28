@@ -1,7 +1,7 @@
 folder: 3MACjT4WKEdYcLem
 name: Boss
 type: capacity
-img: icons/svg/upgrade.svg
+img: icons/equipment/chest/coat-trench-brown.webp
 _id: urXKW1CJ1IWSEvk9
 system:
   description: <p>Livre des règles page 35</p>
@@ -11,38 +11,37 @@ system:
   actions:
     - source: Compendium.coc2-base.coc2-objets-sans-description.Item.urXKW1CJ1IWSEvk9
       indice: 0
-      type: buff
-      img: icons/svg/upgrade.svg
       label: Boss
       chatFlavor: ''
+      img: icons/svg/upgrade.svg
+      type: buff
       actionType: none
       properties:
-        visible: false
         activable: false
-        enabled: false
         temporary: false
-        noManaCost: false
         noChargesUsed: false
+        visible: false
+        enabled: false
+        noManaCost: false
       conditions:
         - predicate: isLearned
-          object: ''
       modifiers:
-        - source: Compendium.coc2-base.coc2-objets-sans-description.Item.urXKW1CJ1IWSEvk9
-          type: capacity
+        - type: capacity
+          source: Compendium.coc2-base.coc2-objets-sans-description.Item.urXKW1CJ1IWSEvk9
           subtype: ability
           target: cha
-          apply: self
           value: '+1'
-          choiceGroup: 0
+          apply: self
           additionalInfos: ''
-        - source: Compendium.coc2-base.coc2-objets-sans-description.Item.urXKW1CJ1IWSEvk9
-          type: capacity
+          choiceGroup: 0
+        - type: capacity
+          source: Compendium.coc2-base.coc2-objets-sans-description.Item.urXKW1CJ1IWSEvk9
           subtype: ability
           target: int
-          apply: self
           value: '+1'
-          choiceGroup: 0
+          apply: self
           additionalInfos: ''
+          choiceGroup: 0
       resolvers: []
 effects: []
 sort: 500000
@@ -52,11 +51,11 @@ flags: {}
 _stats:
   compendiumSource: null
   duplicateSource: null
-  coreVersion: '14'
+  coreVersion: '14.367'
   systemId: co2
-  systemVersion: 2.3.0
+  systemVersion: 2.3.7
   createdTime: 1788897614388
-  modifiedTime: 1788897614388
-  lastModifiedBy: null
+  modifiedTime: 1789342422195
+  lastModifiedBy: Oi5VODFJW1pIN1Sg
   exportSource: null
 _key: '!items!urXKW1CJ1IWSEvk9'
