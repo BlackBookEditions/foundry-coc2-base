@@ -1,3 +1,7 @@
+# 0.9.2
+- Modifications visuelles dont passage au violet de la gamme COC2 (@L'Alchimiste)
+- Ajouts sur les objets des icônes issues de Foundry
+
 # 0.9.1
 - Correction de la résolution d'une attaque de rencontre qui rendait l'ouverture de la fiche impossible
 
