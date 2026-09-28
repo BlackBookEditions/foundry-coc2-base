@@ -1,3 +1,6 @@
+# 0.9.1
+- Correction de la résolution d'une attaque de rencontre qui rendait l'ouverture de la fiche impossible
+
 # 0.9.0
 - Première release officielle
 - Ajout des compendiums des voies, capacités, équipement

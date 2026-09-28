@@ -24,10 +24,13 @@ export default class COC2AttackData extends AttackData {
    * Bonus critique effectif de l'attaque : la valeur saisie, ou à défaut le maximum de son dé de dommages.
    * La formule de référence est celle du premier résolveur de la première action, comme pour le getter
    * `damage` des équipements du système.
+   * La formule est lue directement sur le résolveur et non via `displayValues` : pour une rencontre,
+   * ce getter résout aussi la formule d'attaque avec `actor.getRollData()`, lequel lit `@bc`… donc ce
+   * getter, d'où une récursion infinie dès qu'une attaque de rencontre porte un résolveur.
    * @returns {number} Le bonus critique
    */
   get criticalBonusValue() {
     if (Number.isFinite(this.criticalBonus)) return this.criticalBonus
-    return computeAutoCriticalBonus(this.displayValues.damage)
+    return computeAutoCriticalBonus(this.actions[0]?.resolvers?.[0]?.dmg?.formula)
   }
 }
