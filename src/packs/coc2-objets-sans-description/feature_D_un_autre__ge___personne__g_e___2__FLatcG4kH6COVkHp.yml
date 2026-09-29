@@ -1,0 +1,57 @@
+folder: vmyRJU2GixKPeeG4
+name: 'D''un autre âge : personne âgée (-2)'
+type: feature
+img: icons/svg/downgrade.svg
+_id: FLatcG4kH6COVkHp
+system:
+  description: <p>Livre des règles page 22</p>
+  source: ''
+  origin: ''
+  slug: ''
+  gmNotes: ''
+  subtype: desavantage
+  modifiers:
+    - type: feature
+      source: Compendium.coc2-base.coc2-objets-sans-description.Item.FLatcG4kH6COVkHp
+      subtype: ability
+      target: for
+      apply: self
+      value: '-1'
+      choiceGroup: 0
+      additionalInfos: ''
+    - type: feature
+      source: Compendium.coc2-base.coc2-objets-sans-description.Item.FLatcG4kH6COVkHp
+      subtype: ability
+      target: con
+      apply: self
+      value: '-1'
+      choiceGroup: 0
+      additionalInfos: ''
+    - type: feature
+      source: Compendium.coc2-base.coc2-objets-sans-description.Item.FLatcG4kH6COVkHp
+      subtype: skill
+      target: cha
+      apply: self
+      value: '+2'
+      choiceGroup: 0
+      additionalInfos: Convaincre de son innocence
+  paths: []
+  capacities: []
+effects: []
+sort: 500000
+ownership:
+  default: 0
+flags:
+  coc2-base:
+    points: 2
+_stats:
+  compendiumSource: null
+  duplicateSource: null
+  coreVersion: '14'
+  systemId: co2
+  systemVersion: 2.3.7
+  createdTime: 1790711394011
+  modifiedTime: 1790711394011
+  lastModifiedBy: null
+  exportSource: null
+_key: '!items!FLatcG4kH6COVkHp'

@@ -1,0 +1,49 @@
+folder: vmyRJU2GixKPeeG4
+name: Ignorant (-1)
+type: feature
+img: icons/svg/downgrade.svg
+_id: akmGpMAGDcuTNJ8o
+system:
+  description: <p>Livre des règles page 23</p>
+  source: ''
+  origin: ''
+  slug: ''
+  gmNotes: ''
+  subtype: desavantage
+  modifiers:
+    - type: feature
+      source: Compendium.coc2-base.coc2-objets-sans-description.Item.akmGpMAGDcuTNJ8o
+      subtype: skill
+      target: int
+      apply: self
+      value: '-5'
+      choiceGroup: 0
+      additionalInfos: Culture générale
+    - type: feature
+      source: Compendium.coc2-base.coc2-objets-sans-description.Item.akmGpMAGDcuTNJ8o
+      subtype: skill
+      target: cha
+      apply: self
+      value: '-5'
+      choiceGroup: 0
+      additionalInfos: Face à ceux qui méprisent son manque d'éducation
+  paths: []
+  capacities: []
+effects: []
+sort: 1000000
+ownership:
+  default: 0
+flags:
+  coc2-base:
+    points: 1
+_stats:
+  compendiumSource: null
+  duplicateSource: null
+  coreVersion: '14'
+  systemId: co2
+  systemVersion: 2.3.7
+  createdTime: 1790711394011
+  modifiedTime: 1790711394011
+  lastModifiedBy: null
+  exportSource: null
+_key: '!items!akmGpMAGDcuTNJ8o'

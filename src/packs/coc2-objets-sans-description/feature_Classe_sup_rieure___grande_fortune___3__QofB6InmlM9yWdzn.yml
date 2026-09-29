@@ -1,0 +1,41 @@
+folder: dDjFonnaXQ1URDgl
+name: 'Classe supérieure : grande fortune (+3)'
+type: feature
+img: icons/svg/upgrade.svg
+_id: QofB6InmlM9yWdzn
+system:
+  description: <p>Livre des règles pages 20-21</p>
+  source: ''
+  origin: ''
+  slug: ''
+  gmNotes: ''
+  subtype: avantage
+  modifiers:
+    - type: feature
+      source: Compendium.coc2-base.coc2-objets-sans-description.Item.QofB6InmlM9yWdzn
+      subtype: skill
+      target: cha
+      apply: self
+      value: '+5'
+      choiceGroup: 0
+      additionalInfos: Quand sa classe sociale peut lui « ouvrir des portes »
+  paths: []
+  capacities: []
+effects: []
+sort: 900000
+ownership:
+  default: 0
+flags:
+  coc2-base:
+    points: 3
+_stats:
+  compendiumSource: null
+  duplicateSource: null
+  coreVersion: '14'
+  systemId: co2
+  systemVersion: 2.3.7
+  createdTime: 1790711394011
+  modifiedTime: 1790711394011
+  lastModifiedBy: null
+  exportSource: null
+_key: '!items!QofB6InmlM9yWdzn'

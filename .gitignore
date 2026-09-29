@@ -11,5 +11,8 @@ CLAUDE.md
 .claude/
 docs/
 
+# Générateurs de compendiums (lisent source/, non distribué)
+tools/generate*.mjs
+
 # Sources de règles (PDF/docx non redistribuables)
 source/

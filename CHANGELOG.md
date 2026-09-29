@@ -1,6 +1,8 @@
 # 0.9.3
-- Le coût en points d'un trait distinctif n'est plus modifiable quand la fiche est en mode consultation, comme les autres champs ajoutés par le module
+- Echelle de santé : sans statut, les valeurs sont bien alignées verticalement
 - Refactoring technique (découpage plus fin) de coc-base.mjs et config/coc2.mjs
+- Compendium COC2 Objets : ajout des avantages et désavantages sous forme d'objet de type feature
+- Le coût en points d'un trait distinctif n'est plus modifiable quand la fiche est en mode consultation, comme les autres champs ajoutés par le module
 
 # 0.9.2
 - Modifications visuelles dont passage au violet de la gamme COC2 (@L'Alchimiste)

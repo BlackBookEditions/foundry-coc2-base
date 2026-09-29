@@ -1,0 +1,41 @@
+folder: vmyRJU2GixKPeeG4
+name: Ostracisé (-1)
+type: feature
+img: icons/svg/downgrade.svg
+_id: A8iwzHAGQwLTuAJx
+system:
+  description: <p>Livre des règles page 24</p>
+  source: ''
+  origin: ''
+  slug: ''
+  gmNotes: ''
+  subtype: desavantage
+  modifiers:
+    - type: feature
+      source: Compendium.coc2-base.coc2-objets-sans-description.Item.A8iwzHAGQwLTuAJx
+      subtype: skill
+      target: cha
+      apply: self
+      value: '-5'
+      choiceGroup: 0
+      additionalInfos: Face à ceux qui connaissent ou découvrent son passé
+  paths: []
+  capacities: []
+effects: []
+sort: 1500000
+ownership:
+  default: 0
+flags:
+  coc2-base:
+    points: 1
+_stats:
+  compendiumSource: null
+  duplicateSource: null
+  coreVersion: '14'
+  systemId: co2
+  systemVersion: 2.3.7
+  createdTime: 1790711394011
+  modifiedTime: 1790711394011
+  lastModifiedBy: null
+  exportSource: null
+_key: '!items!A8iwzHAGQwLTuAJx'
