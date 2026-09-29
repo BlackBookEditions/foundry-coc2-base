@@ -1,0 +1,20 @@
+name: Avantages
+sorting: m
+folder: E5XclGrbRjwbm4xC
+type: Item
+_id: dDjFonnaXQ1URDgl
+description: ''
+sort: 100000
+color: null
+flags: {}
+_stats:
+  compendiumSource: null
+  duplicateSource: null
+  coreVersion: '14'
+  systemId: co2
+  systemVersion: 2.3.7
+  createdTime: 1790711394011
+  modifiedTime: 1790711394011
+  lastModifiedBy: null
+  exportSource: null
+_key: '!folders!dDjFonnaXQ1URDgl'

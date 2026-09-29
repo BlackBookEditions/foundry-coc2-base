@@ -1,0 +1,49 @@
+folder: dDjFonnaXQ1URDgl
+name: Force de la nature (+2)
+type: feature
+img: icons/svg/upgrade.svg
+_id: Wh18jas3xdmMKN8o
+system:
+  description: <p>Livre des règles page 20</p>
+  source: ''
+  origin: ''
+  slug: ''
+  gmNotes: ''
+  subtype: avantage
+  modifiers:
+    - type: feature
+      source: Compendium.coc2-base.coc2-objets-sans-description.Item.Wh18jas3xdmMKN8o
+      subtype: ability
+      target: con
+      apply: self
+      value: '1'
+      choiceGroup: 0
+      additionalInfos: ''
+    - type: feature
+      source: Compendium.coc2-base.coc2-objets-sans-description.Item.Wh18jas3xdmMKN8o
+      subtype: combat
+      target: damMelee
+      apply: self
+      value: '1'
+      choiceGroup: 0
+      additionalInfos: ''
+  paths: []
+  capacities: []
+effects: []
+sort: 1300000
+ownership:
+  default: 0
+flags:
+  coc2-base:
+    points: 2
+_stats:
+  compendiumSource: null
+  duplicateSource: null
+  coreVersion: '14'
+  systemId: co2
+  systemVersion: 2.3.7
+  createdTime: 1790711394011
+  modifiedTime: 1790711394011
+  lastModifiedBy: null
+  exportSource: null
+_key: '!items!Wh18jas3xdmMKN8o'

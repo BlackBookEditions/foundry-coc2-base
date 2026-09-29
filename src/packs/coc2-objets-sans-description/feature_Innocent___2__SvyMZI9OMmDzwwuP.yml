@@ -1,0 +1,41 @@
+folder: vmyRJU2GixKPeeG4
+name: Innocent (-2)
+type: feature
+img: icons/svg/downgrade.svg
+_id: SvyMZI9OMmDzwwuP
+system:
+  description: <p>Livre des règles page 22</p>
+  source: ''
+  origin: ''
+  slug: ''
+  gmNotes: ''
+  subtype: desavantage
+  modifiers:
+    - type: feature
+      source: Compendium.coc2-base.coc2-objets-sans-description.Item.SvyMZI9OMmDzwwuP
+      subtype: skill
+      target: per
+      apply: self
+      value: '-5'
+      choiceGroup: 0
+      additionalInfos: Détecter un mensonge, une intention cachée, résister à une manipulation
+  paths: []
+  capacities: []
+effects: []
+sort: 700000
+ownership:
+  default: 0
+flags:
+  coc2-base:
+    points: 2
+_stats:
+  compendiumSource: null
+  duplicateSource: null
+  coreVersion: '14'
+  systemId: co2
+  systemVersion: 2.3.7
+  createdTime: 1790711394011
+  modifiedTime: 1790711394011
+  lastModifiedBy: null
+  exportSource: null
+_key: '!items!SvyMZI9OMmDzwwuP'

@@ -1,0 +1,33 @@
+folder: vmyRJU2GixKPeeG4
+name: Vilain défaut (-2)
+type: feature
+img: icons/svg/downgrade.svg
+_id: UoV7Wm7BMQRtQE1M
+system:
+  description: <p>Livre des règles page 25</p>
+  source: ''
+  origin: ''
+  slug: ''
+  gmNotes: ''
+  subtype: desavantage
+  modifiers: []
+  paths: []
+  capacities: []
+effects: []
+sort: 2100000
+ownership:
+  default: 0
+flags:
+  coc2-base:
+    points: 2
+_stats:
+  compendiumSource: null
+  duplicateSource: null
+  coreVersion: '14'
+  systemId: co2
+  systemVersion: 2.3.7
+  createdTime: 1790711394011
+  modifiedTime: 1790711394011
+  lastModifiedBy: null
+  exportSource: null
+_key: '!items!UoV7Wm7BMQRtQE1M'

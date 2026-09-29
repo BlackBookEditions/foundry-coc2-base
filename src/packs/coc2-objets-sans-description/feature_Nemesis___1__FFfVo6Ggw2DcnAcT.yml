@@ -1,0 +1,33 @@
+folder: vmyRJU2GixKPeeG4
+name: Nemesis (-1)
+type: feature
+img: icons/svg/downgrade.svg
+_id: FFfVo6Ggw2DcnAcT
+system:
+  description: <p>Livre des règles page 24</p>
+  source: ''
+  origin: ''
+  slug: ''
+  gmNotes: ''
+  subtype: desavantage
+  modifiers: []
+  paths: []
+  capacities: []
+effects: []
+sort: 1200000
+ownership:
+  default: 0
+flags:
+  coc2-base:
+    points: 1
+_stats:
+  compendiumSource: null
+  duplicateSource: null
+  coreVersion: '14'
+  systemId: co2
+  systemVersion: 2.3.7
+  createdTime: 1790711394011
+  modifiedTime: 1790711394011
+  lastModifiedBy: null
+  exportSource: null
+_key: '!items!FFfVo6Ggw2DcnAcT'

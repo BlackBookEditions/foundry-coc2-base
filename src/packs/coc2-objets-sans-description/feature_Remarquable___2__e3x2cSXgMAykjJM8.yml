@@ -1,0 +1,49 @@
+folder: dDjFonnaXQ1URDgl
+name: Remarquable (+2)
+type: feature
+img: icons/svg/upgrade.svg
+_id: e3x2cSXgMAykjJM8
+system:
+  description: <p>Livre des règles page 22</p>
+  source: ''
+  origin: ''
+  slug: ''
+  gmNotes: ''
+  subtype: avantage
+  modifiers:
+    - type: feature
+      source: Compendium.coc2-base.coc2-objets-sans-description.Item.e3x2cSXgMAykjJM8
+      subtype: skill
+      target: cha
+      apply: self
+      value: '+5'
+      choiceGroup: 0
+      additionalInfos: Séduction ou coercition par l'apparence physique
+    - type: feature
+      source: Compendium.coc2-base.coc2-objets-sans-description.Item.e3x2cSXgMAykjJM8
+      subtype: skill
+      target: agi
+      apply: self
+      value: '-2'
+      choiceGroup: 0
+      additionalInfos: Passer inaperçu en se mêlant à une foule
+  paths: []
+  capacities: []
+effects: []
+sort: 2500000
+ownership:
+  default: 0
+flags:
+  coc2-base:
+    points: 2
+_stats:
+  compendiumSource: null
+  duplicateSource: null
+  coreVersion: '14'
+  systemId: co2
+  systemVersion: 2.3.7
+  createdTime: 1790711394011
+  modifiedTime: 1790711394011
+  lastModifiedBy: null
+  exportSource: null
+_key: '!items!e3x2cSXgMAykjJM8'

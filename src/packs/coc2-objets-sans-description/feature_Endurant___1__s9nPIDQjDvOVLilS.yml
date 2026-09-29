@@ -1,0 +1,41 @@
+folder: dDjFonnaXQ1URDgl
+name: Endurant (+1)
+type: feature
+img: icons/svg/upgrade.svg
+_id: s9nPIDQjDvOVLilS
+system:
+  description: <p>Livre des règles page 20</p>
+  source: ''
+  origin: ''
+  slug: ''
+  gmNotes: ''
+  subtype: avantage
+  modifiers:
+    - type: feature
+      source: Compendium.coc2-base.coc2-objets-sans-description.Item.s9nPIDQjDvOVLilS
+      subtype: skill
+      target: con
+      apply: self
+      value: '+2'
+      choiceGroup: 0
+      additionalInfos: 'Tests de fatigue : effort intensif, privations'
+  paths: []
+  capacities: []
+effects: []
+sort: 1100000
+ownership:
+  default: 0
+flags:
+  coc2-base:
+    points: 1
+_stats:
+  compendiumSource: null
+  duplicateSource: null
+  coreVersion: '14'
+  systemId: co2
+  systemVersion: 2.3.7
+  createdTime: 1790711394011
+  modifiedTime: 1790711394011
+  lastModifiedBy: null
+  exportSource: null
+_key: '!items!s9nPIDQjDvOVLilS'

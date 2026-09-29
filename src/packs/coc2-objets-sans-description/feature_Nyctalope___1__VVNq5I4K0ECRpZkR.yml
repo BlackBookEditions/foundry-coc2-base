@@ -1,0 +1,33 @@
+folder: dDjFonnaXQ1URDgl
+name: Nyctalope (+1)
+type: feature
+img: icons/svg/upgrade.svg
+_id: VVNq5I4K0ECRpZkR
+system:
+  description: <p>Livre des règles page 22</p>
+  source: ''
+  origin: ''
+  slug: ''
+  gmNotes: ''
+  subtype: avantage
+  modifiers: []
+  paths: []
+  capacities: []
+effects: []
+sort: 2200000
+ownership:
+  default: 0
+flags:
+  coc2-base:
+    points: 1
+_stats:
+  compendiumSource: null
+  duplicateSource: null
+  coreVersion: '14'
+  systemId: co2
+  systemVersion: 2.3.7
+  createdTime: 1790711394011
+  modifiedTime: 1790711394011
+  lastModifiedBy: null
+  exportSource: null
+_key: '!items!VVNq5I4K0ECRpZkR'

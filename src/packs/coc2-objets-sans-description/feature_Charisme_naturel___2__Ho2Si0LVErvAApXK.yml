@@ -1,0 +1,41 @@
+folder: dDjFonnaXQ1URDgl
+name: Charisme naturel (+2)
+type: feature
+img: icons/svg/upgrade.svg
+_id: Ho2Si0LVErvAApXK
+system:
+  description: <p>Livre des règles page 20</p>
+  source: ''
+  origin: ''
+  slug: ''
+  gmNotes: ''
+  subtype: avantage
+  modifiers:
+    - type: feature
+      source: Compendium.coc2-base.coc2-objets-sans-description.Item.Ho2Si0LVErvAApXK
+      subtype: skill
+      target: cha
+      apply: self
+      value: '+5'
+      choiceGroup: 0
+      additionalInfos: Interactions sociales amicales ou neutres
+  paths: []
+  capacities: []
+effects: []
+sort: 600000
+ownership:
+  default: 0
+flags:
+  coc2-base:
+    points: 2
+_stats:
+  compendiumSource: null
+  duplicateSource: null
+  coreVersion: '14'
+  systemId: co2
+  systemVersion: 2.3.7
+  createdTime: 1790711394011
+  modifiedTime: 1790711394011
+  lastModifiedBy: null
+  exportSource: null
+_key: '!items!Ho2Si0LVErvAApXK'

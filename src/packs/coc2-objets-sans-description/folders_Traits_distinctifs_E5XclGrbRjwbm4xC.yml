@@ -1,0 +1,20 @@
+name: Traits distinctifs
+sorting: m
+folder: null
+type: Item
+_id: E5XclGrbRjwbm4xC
+description: ''
+sort: 600000
+color: null
+flags: {}
+_stats:
+  compendiumSource: null
+  duplicateSource: null
+  coreVersion: '14'
+  systemId: co2
+  systemVersion: 2.3.7
+  createdTime: 1790711394011
+  modifiedTime: 1790711394011
+  lastModifiedBy: null
+  exportSource: null
+_key: '!folders!E5XclGrbRjwbm4xC'

@@ -1,0 +1,43 @@
+folder: dDjFonnaXQ1URDgl
+name: Logique élémentaire (+1)
+type: feature
+img: icons/svg/upgrade.svg
+_id: ymEbPms1ddHBbbdz
+system:
+  description: <p>Livre des règles page 20</p>
+  source: ''
+  origin: ''
+  slug: ''
+  gmNotes: ''
+  subtype: avantage
+  modifiers:
+    - type: feature
+      source: Compendium.coc2-base.coc2-objets-sans-description.Item.ymEbPms1ddHBbbdz
+      subtype: skill
+      target: int
+      apply: self
+      value: '+2'
+      choiceGroup: 0
+      additionalInfos: >-
+        Négocier par la logique, résoudre un problème ou déceler une anomalie de
+        raisonnement
+  paths: []
+  capacities: []
+effects: []
+sort: 1800000
+ownership:
+  default: 0
+flags:
+  coc2-base:
+    points: 1
+_stats:
+  compendiumSource: null
+  duplicateSource: null
+  coreVersion: '14'
+  systemId: co2
+  systemVersion: 2.3.7
+  createdTime: 1790711394011
+  modifiedTime: 1790711394011
+  lastModifiedBy: null
+  exportSource: null
+_key: '!items!ymEbPms1ddHBbbdz'
