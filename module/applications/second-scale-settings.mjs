@@ -1,4 +1,4 @@
-import { getSecondScaleModifierProfile, normalizeSecondScaleModifierProfile, SECOND_SCALE_STATE_IDS } from "../config/coc2.mjs"
+import { getSecondScaleModifierProfile, normalizeSecondScaleModifierProfile, SECOND_SCALE_STATE_IDS } from "../config/second-scale.mjs"
 
 const { ApplicationV2, HandlebarsApplicationMixin } = foundry.applications.api
 

@@ -69,6 +69,15 @@ En revanche les identifiants (`contusionne`, `affaibli`, `blesse`, `mourant`) et
 
 Module « overlay » : le hook `init` du module (exécuté après celui du système) remplace `CONFIG.Actor.documentClass`, `CONFIG.Actor.dataModels.character/encounter` et enregistre une fiche de personnage par défaut. Les classes COC2 héritent des classes co2 et ne surchargent que le nécessaire. La présélection des modificateurs contextuels repose sur l'API de jet fournie par la version compatible de `co2`.
 
+`coc-base.mjs` se limite à l'amorçage : la configuration publique `CONFIG.COC2BASE` (posée dès le chargement du script, avant tout hook, pour qu'un module d'univers puisse la modifier), les hooks `init` et `ready`, et le câblage des hooks de rendu. Le reste vit dans `module/` :
+
+| Dossier | Rôle |
+| --- | --- |
+| `config/` | Les règles COC2, un fichier par domaine : `health-scale`, `second-scale`, `statuses`, `items`, `character`, `encounters`, `combat`, plus `effect-changes` (socle commun santé/états), `settings` (réglages de monde) et `system-patch` (ce que le module injecte dans `game.system.CONST`). `config/coc2.mjs` n'est plus qu'un barrel de ré-export, conservé pour les imports historiques des modules d'univers et des tests ; au sein du module, importer directement le fichier de domaine. |
+| `models/`, `documents/`, `applications/` | Les sous-classes co2 (data models, `COC2Actor`, fiches). |
+| `hooks/` | Les retouches du système au rendu : `item-sheets` (fiches trait/voie/profil/équipement/attaque), `mini-character-sheet` (Vue actions), `attack-critical` (bonus critique), `interface` (journal, barre latérale). Un handler par fiche. |
+| `helpers/` | `form-fields` : les fragments de formulaire injectés dans les fiches d'item du système. |
+
 ## Développement
 
 ### Templates ApplicationV2

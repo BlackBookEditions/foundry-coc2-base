@@ -1,14 +1,8 @@
 import COCharacterSheet from "../../../../systems/co2/module/applications/sheets/character-sheet.mjs"
-import {
-  getHealthScaleContext,
-  getSecondScaleContext,
-  updateHealthScale,
-  updateSecondScale,
-  applyWeeklyRest,
-  FEATURE_SUBTYPES_COC2,
-  getAgeBracket,
-  TRAIT_POINTS_MAX,
-} from "../config/coc2.mjs"
+import { getHealthScaleContext, updateHealthScale, applyWeeklyRest } from "../config/health-scale.mjs"
+import { getSecondScaleContext, updateSecondScale } from "../config/second-scale.mjs"
+import { FEATURE_SUBTYPES_COC2 } from "../config/items.mjs"
+import { getAgeBracket, TRAIT_POINTS_MAX } from "../config/character.mjs"
 
 /**
  * Fiche de personnage COC2 : reprend la fiche COF2 en surchargeant les parties spécifiques (échelle de santé, progression sans niveaux)
@@ -38,7 +32,7 @@ export default class COC2CharacterSheet extends COCharacterSheet {
   async _prepareContext() {
     const context = await super._prepareContext()
 
-    // Échelle de santé et seconde échelle : contextes mutualisés avec la Vue actions (cf. config/coc2.mjs)
+    // Échelle de santé et seconde échelle : contextes mutualisés avec la Vue actions (cf. config/health-scale.mjs et config/second-scale.mjs)
     Object.assign(context, getHealthScaleContext(this.document))
     Object.assign(context, getSecondScaleContext(this.document))
 

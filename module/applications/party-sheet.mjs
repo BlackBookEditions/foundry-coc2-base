@@ -1,5 +1,6 @@
 import COPartySheet from "../../../../systems/co2/module/applications/party-sheet.mjs"
-import { getHealthState, getSecondScaleState, isSecondScaleEnabled } from "../config/coc2.mjs"
+import { getHealthState } from "../config/health-scale.mjs"
+import { getSecondScaleState, isSecondScaleEnabled } from "../config/second-scale.mjs"
 
 /**
  * Groupe de joueurs COC2 : reprend le tableau COF2 en retirant les colonnes de magie (attaque magique et
@@ -65,5 +66,41 @@ export default class COC2PartySheet extends COPartySheet {
     }
 
     return context
+  }
+
+  /**
+   * Impose cette sous-classe à `game.system.partySheet` : la barre latérale et co.mjs lisent cette
+   * instance, remplacer CONFIG ne suffirait pas car la référence importée y est figée.
+   * À appeler depuis le hook ready du module.
+   *
+   * Attention à la course : le système assigne game.system.partySheet à la FIN de sa propre ready
+   * asynchrone (co.mjs:255), APRÈS des await (co.mjs:244/249). Cette affectation retombe donc APRÈS le
+   * hook ready du module et écraserait une simple réaffectation. On remplace donc la propriété par un
+   * accesseur qui n'accepte QUE la sous-classe COC2 et ignore l'instance COF2 du système, quel que soit
+   * l'ordre d'exécution des deux ready.
+   */
+  static install() {
+    const PartySheet = this
+    const existing = game.system.partySheet
+    let instance = existing instanceof PartySheet ? existing : null
+
+    // Si le système a déjà posé (et, pour le MJ, rendu) sa version COF2 avant ce hook, on la ferme.
+    const replacedRendered = existing && !instance && existing.rendered
+    if (existing && !instance) existing.close()
+
+    Object.defineProperty(game.system, "partySheet", {
+      configurable: true,
+      enumerable: true,
+      get() {
+        return (instance ??= new PartySheet())
+      },
+      set(value) {
+        // On ignore l'affectation de la classe système (COPartySheet) ; seule la sous-classe COC2 est acceptée.
+        if (value instanceof PartySheet) instance = value
+      },
+    })
+
+    // Reproduit l'auto-rendu MJ du système, mais avec notre version, si sa fenêtre était déjà ouverte.
+    if (game.user.isGM && replacedRendered) game.system.partySheet.render({ force: true })
   }
 }

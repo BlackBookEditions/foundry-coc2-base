@@ -1,5 +1,6 @@
 import COEncounterSheet from "../../../../systems/co2/module/applications/sheets/encounter-sheet.mjs"
-import { getHealthScaleContext, updateHealthScale, getEncounterProfile } from "../config/coc2.mjs"
+import { getHealthScaleContext, updateHealthScale } from "../config/health-scale.mjs"
+import { getEncounterProfile } from "../config/encounters.mjs"
 
 /**
  * Fiche de rencontre COC2 : reprend la fiche COF2 en surchargeant l'en-tête et la barre latérale, pour
@@ -27,7 +28,7 @@ export default class COC2EncounterSheet extends COEncounterSheet {
   async _prepareContext() {
     const context = await super._prepareContext()
 
-    // Échelle de santé : contexte mutualisé avec la fiche de personnage (cf. config/coc2.mjs)
+    // Échelle de santé : contexte mutualisé avec la fiche de personnage (cf. config/health-scale.mjs)
     Object.assign(context, getHealthScaleContext(this.document))
     // La seconde échelle n'existe que sur le schéma des personnages : ne pas l'appeler ici
 

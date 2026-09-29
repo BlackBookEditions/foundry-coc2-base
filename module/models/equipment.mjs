@@ -1,5 +1,5 @@
 import EquipmentData from "../../../../systems/co2/module/models/equipment.mjs"
-import { computeAutoCriticalBonus } from "../config/coc2.mjs"
+import { computeAutoCriticalBonus } from "../config/combat.mjs"
 
 /**
  * Data model des équipements COC2 : adapte le modèle COF2 aux règles de Chroniques Oubliées Contemporain.

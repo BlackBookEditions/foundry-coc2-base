@@ -1,3 +1,7 @@
+# 0.9.3
+- Le coût en points d'un trait distinctif n'est plus modifiable quand la fiche est en mode consultation, comme les autres champs ajoutés par le module
+- Refactoring technique (découpage plus fin) de coc-base.mjs et config/coc2.mjs
+
 # 0.9.2
 - Modifications visuelles dont passage au violet de la gamme COC2 (@L'Alchimiste)
 - Ajouts sur les objets des icônes issues de Foundry

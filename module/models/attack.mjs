@@ -1,5 +1,5 @@
 import AttackData from "../../../../systems/co2/module/models/attack.mjs"
-import { computeAutoCriticalBonus } from "../config/coc2.mjs"
+import { computeAutoCriticalBonus } from "../config/combat.mjs"
 
 /**
  * Data model des attaques COC2 : les attaques naturelles des créatures portent leur propre bonus

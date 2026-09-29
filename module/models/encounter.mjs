@@ -1,5 +1,6 @@
 import EncounterData from "../../../../systems/co2/module/models/encounter.mjs"
-import { HEALTH_SCALE, applyHealthScaleStatuses, getEncounterArchetype, getEncounterProfile } from "../config/coc2.mjs"
+import { HEALTH_SCALE, applyHealthScaleStatuses } from "../config/health-scale.mjs"
+import { getEncounterArchetype, getEncounterProfile } from "../config/encounters.mjs"
 
 /**
  * Data model des rencontres COC2 : adapte le modèle COF2 aux règles de Chroniques Oubliées Contemporain.

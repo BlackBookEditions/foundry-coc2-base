@@ -1,5 +1,8 @@
 import COActor from "../../../../systems/co2/module/documents/actor.mjs"
-import { getStateSkillBonuses, getSecondScaleSkillBonuses, getAgeBracket, MINIMUM_DAMAGE } from "../config/coc2.mjs"
+import { getStateSkillBonuses } from "../config/statuses.mjs"
+import { getSecondScaleSkillBonuses } from "../config/second-scale.mjs"
+import { getAgeBracket } from "../config/character.mjs"
+import { MINIMUM_DAMAGE } from "../config/combat.mjs"
 
 /**
  * Document Actor COC2 : adapte le document COF2 aux règles de Chroniques Oubliées Contemporain

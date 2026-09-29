@@ -2,7 +2,9 @@ import CharacterData from "../../../../systems/co2/module/models/character.mjs"
 import { BaseValue } from "../../../../systems/co2/module/models/schemas/base-value.mjs"
 import Utils from "../../../../systems/co2/module/helpers/utils.mjs"
 import DefaultConfiguration from "../../../../systems/co2/module/config/configuration.mjs"
-import { HEALTH_SCALE, applyHealthScaleStatuses, SECOND_SCALE, getAgeBracket } from "../config/coc2.mjs"
+import { HEALTH_SCALE, applyHealthScaleStatuses } from "../config/health-scale.mjs"
+import { SECOND_SCALE } from "../config/second-scale.mjs"
+import { getAgeBracket } from "../config/character.mjs"
 
 /**
  * Data model des personnages COC2 : adapte le modèle COF2 aux règles de Chroniques Oubliées Contemporain
