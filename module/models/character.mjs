@@ -134,8 +134,25 @@ export default class COC2CharacterData extends CharacterData {
    */
   async _preUpdate(changes, options, user) {
     if (foundry.utils.hasProperty(changes, "system.attributes.hp.value")) {
-      await applyHealthScaleStatuses(this.parent, changes.system.attributes.hp.value, this.attributes.hp.max)
+      const newHp = changes.system.attributes.hp.value
+      await applyHealthScaleStatuses(this.parent, newHp, this.attributes.hp.max)
+      await this.#clearUnconsciousStatus(newHp)
     }
+  }
+
+  /**
+   * co2 pose l'état « Inconscient » à 0 PV (hook updateActor, drapeau co2.statuses.unconsciousFromZeroHP)
+   * et le retire dans son propre _preUpdate, volontairement non appelé ici : il poserait aussi l'état
+   * « Affaibli » de COF2 à 1 PV, en doublon des états de l'échelle de santé. On ne reprend donc que le
+   * retrait, dès qu'un échelon est décoché (au-dessus de 0 PV, et non de 1 comme en COF2).
+   * Un « Inconscient » posé à la main, sans le drapeau, n'est pas touché.
+   * @param {number} newHp Nouvelle valeur de hp.value
+   */
+  async #clearUnconsciousStatus(newHp) {
+    const actor = this.parent
+    if (newHp <= 0 || !actor.getFlag("co2", "statuses.unconsciousFromZeroHP")) return
+    if (actor.statuses.has("unconscious")) await actor.toggleStatusEffect("unconscious", { active: false })
+    await actor.unsetFlag("co2", "statuses.unconsciousFromZeroHP")
   }
 
   /**
