@@ -1,3 +1,6 @@
+# 0.9.4
+- Rencontre : l'état « Mort » posé quand toute l'échelle de santé est cochée est retiré dès qu'un échelon est décoché ; l'échelle ne reste plus affichée entièrement cochée (#3, #4)
+
 # 0.9.3
 - Echelle de santé : sans statut, les valeurs sont bien alignées verticalement
 - Refactoring technique (découpage plus fin) de coc-base.mjs et config/coc2.mjs

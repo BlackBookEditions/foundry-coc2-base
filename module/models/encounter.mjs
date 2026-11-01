@@ -68,7 +68,28 @@ export default class COC2EncounterData extends EncounterData {
     }
 
     if (foundry.utils.hasProperty(changes, "system.attributes.hp.value")) {
-      await applyHealthScaleStatuses(this.parent, changes.system.attributes.hp.value, this.#pendingHpMax(changes))
+      const newHp = changes.system.attributes.hp.value
+      await applyHealthScaleStatuses(this.parent, newHp, this.#pendingHpMax(changes))
+      await this.#syncDeadStatus(newHp)
+    }
+  }
+
+  /**
+   * Une rencontre est morte quand toute son échelle de santé est cochée : co2 pose alors l'état « Mort »
+   * (hook updateActor et applyDamage) mais ne le retire jamais. Cet état force hp.value à 0 par son effet :
+   * tant qu'il reste, l'échelle s'affiche entièrement cochée et les clics partent d'une valeur fausse.
+   * On marque donc la mort venue de l'échelle, pour la lever quand des échelons sont décochés, sans
+   * toucher à un état « Mort » posé à la main par le MJ.
+   * @param {number} newHp Nouvelle valeur de hp.value
+   */
+  async #syncDeadStatus(newHp) {
+    const actor = this.parent
+    const flag = "statuses.deadFromHealthScale"
+    if (newHp <= 0) {
+      if (!actor.getFlag("coc2-base", flag)) await actor.setFlag("coc2-base", flag, true)
+    } else if (actor.getFlag("coc2-base", flag)) {
+      if (actor.statuses.has("dead")) await actor.toggleStatusEffect("dead", { active: false })
+      await actor.unsetFlag("coc2-base", flag)
     }
   }
 
