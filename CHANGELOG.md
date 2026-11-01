@@ -1,5 +1,6 @@
 # 0.9.4
 - Rencontre : l'état « Mort » posé quand toute l'échelle de santé est cochée est retiré dès qu'un échelon est décoché ; l'échelle ne reste plus affichée entièrement cochée (#3, #4)
+- Fiches d'objet : les options des listes déroulantes (conditions des actions, type et temps d'action…) sont lisibles sans les survoler (#2)
 
 # 0.9.3
 - Echelle de santé : sans statut, les valeurs sont bien alignées verticalement

@@ -1379,6 +1379,10 @@
   background-color: var(--co-surface);
   color: var(--co-text-dark);
 }
+.co.item .window-content select option {
+  background: var(--co-surface);
+  color: var(--co-text-dark);
+}
 .co.item .form-header {
   color: var(--co-text-light);
 }

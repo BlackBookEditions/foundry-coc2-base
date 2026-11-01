@@ -79,6 +79,15 @@
   color: var(--co-text-dark);
 }
 
+// Listes déroulantes du corps des fiches d'objet (conditions, type et temps d'action…). Les options
+// héritent de la couleur claire du sélecteur, alors que leur fond est crème en mode clair
+// (--color-select-option-bg = --color-light-1) et laissé au navigateur en mode sombre (transparent) :
+// texte blanc sur fond clair, illisible tant qu'on ne survole pas l'option. On fixe fond et texte.
+.co.item .window-content select option {
+  background: var(--co-surface);
+  color: var(--co-text-dark);
+}
+
 // Titres de section des fiches d'objet, fond --co-item-light en mode clair
 .co.item .form-header {
   color: var(--co-text-light);
